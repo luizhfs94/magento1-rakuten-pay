@@ -1,0 +1,255 @@
+<?php
+/**
+ ************************************************************************
+ * Copyright [2017] [RakutenPay]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ************************************************************************
+ */
+
+?>
+<script type="text/javascript">
+  (function(window, document){
+
+    if(!!window["RPay"]) return;
+
+    var head = document.getElementsByTagName("head")[0];
+    var script = document.createElement("script");
+    script.async = 1;
+<?php if(strtolower(Mage::getStoreConfig('payment/rakutenpay/environment')) == "sandbox"): ?>
+    script.src = "https://static.rakutenpay.com.br/rpayjs/rpay-latest.dev.min.js";
+<?php else: ?>
+    script.src = "https://static.rakutenpay.com.br/rpayjs/rpay-latest.min.js";
+<?php endif ?>
+    head.appendChild(script);
+
+  })(window, document)
+</script>
+
+<script>
+//<![CDATA[
+    var x = document.getElementsByTagName("script");
+    var header_already_added = false;
+    for (var i=0; i< x.length; i++){
+      if (x[i].src == "<?php echo $this->getSkinUrl('rakuten/rakutenpay/js/rakutenpay-before-save.js') ?>"){
+             header_already_added = true;
+    }
+  }
+
+  if (header_already_added == false){
+    // add header if not already added
+    var head = document.getElementsByTagName("head")[0];
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.src = '<?php echo $this->getSkinUrl('rakuten/rakutenpay/js/rakutenpay-before-save.js') ?>';
+    head.appendChild(s);
+  }
+//]]>
+</script>
+<div class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
+    <div id="rakutenpay-cc-method-div"></div>
+    <div class="rakutenpay-label-spacing rakutenpay-cc-group-div">
+        <div class="rakutenpay-cc-label-div">
+            <label
+                class="rakutenpay-required"
+                for="creditCardNum">
+                Número do cartão
+            </label>
+        </div>
+        <div class="rakutenpay-cc-input-div">
+            <input
+                class="rakutenpay-cc-input"
+                id="creditCardNum"
+                type="text"
+                data-rkp="card-number"
+                maxlength="19"
+                onkeydown="creditCardMask(event, this)"
+                onblur="creditCardMask(event, this); getBrand(this);">
+            <div class="display-none validation-advice creditCardNum-error-message">Insira um número de cartão válido</div>
+        </div>
+    </div>
+    <div class="rakutenpay-label-spacing rakutenpay-cc-group-div">
+        <div class="rakutenpay-cc-label-div">
+            <label
+                class="rakutenpay-required"
+                for="creditCardCode">
+                    Código de segurança
+            </label>
+        </div>
+        <div class="rakutenpay-cc-input-div">
+            <input
+                class="rakutenpay-cc-input form-control code-card-mask"
+                id="creditCardCode"
+                name="payment[credit_card_code]"
+                type="text"
+                data-rkp="card-cvv"
+                minlength="3"
+                maxlength="4"
+                onkeydown="creditCardCodeMask(event, this)"
+                onblur="creditCardCodeMask(event, this); validateCreditCardCode(this)"
+                required>
+            <div class="display-none validation-advice creditCardCode-error-message">Insira um código de segurança válido</div>
+        </div>
+    </div>
+    <div class="rakutenpay-label-spacing rakutenpay-cc-group-div">
+        <div class="rakutenpay-cc-label-div">
+            <label
+                class="rakutenpay-required"
+                for="creditCardExpirationMonth">
+                Validade
+            </label>
+        </div>
+        <div class="rakutenpay-cc-input-div">
+            <select
+                onclick="validateCardDate()"
+                onchange="validateCardDate()"
+                id="creditCardExpirationMonth"
+                title="Cartão válido até"
+                class="rakutenpay-cc-select"
+                required
+                data-rkp="card-expiration-month">
+                <option value="" disabled selected>Mês</option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <div class="display-none validation-advice creditCardExpirationMonth-error-message">Escolha um mês válido</div>
+            <select
+                onclick="validateCardDate()"
+                onchange="validateCardDate()"
+                id="creditCardExpirationYear"
+                title="Cartão válido até"
+                class="rakutenpay-cc-select"
+                required
+                data-rkp="card-expiration-year">
+                <option value="" disabled selected>Ano</option>
+                <?php
+                $year = idate("Y");
+                $maxYear = $year + 20;
+                for ($i = $year; $i < $maxYear; $i++): ?>
+                    <option value="<?= $i; ?>"><?= $i; ?></option>
+                <?php endfor; ?>
+            </select>
+            <div class="display-none validation-advice creditCardExpirationYear-error-message">Escolha um ano válido</div>
+        </div>
+    </div>
+    <div class="rakutenpay-label-spacing rakutenpay-cc-group-div">
+        <div class="rakutenpay-cc-label-div">
+            <label
+                class="rakutenpay-required"
+                for="creditCardHolder">
+                Nome impresso no cartão
+            </label>
+        </div>
+        <div class="rakutenpay-cc-input-div">
+            <input
+                class="rakutenpay-cc-input"
+                id="creditCardHolder"
+                type="text"
+                data-rkp="card-holder-name"
+                name="payment[credit_card_holder]"
+                required
+                onblur="validateCardHolder(this)"
+                onkeydown="notNumberMask(event)"
+                minlength="3">
+            <div class="display-none validation-advice creditCardHolder-error-message">Insira o nome conforme impresso no cartão</div>
+        </div>
+    </div>
+    <div class="rakutenpay-label-spacing rakutenpay-cc-group-div">
+        <div class="rakutenpay-cc-label-div">
+            <label
+                class="rakutenpay-required">
+                    <?php echo $this->__('CPF ou CNPJ') ?></label>
+        </div>
+        <div class="rakutenpay-cc-input-div">
+            <input
+                id="creditCardDocument"
+                class="rakutenpay-cc-input"
+                onblur="validateDocument(this)"
+                onkeydown="documentMask(event, this)"
+                type="text"
+                title="<?php echo $this->__('CPF ou CNPJ') ?>"
+                name="payment[credit_card_cpf]"
+                value=""
+                maxlength="18"
+                accept=""
+                data-rkp="card-holder-document">
+            <div class="display-none validation-advice creditCardDocument-error-message">Insira um CPF ou CNPJ válido</div>
+        </div>
+    </div>
+
+    <input type="hidden" id="creditCardHash" value="" name="payment[credit_card_hash]">
+    <input type="hidden" id="creditCardToken" value="" name="payment[credit_card_token]">
+    <input type="hidden" id="creditCardBrand" name="payment[credit_card_brand]">
+    <input type="hidden" id="creditCardInstallment" name="payment[credit_card_installment]">
+    <input type="hidden" id="creditCardInstallmentValue" name="payment[credit_card_installment_value]">
+    <input type="hidden" id="creditCardInterestPercent" name="payment[credit_card_interest_percent]">
+    <input type="hidden" id="creditCardInterestAmount" name="payment[credit_card_interest_amount]">
+    <input type="hidden" id="creditCardInstallmentTotalValue" name="payment[credit_card_installment_total_value]"
+    <input type="hidden" id="grand_total" value="<?= $this->getGrandTotal() ?>">
+
+    <div class="rakutenpay-label-spacing rakutenpay-cc-group-div">
+        <div class="rakutenpay-cc-label-div">
+            <label class="rakutenpay-required" for="card_installments">Parcelas</label>
+        </div>
+        <div class="rakutenpay-cc-input-div">
+            <select class="rakutenpay-cc-select" id="card_installment_option" title="Nº de parcelas" required
+                    disabled onchange="cardInstallmentOnChange(this.value)" onclick="validateCreditCardInstallment(this)">
+                <option value="null" disabled selected>Escolha o N° de parcelas</option>
+                <?php
+                    $helper = Mage::helper('rakutenpay');
+
+                    $installments = $helper->installmentsModel()->create($this->getGrandTotal());
+                    if ($installments) {
+                        $totalAmount = str_replace('.', ',', $installments[$countInstallment-1]['totalAmount']);
+                        for($i = 0; $i < count($installments); $i++) {
+                            $value = json_encode($installments[$i]);
+                            echo "<option value='$value'>{$installments[$i]['text']}</option>";
+                        }
+                    }
+                    ?>
+            </select>
+            <div class="display-none validation-advice card_installment_option-error-message">Escolha uma opção de parcelamento</div>
+        </div>
+    </div>
+
+    <div class="credit-total rakutenpay-label-spacing rakutenpay-cc-group-div">
+        <div class="rakutenpay-cc-label-div">
+        <label class="rakutenpay-required" for="card_installments">Total</label>
+        </div>
+        <div class="rakutenpay-cc-input-div">
+            <span>
+                <span id="card_total">&MediumSpace;selecione o número de parcelas</span>
+            </span>
+        </div>
+    </div>
+
+<!--    <div style="display: inline-block; "class="rakutenpay-label-spacing rakutenpay-cc-group-div">
+        <ul class="rakutenpay-direct-payment-ul">
+            <div class="rakutenpay-cc-input-div">
+                <li>Esta compra está sendo feita no Brasil
+                    <img class="flag-origin-country-img" src="<?php echo $this->getSkinUrl('rakuten/rakutenpay/images/flag-origin-country.png'); ?>">
+                </li>
+            </div>
+        </ul>
+    </div>-->
+</div>

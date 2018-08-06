@@ -1,0 +1,21 @@
+{
+  "name": "rakutenpay/rakutenpay-php-sdk",
+  "description": "Biblioteca de integração com o RakutenPay",
+    "license": "",
+  "authors": [
+    {
+      "name": "RakutenPay"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.27",
+    "ext-curl": "*",
+    "lib-curl": "*",
+    "lib-openssl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "RakutenPay\\": "source/"
+    }
+  }
+}

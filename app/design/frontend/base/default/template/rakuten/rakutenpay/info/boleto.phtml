@@ -1,0 +1,39 @@
+<?php
+/**
+ ************************************************************************
+ * Copyright [2017] [RakutenPay]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ************************************************************************
+ */
+?>
+
+<script>
+<?php
+    $http = new \RakutenPay\Resources\Http();
+    $billet_url = $this->getBilletUrl();
+    if(!empty($billet_url)):
+        $http->get($this->getBilletUrl(), 20, 'ISO-8859-1', false);
+        $response = \RakutenPay\Resources\Responsibility::http($http,
+                new \RakutenPay\Parsers\DirectPayment\Boleto\Billet());?>
+        function pop_up() {
+            var win = window.open('', '_blank');
+            win.document.body.innerHTML = `<?= $response ?>`;
+        }
+<?php endif;?>
+</script>
+
+<?php echo $this->escapeHtml($this->getMethod()->getTitle()) ?>
+<?php if(!empty($this->getBilletUrl())): ?>
+    (<a href="#" onclick="pop_up();">clique aqui</a> para visualizar)
+<?php endif;?>

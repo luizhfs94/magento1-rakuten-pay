@@ -1,0 +1,224 @@
+/**
+ ************************************************************************
+ * Copyright [2017] [RakutenPay]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ************************************************************************
+ */
+
+/* Structure */
+#content { background: none repeat scroll 0 0 #E6E9Eb; overflow: hidden; }
+#rakutenpay-module { background: none repeat scroll 0 0 #F2F2F2; box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.2); margin-bottom: 5em; color: #666; font-family: Arial!important; font-size: 12px; overflow: hidden; position: relative; }
+#rakutenpay-module .wrapper { margin: 0 auto; max-width: 96%; position: relative; }
+#rakutenpay-module-content { padding:1em 0 2em 0; position: relative; background: #FFF; background-size: contain; overflow: hidden; clear: both; min-height: 500px; }
+#rakutenpay-module p { margin: 1em 0; line-height: 1.4em; }
+
+/* Header */
+#rakutenpay-module-header { border-bottom: 5px solid #90E265; overflow: hidden; padding: 1.5em 0; background: #FFF; }
+#rakutenpay-logo { float: left; }
+#rakutenpay-registration-button { float: right; margin-top: 0.4em; }
+
+/* Menu */
+#rakutenpay-module-menu { width: 100%; max-width: 15%; position: absolute; top:0; left: 0; transition-property: top, width; transition-duration: 0.5s; }
+#rakutenpay-module-menu ul { font-size: 1.2em; margin-top: 1em; padding: 0; width: 100%; }
+#rakutenpay-module-menu ul ul { font-size: 1em; margin: 0 0 0 25px; }
+#rakutenpay-module-menu li { list-style: none outside none; }
+#rakutenpay-module-menu li span,
+#rakutenpay-module-menu li a { text-decoration: none!important; border-radius: 3px; display: block; line-height: 2.1em; margin: 0.3em 0; padding: 0 0.4em 0 0.8em; }
+#rakutenpay-module-menu li span { cursor: pointer; color: #025ec7; }
+#rakutenpay-module-menu li span i.icon { background-image: url("../images/messages.png"); background-repeat: no-repeat; background-size: 16px; background-position: 0 -122px; width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin: -2px 5px 0 0; }
+#rakutenpay-module-menu li.open span i.icon { background-position: 0 -142px; }
+#rakutenpay-module-menu li span:hover,
+#rakutenpay-module-menu li a:hover { text-decoration: none; background: none repeat scroll 0 0 #F3F3F3; }
+#rakutenpay-module-menu li.selected a { background: none repeat scroll 0 0 #77bf52; color: #FFF; }
+#rakutenpay-save-wrapper { font-size: 0.9em; margin: 5em 0 0 0; }
+#rakutenpay-save-button { width: 100%; }
+
+/* Content */
+#rakutenpay-module-contents { float: right; width: 100%; }
+@media screen and (max-width: 1000px) {
+    #rakutenpay-module-contents { float: right; width: 75%; padding-right: 6%; }
+    #rakutenpay-module-menu { width: 15%; max-width: 13%; position: absolute; top:0; left: 2%; transition-property: top, width; transition-duration: 0.5s; }
+    #rakutenpay-registration-button { float: right; margin-top: 0.4em; margin-right: 7%; }
+    #rakutenpay-logo { float: left; margin-left: 3%; }
+}
+.rakutenpay-module-content { display: none; }
+.rakutenpay-module-content.selected { display: block; }
+#rakutenpay-module-content .tabela a { display: block; }
+
+/* Links */
+#rakutenpay-module a,
+#rakutenpay-module .link { color: #025ec7; cursor: pointer; outline: medium none; text-decoration: none; }
+
+/* Titles */
+#rakutenpay-module .title { font-weight: normal; border-bottom: 1px solid #DEDEDE; color: #3B3B3B; font-weight: normal; padding: 0.3em 0; position: relative; margin: 0 0 1em; }
+#rakutenpay-module .title:before { border-top: 4px solid rgba(0, 0, 0, 0.2); content: attr(title); display: inline-block; height: 0; overflow: hidden; position: absolute; top: 100%; left: 0; }
+#rakutenpay-module h2.title { font-size: 1.8em; }
+#rakutenpay-module h3.title { font-size: 1.4em; padding-bottom: 0.1em; }
+
+/* Forms & Fields */
+#rakutenpay-module label { color:inherit; margin:0; padding: 0.2em 0.5em 0 0; width: auto; font-weight: bold; float:none; line-height: 1em; font-size:1em; }
+#rakutenpay-module .config-area label { text-align: left; text-transform: uppercase; clear: both; display: block; }
+#rakutenpay-module .rakutenpay-field { font-size: 1.2em; padding: 8px 4px; width: auto; border-radius: 3px; box-shadow: 0 2px 2px #DDDDDD inset; color: #4F4F4F; border: none; margin: 0; border: 1px solid #BCC6D0; background-color: #FFF; }
+#rakutenpay-module select.rakutenpay-field { padding-right: 1em; }
+#rakutenpay-module .rakutenpay-field:focus { background-color: #F2F4F8; outline: none; border-color: #7E9DB9; }
+#rakutenpay-module .rakutenpay-field:disabled { background-color: #DDD; }
+#rakutenpay-module .config-area { margin: 0 0 3em 0; }
+#rakutenpay-module .config-sub-area { margin: 0 0 2em 0; }
+#rakutenpay-module .config-field { margin: 0 0 1.5em 0; }
+#rakutenpay-module .config-field .rakutenpay-button { margin-left: 0.4em; }
+#rakutenpay-module .config-area input[type='text'] { width: 50%; max-width: 600px; }
+#rakutenpay-module .config-area select.rakutenpay-field option { padding: 0.3em; }
+#rakutenpay-module .rakutenpay-select-hint { float: left; margin: 0 1em 0 0; max-width: 20%; }
+#rakutenpay-module .rakutenpay-option-hint { margin: 2.5em 0 4em 0; max-width: 100%; }
+
+/* Tables */
+.rakutenpay-table { border: 1px solid #e5e5e5; border-bottom-width: 3px; border-collapse: collapse; color: #444; width: 100%; }
+.rakutenpay-table th { background: #eee no-repeat center right; border: 1px solid #dbdbdb; color: #515151; font-size: 0.85em; font-weight: normal; padding: 10px 5px; text-transform: uppercase; text-align:center; }
+.rakutenpay-table th:first-child + th { cursor: pointer; }
+.rakutenpay-table tfoot td { text-align:center; padding: 5px; }
+.rakutenpay-table tr.over:hover td, tbody.over tr:hover td { background: #e1f1d3 !important; cursor: pointer; }
+.rakutenpay-table tbody tr td { font-size: 1em; text-align: center; padding: 0.8em 0.5em; border: 1px solid #DEDEDE; border-top-width: 0; cursor: pointer; }
+.rakutenpay-table tbody tr td:first-child { cursor: default; }
+.rakutenpay-adminhtml-canceled-index .rakutenpay-table thead tr th:first-child,
+.rakutenpay-adminhtml-refund-index .rakutenpay-table thead tr th:first-child { cursor: pointer; }
+.rakutenpay-adminhtml-canceled-index .rakutenpay-table tbody tr td:first-child,
+.rakutenpay-adminhtml-refund-index .rakutenpay-table tbody tr td:first-child { cursor: pointer; }
+.rakutenpay-table tbody tr td:first-child label { padding: 0 !important; }
+.rakutenpay-table tbody tr:hover td { background: #F9F9F9; color: #222; }
+.rakutenpay-table tbody tr.checked td { background: #F2FCEE; color: #000; }
+.rakutenpay-table tbody tr.unread td { color: #000; font-weight: bold; }
+.rakutenpay-table tbody td .link { display:block; padding: 0.5em 0.5em 0 0.5em; }
+.rakutenpay-table tbody td i { margin: 0 0.4em; font-size: 0.9em; }
+
+/* DataTable Sorting */
+.dataTable .sorting { background-image: url("../images/dataTable/sort_both.png"); cursor:pointer; }
+.dataTable .sorting_asc { background-image: url("../images/dataTable/sort_asc.png"); }
+.dataTable .sorting_desc { background-image: url("../images/dataTable/sort_desc.png"); }
+.dataTable .sorting_asc_disabled { background-image: url("../images/dataTable/sort_asc_disabled.png"); }
+.dataTable .sorting_desc_disabled { background-image: url("../images/dataTable/sort_desc_disabled.png"); }
+
+/* DataTable Pagination */
+.dataTables_paginate { overflow: hidden; font-size: 1.1em; margin: 1em 0; float: right; text-align: center; }
+.dataTables_paginate span { margin: 0 1em; }
+.paginate_button { padding: 0.5em; margin-left: 0.5em; }
+.paginate_button:hover { text-decoration: underline; }
+.paginate_button.current { background: none repeat scroll 0 0 #EEF6EB; color: #222222; }
+.paginate_button.disabled { display: none !important; }
+
+/* Search */
+.rakutenpay-search-tools { margin: 2em 0; }
+.rakutenpay-search-tools .rakutenpay-button,
+.rakutenpay-search-tools .rakutenpay-input { margin-right: 0.5em; }
+.rakutenpay-search-tools .right-tools { float: right; }
+
+/* List */
+.rakutenpay-list { margin: 0; padding: 0; list-style:none; }
+.rakutenpay-list li { background-image: url("../images/messages.png"); background-position: 0 -127px; background-repeat: no-repeat; border-bottom: 0 none; font-size: 1.2em; margin-bottom: 1em; padding-left: 2em; background-size: 20px; }
+.rakutenpay-list .rakutenpay-list-item-error, .rakutenpay-list .requirements-alert { background-image: url("../images/messages.png"); background-position: 0 -77px; }
+
+/* Buttons */
+.rakutenpay-button { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; }
+.rakutenpay-button { font-family: 'Arial'; font-size: 1.4em !important; cursor: pointer; position: relative; display: inline-block; color: #FFF !important; height: auto !important; line-height: 1.1em !important; border:none; border-top: 0.1em solid rgba(0, 0, 0, 0.05); border-left: 0.1em solid rgba(0, 0, 0, 0.1); border-bottom: 0.1em solid rgba(0, 0, 0, 0.2); border-right: 0.1em solid rgba(0, 0, 0, 0.1); border-radius: 0.2em; padding: 0.3em 0.55em !important; background-image: -webkit-linear-gradient(transparent 20%, rgba(0, 0, 0, 0.1)); background-image: -moz-linear-gradient(transparent 20%, rgba(0, 0, 0, 0.1)); background-image: -o-linear-gradient(transparent 20%, rgba(0, 0, 0, 0.1)); background-image: linear-gradient(transparent 20%, rgba(0, 0, 0, 0.1)); -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none; text-decoration:none !important; appearance:none; -moz-appearance:none; -webkit-appearance:none; font-weight: bold; -webkit-transition:box-shadow 200ms; -o-transition:box-shadow 200ms; transition:box-shadow 200ms; }
+.rakutenpay-button:active { box-shadow: 0 0.1125em 0.4125em rgba(0, 0, 0, 0.3) inset !important; }
+.rakutenpay-button:hover { box-shadow: 0 2em 2em rgba(255, 255, 255, 0.125) inset; }
+.rakutenpay-button,
+.rakutenpay-button.theme-green,
+.rakutenpay-button.green-theme { background-color: #C00000; }
+.rakutenpay-button.theme-gray,
+.rakutenpay-button.gray-theme { background-color: #F6F6F6; color: #41B320 !important; text-shadow: none; }
+.rakutenpay-button.theme-gray:hover,
+.rakutenpay-button.gray-theme:hover { background-color: #F9F9F9; }
+.rakutenpay-button[disabled] { background-color: #CCC !important; color: #FFF !important; }
+
+/* Messages */
+.rakutenpay-msg h3 > a { color:#035EC7!important }
+.rakutenpay-msg.rakutenpay-msg-micro h3,
+.rakutenpay-msg.rakutenpay-msg-micro dt,
+.rakutenpay-msg.rakutenpay-msg-micro dd,
+.rakutenpay-msg.rakutenpay-msg-micro li,
+.rakutenpay-msg.rakutenpay-msg-micro p { font-size:1em !important; }
+.rakutenpay-msg.rakutenpay-msg-small h3,
+.rakutenpay-msg.rakutenpay-msg-small dt,
+.rakutenpay-msg.rakutenpay-msg-small dd,
+.rakutenpay-msg.rakutenpay-msg-small li,
+.rakutenpay-msg.rakutenpay-msg-small p { font-size:1.2em !important; }
+.rakutenpay-msg.rakutenpay-msg-medium h3,
+.rakutenpay-msg.rakutenpay-msg-medium dt { font-size:1.4em !important; }
+.rakutenpay-msg.rakutenpay-msg-medium dd,
+.rakutenpay-msg.rakutenpay-msg-medium li,
+.rakutenpay-msg.rakutenpay-msg-medium p { font-size:1.2em !important; }
+.rakutenpay-msg { display: table; overflow: hidden; zoom: 1; font-size: 1em; width: 100%; font-family: Arial; padding: 0.5em; margin-bottom: 1em; /* IEs */ margin-bottom: 0.4rem; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; text-align: left; }
+.rakutenpay-msg h3,
+.rakutenpay-msg p { display: table-cell; vertical-align: middle; width: 100%; }
+.rakutenpay-msg span { display: normal; vertical-align: middle; float:right; width: 86%; font-size:1.4em !important; margin-top: 2%;}
+.rakutenpay-msg dl,
+.rakutenpay-msg ul { display: table-cell; vertical-align: top; width: 100%; }
+.rakutenpay-msg h3,
+.rakutenpay-msg p,
+.rakutenpay-msg li,
+.rakutenpay-msg dt,
+.rakutenpay-msg dd { color: #4F4F4F !important; }
+.rakutenpay-msg h3,
+.rakutenpay-msg span,
+.rakutenpay-msg dt { font-weight: bold; }
+.rakutenpay-msg dd { margin: 0; padding: 0; }
+.rakutenpay-msg li { padding: 0; list-style-type: none; }
+.rakutenpay-msg dd,
+.rakutenpay-msg li + li { margin-top: 0.4em; }
+.rakutenpay-msg hr {  border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+.rakutenpay-msg button {float: right; margin: 1% 0 0 1%;}
+i.icon-rakutenpay-msg,
+.rakutenpay-msg:before { display: inline-block; vertical-align: middle; overflow: hidden; background-image: url('../images/messages.png'); background-repeat: no-repeat; background-size: cover; }
+i.icon-rakutenpay-msg.icon-loading,
+.rakutenpay-msg.rakutenpay-msg-loading:before { background-image: url('../images/loading.gif'); background-position: 0 0; width: 63px !important; height: 62px !important; }
+.rakutenpay-msg:before { content: ''; }
+.rakutenpay-msg.no-icon:before { display: none !important; }
+i.icon-rakutenpay-msg {}
+i.icon-rakutenpay-msg.icon-alert,
+.rakutenpay-msg.rakutenpay-msg-alert:before { background-position: 0 0em; }
+i.icon-rakutenpay-msg.icon-wait,
+.rakutenpay-msg.rakutenpay-msg-wait:before { background-position: 0 -1.28em; }
+i.icon-rakutenpay-msg.icon-error,
+.rakutenpay-msg.rakutenpay-msg-error:before { background-position: 0 -2.56em; }
+i.icon-rakutenpay-msg.icon-block,
+.rakutenpay-msg.rakutenpay-msg-block:before { background-position: 0 -3.84em; }
+i.icon-rakutenpay-msg.icon-info,
+.rakutenpay-msg.rakutenpay-msg-info:before { background-position: 0 -5.12em; }
+i.icon-rakutenpay-msg.icon-success,
+.rakutenpay-msg.rakutenpay-msg-success:before { background-position: 0 -6.35em; }
+i.icon-rakutenpay-msg.icon-loading,
+.rakutenpay-msg.rakutenpay-msg-loading:before { -webkit-animation: rakutenpay-fx-loading 1.5s linear infinite; -moz-animation: rakutenpay-fx-loading 1.5s linear infinite; -ms-animation: rakutenpay-fx-loading 1.5s linear infinite; -o-animation: rakutenpay-fx-loading 1.5s linear infinite; animation: rakutenpay-fx-loading 1.5s linear infinite; }
+i.icon-rakutenpay-msg,
+.rakutenpay-msg:before { width: 1em; height: 1em; }
+i.icon-rakutenpay-msg.micro,
+.rakutenpay-msg.rakutenpay-msg-micro:before { font-size: 2em; margin: 0 0.3em 0 0; }
+i.icon-rakutenpay-msg.small,
+.rakutenpay-msg.rakutenpay-msg-small:before { font-size: 3em; margin: 0 0.33em 0 0.053em; }
+i.icon-rakutenpay-msg.medium,
+.rakutenpay-msg.rakutenpay-msg-medium:before { font-size: 5em; margin: 0 0.24em 0 0.072em; }
+i.icon-rakutenpay-msg.large,
+.rakutenpay-msg.rakutenpay-msg-large:before { font-size: 7em; margin: 0 0.171em 0 0.0514em; }
+#rakutenpay-module-contents .rakutenpay-msg { background: #F3F3F3; border:solid 1px #E3E3E3; border-radius: 2px 2px 2px; }
+#rakutenpay-module-contents .rakutenpay-confirm { background: #999; border:solid 1px #E3E3E3; border-radius: 2px 2px 2px; }
+#rakutenpay-module-contents #conciliation-info { margin-top: 40px; }
+#rakutenpay-module-contents #refund-info { margin-top: 40px; }
+#rakutenpay-module-contents #canceled-info { margin-top: 40px; }
+#rakutenpay-module-contents #abandoned-info { margin-top: 40px; }
+#rakutenpay-loading-message { width: 65px; }
+#rakutenpay-module-menu ul ul li { display: none; }
+#rakutenpay-module-menu ul li.open ul li,
+#rakutenpay-module-menu ul ul li.selected { display: block; }
+.rakutenpay-adminhtml-canceled-index table.rakutenpay-table a.edit,
+.rakutenpay-adminhtml-refund-index table.rakutenpay-table a.edit { display: none !important; }
+.ps_msg_hidden { display: none !important; }

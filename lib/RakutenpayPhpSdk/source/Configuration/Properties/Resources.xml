@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Resources>
+    <path>
+        <protocol>https</protocol>
+        <environment>
+            <production>
+                <url>api.rakuten.com.br</url>
+            </production>
+            <sandbox>
+                <url>oneapi-sandbox.rakutenpay.com.br</url>
+            </sandbox>
+        </environment>
+    </path>
+    <services>
+        <directPayment>
+            <request>rpay/v1/charges</request>
+        </directPayment>
+        <checkout>
+            <request>rpay/v1/checkout</request>
+        </checkout>
+    </services>
+</Resources>
