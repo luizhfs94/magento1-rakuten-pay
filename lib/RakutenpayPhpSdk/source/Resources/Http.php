@@ -39,6 +39,7 @@ class Http
      */
     public function __construct()
     {
+        \RakutenPay\Resources\Log\Logger::info('Constructing Http.');
         if (!function_exists('curl_init')) {
             throw new \Exception('RakutenPay Library: cURL library is required.');
         }
@@ -86,6 +87,7 @@ class Http
      */
     public function post($url, array $data = array(), $timeout = 20, $charset = 'ISO-8859-1')
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing post.');
         return $this->curlConnection('POST', $url, $timeout, $charset, $data);
     }
 
@@ -112,6 +114,7 @@ class Http
      */
     private function curlConnection($method, $url, $timeout, $charset, array $data = null, $secureGet = true)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing curlConnection.');
         $cnpj = \Mage::getStoreConfig('payment/rakutenpay/cnpj');
         $api_key = \Mage::getStoreConfig('payment/rakutenpay/api_key');
         $auth = $cnpj . ':' . $api_key;
@@ -134,6 +137,7 @@ class Http
                 CURLOPT_POSTFIELDS => $post_data,
             );
         } else {
+            \RakutenPay\Resources\Log\Logger::info('Processing Request.', ["method" => $method]);
             $contentLength = null;
             $methodOptions = array(
                 CURLOPT_HTTPHEADER => [
@@ -175,6 +179,7 @@ class Http
         $error = curl_errno($curl);
         $errorMessage = curl_error($curl);
         curl_close($curl);
+        \RakutenPay\Resources\Log\Logger::info('Response curlConnection', ['http_code' => $info['http_code'], 'response' => $resp]);
         $this->setStatus((int) $info['http_code']);
         $this->setResponse((String) $resp);
         if ($error) {
