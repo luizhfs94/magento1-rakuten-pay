@@ -191,10 +191,14 @@ class Logger implements LoggerInterface
      * Write in file
      * @param $file
      * @param $message
+     * @throws \Exception
      */
     private static function write($file, $message)
     {
-        file_put_contents($file, $message, FILE_APPEND | LOCK_EX);
+        $isWrite = file_put_contents($file, $message, FILE_APPEND | LOCK_EX);
+        if (false === $isWrite) {
+           throw new \Exception('Error: Could not write to log.');
+        }
     }
 
 
@@ -223,7 +227,7 @@ class Logger implements LoggerInterface
     private static function location()
     {
         if (\RakutenPay\Configuration\Configure::getLog()->getLocation()) {
-            return \RakutenPay\Configuration\Configure::getLog()->getLocation();
+            return \RakutenPay\Configuration\Configure::getLog()->getLocation() . '/' . self::DEFAULT_FILE;
         } else {
             return sprintf("%1s/../%1s", '', self::DEFAULT_FILE);
         }
