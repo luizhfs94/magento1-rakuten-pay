@@ -32,6 +32,7 @@ class Rakuten_RakutenPay_Model_NotificationMethod extends MethodAbstract
      */
     public function __construct()
     {
+        \RakutenPay\Resources\Log\Logger::info('Constructing ModelNotificationMethod.');
         $this->helper = Mage::helper('rakutenpay');
     }
 
@@ -45,6 +46,7 @@ class Rakuten_RakutenPay_Model_NotificationMethod extends MethodAbstract
 
     private function getNotificationPost()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getNotificationPost in ModelNotificationMethod.');
         $this->webhookStatus = $this->post['status'];
         $this->webhookReference = $this->post['reference'];
         if ($this->webhookStatus == 'approved') {
@@ -56,8 +58,10 @@ class Rakuten_RakutenPay_Model_NotificationMethod extends MethodAbstract
         }
     }
 
+
     private function setNotificationUpdateOrder()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing setNotificationUpdateOrder in ModelNotificationMethod.');
         $orderId = $this->helper->getOrderIdFromReference($this->webhookReference);
         $transactionCode = $this->webhookStatus;
         $orderStatus = $this->helper->getPaymentStatusFromKey($transactionCode);

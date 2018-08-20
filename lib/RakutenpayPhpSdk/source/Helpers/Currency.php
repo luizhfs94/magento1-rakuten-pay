@@ -32,6 +32,7 @@ class Currency
      */
     public static function toDecimal($value)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing toDecimal in Currency.');
         if (is_int($value)) {
             return $value;
         } elseif (is_float($value)) {

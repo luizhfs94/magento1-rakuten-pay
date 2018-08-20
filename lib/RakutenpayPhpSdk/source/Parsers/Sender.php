@@ -35,6 +35,7 @@ trait Sender
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Sender.');
         $data = [];
         // sender
         if (!is_null($request->getSender())) {

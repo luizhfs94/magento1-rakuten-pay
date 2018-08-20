@@ -33,6 +33,7 @@ class Rakuten_RakutenPay_Helper_Webservice extends Rakuten_RakutenPay_Helper_Dat
     public function __construct()
     {
         parent::__construct();
+        \RakutenPay\Resources\Log\Logger::info('Constructing HelperWebservice.');
         $this->library = new Rakuten_RakutenPay_Model_Library();
     }
 
@@ -43,6 +44,7 @@ class Rakuten_RakutenPay_Helper_Webservice extends Rakuten_RakutenPay_Helper_Dat
      */
     public function getNotification()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getNotification in HelperWebservice.');
         return \RakutenPay\Services\Transactions\Notification::check();
     }
 
@@ -56,6 +58,7 @@ class Rakuten_RakutenPay_Helper_Webservice extends Rakuten_RakutenPay_Helper_Dat
      */
     public function getTransactionsByDate($page, $maxPageResults, $initialDate)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getTransactionsByDate in HelperWebservice.');
         $response = null;
         try {
             $response = \RakutenPay\Services\Transactions\Search\Date::search(
@@ -78,6 +81,7 @@ class Rakuten_RakutenPay_Helper_Webservice extends Rakuten_RakutenPay_Helper_Dat
     public function refundRequest($transactionCode, $refundValue = null, $kind = 'total',
             $reason = 'merchant_other', $bankData = null, $paymentId = null)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing refundRequest in HelperWebservice.');
         return \RakutenPay\Services\Transactions\Refund::create(
             $transactionCode,
             $refundValue,
@@ -97,6 +101,7 @@ class Rakuten_RakutenPay_Helper_Webservice extends Rakuten_RakutenPay_Helper_Dat
      */
     public function requestRakutenPayService($class, $transactionCode)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing requestRakutenPayService in HelperWebservice.');
         try {
             if ($class == 'Rakuten_RakutenPay_Adminhtml_RefundController') {
                 return \RakutenPay\Services\Transactions\Refund::create($transactionCode);

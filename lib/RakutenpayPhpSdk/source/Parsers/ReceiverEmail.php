@@ -34,6 +34,7 @@ trait ReceiverEmail
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait ReceiverEmail.');
 
         $data = [];
 

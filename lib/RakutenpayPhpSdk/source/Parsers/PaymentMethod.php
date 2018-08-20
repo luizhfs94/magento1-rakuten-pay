@@ -35,6 +35,7 @@ trait PaymentMethod
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait PaymentMethod.');
         $data = [];
         $paymentMethod = $request->getPaymentMethod();
         if ($request->paymentMethodLenght() > 0) {

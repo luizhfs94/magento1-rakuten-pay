@@ -25,6 +25,7 @@ class Rakuten_RakutenPay_Model_Environment
      */
     public function toOptionArray()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing toOptionArray in ModelEnvironment.');
         $helper = Mage::helper('rakutenpay');
 
         return array(array("value" => "production", "label" => $helper->__("Produção")),

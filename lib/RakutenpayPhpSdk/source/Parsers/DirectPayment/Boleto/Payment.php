@@ -32,6 +32,7 @@ trait Payment
      */
     public static function getData($request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Payment.');
         $data = [];
         $payment_array = [];
         $payment_values = [];

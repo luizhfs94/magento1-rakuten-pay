@@ -31,6 +31,7 @@ class NotificationObject
      */
     public static function initialize()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing initialize in NotificationObject.');
         $notification = new \RakutenPay\Domains\Notification();
         $notification->setCode(Xhr::getInputCode())
                      ->setType(Xhr::getInputType());

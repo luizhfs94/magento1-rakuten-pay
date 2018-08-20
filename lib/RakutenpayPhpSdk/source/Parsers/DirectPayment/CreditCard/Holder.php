@@ -35,6 +35,7 @@ trait Holder
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Holder.');
         $data = [];
         // sender
         if (!is_null($request->getHolder())) {

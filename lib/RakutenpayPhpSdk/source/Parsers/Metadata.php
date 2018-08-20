@@ -37,6 +37,7 @@ trait Metadata
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Metadata.');
         $data = [];
 
         if ($request->metadataLenght() > 0) {

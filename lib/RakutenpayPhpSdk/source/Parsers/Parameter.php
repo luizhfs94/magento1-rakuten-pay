@@ -34,6 +34,7 @@ trait Parameter
      */
     public static function getData(Requests $request)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Parameter.');
         $data = [];
         
         if ($request->parameterLenght() > 0) {

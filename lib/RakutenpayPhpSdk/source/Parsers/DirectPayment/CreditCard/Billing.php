@@ -34,6 +34,7 @@ trait Billing
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Billing.');
         $data = [];
         // Billing data
         if (!is_null($request->getBilling())) {

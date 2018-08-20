@@ -28,11 +28,13 @@ class Rakuten_RakutenPay_Model_Observer
      */
     public function __construct($lib_path)
     {
+        \RakutenPay\Resources\Log\Logger::info('Constructing ModelObserver.');
         $this->lib_path = Mage::getBaseDir('lib'). '/RakutenpayPhpSdk/vendor/autoload.php';
     }
 
     public function addAutoloader()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing addAutoloader in ModelObserver.');
         include_once($this->lib_path);
         return $this;
     }
@@ -43,6 +45,7 @@ class Rakuten_RakutenPay_Model_Observer
      */
     public function salesOrderGridCollectionLoadBefore($observer)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing salesOrderGridCollectionLoadBefore in ModelObserver.');
         $collection = $observer->getOrderGridCollection();
         $select = $collection->getSelect();
         $tableCollection = Mage::getSingleton('core/resource')->getTableName('rakutenpay_orders');
@@ -59,6 +62,7 @@ class Rakuten_RakutenPay_Model_Observer
     */
     public function adminSystemConfigPaymentSave()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing adminSystemConfigPaymentSave in ModelObserver.');
         if (!Mage::getStoreConfig("payment/rakutenpay/init")) {
             Mage::getConfig()->saveConfig('payment/rakutenpay/init', 1);
         }
@@ -73,6 +77,7 @@ class Rakuten_RakutenPay_Model_Observer
 
     public function adminOrderAfterSave($observer)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing adminOrderAfterSave in ModelObserver.');
         \RakutenPay\Configuration\Configure::setEnvironment(Mage::getStoreConfig('payment/rakutenpay/environment'));
         $order = $observer->getEvent()->getOrder();
 
@@ -122,7 +127,9 @@ class Rakuten_RakutenPay_Model_Observer
         return $this;
     }
 
-    public function adminFilterPaymentMethod($observer) {
+    public function adminFilterPaymentMethod($observer)
+    {
+        \RakutenPay\Resources\Log\Logger::info('Processing adminFilterPaymentMethod in ModelObserver.');
         $method_code = $observer->getEvent()->getMethodInstance()->getCode();
 
         if ($method_code === 'rakutenpay_boleto' || $method_code === 'rakutenpay_credit_card') {

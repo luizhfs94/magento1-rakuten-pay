@@ -34,6 +34,7 @@ trait Shipping
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Shipping.');
         $data = [];
         // shipping
         if (!is_null($request->getShipping())) {

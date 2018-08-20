@@ -34,6 +34,7 @@ trait Order
      */
     public static function getData($request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Order.');
         $data = [];
         $order_data = [];
 

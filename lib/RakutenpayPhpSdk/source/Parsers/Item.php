@@ -34,6 +34,7 @@ trait Item
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Item.');
         $data = [];
         $items = $request->getItems();
         if ($request->itemLenght() > 0) {

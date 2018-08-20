@@ -42,6 +42,7 @@ class Rakuten_RakutenPay_Model_OrderAddress
      */
     public function __construct(Mage_Sales_Model_Order $order)
     {
+        \RakutenPay\Resources\Log\Logger::info('Constructing ModelOrderAddress.');
         $this->order = $order;
         $this->billingAddress = $this->order->getBillingAddress();
         $this->shippingAddress = $this->order->getShippingAddress();
@@ -62,6 +63,7 @@ class Rakuten_RakutenPay_Model_OrderAddress
      */
     private function setAddress(Mage_Sales_Model_Order_Address $address)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing setAddress in ModelOrderAddress.');
         $name = '';
         if ($address->getFirstname()) {
             $name .= $address->getFirstname();
@@ -94,6 +96,7 @@ class Rakuten_RakutenPay_Model_OrderAddress
      */
     public static function formatPhone($phone)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing formatPhone in ModelOrderAddress.');
         $phone = preg_replace('/[^0-9]/', '', $phone);
         $ddd = '';
         if (strlen($phone) > 9) {
@@ -115,6 +118,7 @@ class Rakuten_RakutenPay_Model_OrderAddress
      */
     private function parseStreet($fullAddress)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing parseStreet in ModelOrderAddress.');
         $fullAddress = explode(', ', $fullAddress);
         $street = $fullAddress[0];
         $number = isset($fullAddress[1]) ? $fullAddress[1] : null;
@@ -134,6 +138,7 @@ class Rakuten_RakutenPay_Model_OrderAddress
      */
     private function getRegionAbbreviation($address)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getRegionAbbreviation in ModelOrderAddress.');
         if (!is_null($address->getRegionCode()) && strlen($address->getRegionCode()) == 2) {
             return strtoupper($address->getRegionCode());
         }
