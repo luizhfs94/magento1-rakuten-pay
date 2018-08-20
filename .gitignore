@@ -1,9 +1,4 @@
 _Store
 .env
 tags
-
-#PHPStorm
 .idea
-
-#Docker module
-.docker
