@@ -33,7 +33,6 @@ class Responsibility
 {
     public static function http($http, $class)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing http in Responsibility.');
         switch ($http->getStatus()) {
             case Status::OK:
                 return $class::success($http);
@@ -57,7 +56,6 @@ class Responsibility
 
     public static function configuration()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing configuration in Responsibility.');
         $environment = new Environment;
         $extensible = new Extensible;
         $file = new File;

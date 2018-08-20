@@ -23,7 +23,6 @@ class Wrapper
 {
     public static function environment($config)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing environment in Wrapper.');
         return [
             'environment' => $config::get_env()
         ];
@@ -31,7 +30,6 @@ class Wrapper
 
     public static function credentials($config)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing credentials in Wrapper.');
         return [
             'credentials' => [
                 'email' => $config::EMAIL,
@@ -59,7 +57,6 @@ class Wrapper
 
     public static function charset($config)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing charset in Wrapper.');
         return [
             'charset' => $config::CHARSET
         ];
