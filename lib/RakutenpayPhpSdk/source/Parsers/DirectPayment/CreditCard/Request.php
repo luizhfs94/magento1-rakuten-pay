@@ -49,7 +49,7 @@ class Request extends Error implements Parser
      */
     public static function getData(\RakutenPay\Domains\Requests\DirectPayment\CreditCard $creditCard)
     {
-
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Request.');
         $data = [];
         $properties = new Constants();
         return array_merge(

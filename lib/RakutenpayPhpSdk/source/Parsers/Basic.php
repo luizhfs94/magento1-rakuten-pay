@@ -34,6 +34,7 @@ trait Basic
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Basic.');
         $data = [];
 
         // reference

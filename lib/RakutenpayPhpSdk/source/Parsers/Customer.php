@@ -34,6 +34,7 @@ trait Customer
      */
     public static function getData($request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Customer.');
         $data = [];
         $customer_data = [];
         if (!is_null($request->getSender())) {

@@ -32,6 +32,7 @@ class Xhr
      */
     public static function hasPost()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing hasPost in Xhr.');
         //initialize super global is required
         $post = $_POST;
         return self::validate($post);
@@ -43,6 +44,7 @@ class Xhr
      */
     public static function hasGet()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing hasGet in Xhr.');
         //initialize super global is required
         $get = $_GET;
         return self::validate($get);
@@ -54,6 +56,7 @@ class Xhr
      */
     public static function getInputCode()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getInputCode in Xhr.');
         //use filter input instead of super globals for security
         return filter_input(INPUT_POST, 'notificationCode', FILTER_SANITIZE_STRING) !== null ?
             filter_input(INPUT_POST, 'notificationCode', FILTER_SANITIZE_STRING) : null;
@@ -65,6 +68,7 @@ class Xhr
      */
     public static function getInputType()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getInputType in Xhr.');
         //use filter input instead of super globals for security
         return filter_input(INPUT_POST, 'notificationType', FILTER_SANITIZE_STRING) !== null ?
             filter_input(INPUT_POST, 'notificationType', FILTER_SANITIZE_STRING) : null;
@@ -77,6 +81,7 @@ class Xhr
      */
     private static function validate($input)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing validate in Xhr.');
         if (isset($input)) {
             return true;
         }

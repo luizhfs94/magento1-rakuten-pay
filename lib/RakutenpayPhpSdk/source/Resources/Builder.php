@@ -33,6 +33,7 @@ class Builder
      */
     protected static function getResourcesFile()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getResourcesFile in Builder.');
         $resources = __DIR__ . '/../Configuration/Properties/Resources.xml';
 
         if (defined('RP_RESOURCES')) {
@@ -48,6 +49,7 @@ class Builder
      */
     protected static function getUrl($protocol = null)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getUrl in Builder.');
         $xml = simplexml_load_file(self::getResourcesFile());
 
         if (is_null($protocol)) {
@@ -68,6 +70,7 @@ class Builder
      */
     protected static function getRequest($url, $service)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getRequest in Builder.');
         return self::getService($url, $service, 'request');
     }
 
@@ -78,6 +81,7 @@ class Builder
      */
     protected static function getResponse($url, $service)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getResponse in Builder.');
         return self::getService($url, $service, 'response');
     }
 
@@ -89,6 +93,7 @@ class Builder
      */
     protected static function getService($url, $service, $http)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getService in Builder.');
         $xml = simplexml_load_file(self::getResourcesFile());
         $values = self::getProperties($xml, $service, $http);
         if (isset($values))
@@ -111,6 +116,7 @@ class Builder
      */
     private static function getProperties($xml, $service, $http)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getProperties in Builder.');
         $services = explode("/", $service);
         if (isset($services[1])) {
             return $xml->services->{$services[0]}->{$services[1]}->{$http};

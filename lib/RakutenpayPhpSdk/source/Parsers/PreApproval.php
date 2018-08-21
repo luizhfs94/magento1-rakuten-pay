@@ -35,6 +35,7 @@ trait PreApproval
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait PreApproval.');
         $data = [];
         if (!is_null($request->getPreApproval())) {
             if (!is_null($request->getPreApproval()->getCharge())) {

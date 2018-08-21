@@ -34,6 +34,7 @@ class InitializeObject
      */
     public static function initialize($attr, $instantiateClass)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing initialize in InitializeObject.');
         if (! isset($attr) || empty($attr) || is_null($attr)) {
             $attr = new $instantiateClass;
         }

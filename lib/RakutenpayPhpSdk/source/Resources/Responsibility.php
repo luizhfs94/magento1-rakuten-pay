@@ -31,7 +31,8 @@ use RakutenPay\Resources\Responsibility\Configuration\Wrapper;
  */
 class Responsibility
 {
-    public static function http($http, $class) {
+    public static function http($http, $class)
+    {
         switch ($http->getStatus()) {
             case Status::OK:
                 return $class::success($http);

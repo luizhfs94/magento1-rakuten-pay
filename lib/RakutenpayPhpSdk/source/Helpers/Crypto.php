@@ -28,6 +28,7 @@ class Crypto
 
     public static function encrypt($parameters)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing encrypt in Crypto.');
         foreach (self::$list as $param => $value) {
             if (array_key_exists($param, $parameters)) {
                 $parameters[$param] = Mask::{current($value)}($parameters[$param], ["type" => end($value)]);

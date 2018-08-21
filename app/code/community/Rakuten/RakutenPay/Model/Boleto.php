@@ -38,6 +38,7 @@ class Rakuten_RakutenPay_Model_Boleto extends Mage_Payment_Model_Method_Abstract
 
     public function assignData($data)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing assignData in ModelBoleto.');
         $info = $this->getInfoInstance();
 
         if ($data->getBoletoCpf()) {
@@ -62,6 +63,7 @@ class Rakuten_RakutenPay_Model_Boleto extends Mage_Payment_Model_Method_Abstract
 
     public function validate()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing validate in ModelBoleto.');
         parent::validate();
         $info = $this->getInfoInstance();
         return $this;
@@ -72,6 +74,7 @@ class Rakuten_RakutenPay_Model_Boleto extends Mage_Payment_Model_Method_Abstract
      */
     public function getOrderPlaceRedirectUrl()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getOrderPlaceRedirectUrl in ModelBoleto.');
         return Mage::getUrl('rakutenpay/payment/request');
     }
 

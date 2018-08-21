@@ -33,6 +33,7 @@ class Mask
      */
     public static function cpf($subject, array $options)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing cpf in Mask.');
         if (self::isValidType($options['type'])) {
             return self::toHash(Characters::hasSpecialChars($subject), 3, "********", "###.###.###-##");
         }
@@ -45,6 +46,7 @@ class Mask
      */
     public static function rg($subject, array $options)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing rg in Mask.');
         if (self::isValidType($options['type'])) {
             return self::toHash(Characters::hasSpecialChars($subject), 5, "*****", "##.###.###-##");
         }
@@ -57,6 +59,7 @@ class Mask
      */
     public static function birthDate($subject, array $options)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing birthDate in Mask.');
         if (self::isValidType($options['type'])) {
             return self::toHash(Characters::hasSpecialChars($subject), 4, "****", "##/##/####");
         }
@@ -64,6 +67,7 @@ class Mask
 
     public static function phone($subject, array $options)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing phone in Mask.');
         if (Characters::hasSpecialChars($subject)) {
             $subject = Characters::hasSpecialChars($subject);
         }
@@ -81,6 +85,7 @@ class Mask
      */
     public static function mobile($subject, array $options)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing mobile in Mask.');
         if (self::isValidType($options['type'])) {
             return self::toHash(
                 $subject,
@@ -99,6 +104,7 @@ class Mask
      */
     private static function telephone($subject, array $options)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing telephone in Mask.');
         if (self::isValidType($options['type'])) {
             return self::toHash(
                 $subject,
@@ -116,6 +122,7 @@ class Mask
      */
     private static function isValidType($type)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing isValidType in Mask.');
         if (\RakutenPay\Enum\Mask::isValidName(
             \RakutenPay\Enum\Mask::getType($type)
         )) {
@@ -134,6 +141,7 @@ class Mask
      */
     private static function toHash($subject, $rule, $pattern, $mask, $options = ["prefix" => false])
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing toHash in Mask.');
         if ($subject) {
             $subject = substr_replace($subject, $pattern, $rule);
             if ($options['prefix']) {
@@ -151,6 +159,7 @@ class Mask
      */
     private static function mask($value, $mask)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing mask in Mask.');
         $maskared = '';
         $key = 0;
         for ($count = 0; $count <= strlen($mask)-1; $count++) {

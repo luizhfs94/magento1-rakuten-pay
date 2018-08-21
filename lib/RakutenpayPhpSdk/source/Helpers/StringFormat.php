@@ -32,6 +32,7 @@ class StringFormat
      */
     public static function getOnlyNumbers($value)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getOnlyNumbers in StringFormat.');
         return preg_replace('/\D/', '', $value);
     }
     
@@ -44,6 +45,7 @@ class StringFormat
      */
     public static function formatString($string, $limit, $endchars = '...')
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing formatString in StringFormat.');
         $string = self::removeStringExtraSpaces($string);
         return self::truncateValue($string, $limit, $endchars);
     }
@@ -55,6 +57,7 @@ class StringFormat
      */
     public static function removeStringExtraSpaces($string)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing removeStringExtraSpaces in StringFormat.');
         return trim(preg_replace("/( +)/", " ", $string));
     }
     
@@ -67,6 +70,7 @@ class StringFormat
      */
     public static function truncateValue($string, $limit, $endchars = '...')
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing truncateValue in StringFormat.');
         if (!is_array($string) && !is_object($string)) {
             $stringLength = strlen($string);
             $endcharsLength = strlen($endchars);

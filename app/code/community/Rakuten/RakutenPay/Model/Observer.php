@@ -122,7 +122,8 @@ class Rakuten_RakutenPay_Model_Observer
         return $this;
     }
 
-    public function adminFilterPaymentMethod($observer) {
+    public function adminFilterPaymentMethod($observer)
+    {
         $method_code = $observer->getEvent()->getMethodInstance()->getCode();
 
         if ($method_code === 'rakutenpay_boleto' || $method_code === 'rakutenpay_credit_card') {

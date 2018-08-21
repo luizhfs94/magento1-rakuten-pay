@@ -35,6 +35,7 @@ trait Currency
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Currency.');
         $data = [];
         // currency
         if (!is_null($request->getCurrency())) {

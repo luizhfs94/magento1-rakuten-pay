@@ -32,6 +32,7 @@ class Characters
      */
     public static function hasSpecialChars($subject)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing hasSpecialChars in Characters.');
         if (preg_match(self::PATTERN, $subject)) {
             return self::removeSpecialChars($subject);
         }
@@ -44,6 +45,7 @@ class Characters
      */
     public static function removeSpecialChars($subject)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing removeSpecialChars in Characters.');
         return preg_replace(self::PATTERN, null, $subject);
     }
 }

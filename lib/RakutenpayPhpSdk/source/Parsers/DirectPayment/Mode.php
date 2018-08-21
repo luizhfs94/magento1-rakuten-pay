@@ -34,7 +34,7 @@ trait Mode
      */
     public static function getData(Requests $request, $properties)
     {
-
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Mode.');
         $data = [];
         // Payment mode
         if (!is_null($request->getMode())) {

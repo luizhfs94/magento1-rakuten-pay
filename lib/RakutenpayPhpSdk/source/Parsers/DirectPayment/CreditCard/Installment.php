@@ -35,6 +35,7 @@ trait Installment
      */
     public static function getData(Requests $request, $properties)
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing getData in trait Installment.');
         $data = [];
         $installment = current($request->getInstallment());
 

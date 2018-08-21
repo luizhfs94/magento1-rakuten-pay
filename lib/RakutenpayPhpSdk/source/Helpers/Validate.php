@@ -23,6 +23,7 @@ class Validate
 {
     final public static function cUrl()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing cUrl in Validate.');
         if (!function_exists('curl_init')) {
             throw new \Exception(
                 'RakutenPay Library cURL library is required.',
@@ -33,6 +34,7 @@ class Validate
 
     final public static function simpleXml()
     {
+        \RakutenPay\Resources\Log\Logger::info('Processing simpleXml in Validate.');
         if (!extension_loaded('simplexml')) {
             throw new \Exception(
                 'RakutenPay Library simple xml is required.',
