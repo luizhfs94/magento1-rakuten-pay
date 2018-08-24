@@ -30,24 +30,11 @@
         var win = window.open('', '_blank');
         win.document.body.innerHTML = `<?= $response ?>`;
     }
-    pop_up();
     <?php endif ?>
 </script>
 
-<div class="page-head">
-    <h2 class="sub-title">Pedido efetuado</h2>
-</div>
-<table style="width:100%;">
-    <tr>
-		<?php if (array_key_exists('billet', $_GET)) { ?>
-            <td style="width:100%">
-                Se a página de pagamento não abrir automaticamente
-                <a onclick="pop_up();">clique aqui</a>.
-            </td>
-		<?php } else { ?>
-            <td style="width:100%">
-                Assim que o pagamento for confirmado você receberá um e-mail para acompanhar  seu pedido.
-            </td>
-		<?php } ?>
-    </tr>
-</table>
+    <?php if (array_key_exists('billet', $_GET)) { ?>
+        <div class="buttons-set">
+            <input type="button" class="button" onclick="pop_up();" value="Clique aqui para imprimir seu Boleto" />
+        </div>
+    <?php } ?>
