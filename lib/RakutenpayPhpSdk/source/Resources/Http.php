@@ -120,11 +120,10 @@ class Http
         $auth = $cnpj . ':' . $api_key;
         $auth_base64 = base64_encode($auth);
         if (strtoupper($method) === 'POST') {
-            $post_data = json_encode($data, JSON_PRESERVE_ZERO_FRACTION);
-            \RakutenPay\Resources\Log\Logger::info($post_data, ["service" => "HTTP_POST"]);
-            $contentLength = "Content-length: " . strlen($post_data);
+            $postData = json_encode($data);
+            \RakutenPay\Resources\Log\Logger::info(sprintf("POST: %s", $postData), ['service' => 'HTTP_POST']);
             $sig_key = \Mage::getStoreConfig('payment/rakutenpay/signature_key');
-            $signature = hash_hmac('sha256', $post_data, $sig_key, true);
+            $signature = hash_hmac('sha256', $postData, $sig_key, true);
             $signature_base64 = base64_encode($signature);
             $methodOptions = array(
                 CURLOPT_HTTPHEADER => [
@@ -134,11 +133,10 @@ class Http
                     'Cache-Control: no-cache'
                 ],
                 CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => $post_data,
+                CURLOPT_POSTFIELDS => $postData,
             );
         } else {
-            \RakutenPay\Resources\Log\Logger::info('Processing Request.', ["method" => $method]);
-            $contentLength = null;
+            \RakutenPay\Resources\Log\Logger::info(sprintf('Processing Request. URL %s', $url), ['service' => $method]);
             $methodOptions = array(
                 CURLOPT_HTTPHEADER => [
                     'Content-Type: application/json',
@@ -166,12 +164,14 @@ class Http
         if (array_key_exists('signature', $info)) {
             \RakutenPay\Resources\Log\Logger::info('Checking response signature.', ['service' => 'HTTP.Response.Signature']);
             $sig_key = \Mage::getStoreConfig('payment/rakutenpay/signature_key');
-            $signature = hash_hmac('sha256', $post_data, $sig_key, true);
+            $signature = hash_hmac('sha256', $postData, $sig_key, true);
             $signature_base64 = base64_encode($signature);
             if ($info['signature'] !== $signature_base64) {
+                \RakutenPay\Resources\Log\Logger::error("Wrong signature from RakutenPay.");
                 throw new \Exception("Wrong signature from RakutenPay.");
             }
         } elseif ($secureGet and strtoupper($method) === 'GET') {
+            \RakutenPay\Resources\Log\Logger::error("No signature from RakutenPay.");
             throw new \Exception("No signature from RakutenPay.");
         } else {
             \RakutenPay\Resources\Log\Logger::info('No signature in header.', ['service' => 'HTTP.Response.Signature']);
@@ -179,10 +179,12 @@ class Http
         $error = curl_errno($curl);
         $errorMessage = curl_error($curl);
         curl_close($curl);
-        \RakutenPay\Resources\Log\Logger::info('Response curlConnection', ['http_code' => $info['http_code'], 'response' => $resp]);
         $this->setStatus((int) $info['http_code']);
         $this->setResponse((String) $resp);
+        \RakutenPay\Resources\Log\Logger::info(sprintf('Response curlConnection: %s', $this->getResponse()), ['service' => 'HTTP.Response']);
+        \RakutenPay\Resources\Log\Logger::info(sprintf('Response Status: %s', $this->getStatus()), ['service' => 'HTTP.Response.Status']);
         if ($error) {
+            \RakutenPay\Resources\Log\Logger::error("CURL can't connect: $errorMessage");
             throw new \Exception("CURL can't connect: $errorMessage");
         } else {
             return true;
