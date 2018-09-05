@@ -50,10 +50,10 @@ class Library
     final public static function initialize()
     {
         //Basic configuration
-        define('RP_BASEPATH', __DIR__);
-        define('RP_CONFIG_PATH', RP_BASEPATH. "/Configuration/");
-        define('RP_CONFIG', RP_CONFIG_PATH."Properties/Conf.xml");
-        define('RP_RESOURCES', RP_CONFIG_PATH."Properties/Resources.xml");
+        defined('RP_BASEPATH') || define('RP_BASEPATH', __DIR__);
+        defined('RP_CONFIG_PATH') || define('RP_CONFIG_PATH', RP_BASEPATH. "/Configuration/");
+        defined('RP_CONFIG') || define('RP_CONFIG', RP_CONFIG_PATH."Properties/Conf.xml");
+        defined('RP_RESOURCES') || define('RP_RESOURCES', RP_CONFIG_PATH."Properties/Resources.xml");
         //Validates for cUrl and SimpleXml.
         self::validate();
         //Garbage Collection
