@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-        <Rakuten_RakutenPay>
+        <Rakuten_Connector>
             <active>true</active>
             <codePool>community</codePool>
             <depends>
                 <Mage_Payment />
             </depends>
-        </Rakuten_RakutenPay>
+        </Rakuten_Connector>
     </modules>
 </config>

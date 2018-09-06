@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<config>
+   <sections>
+        <payment>
+            <groups>
+                <connector_settings translate="label" module="paygate">
+                    <label>Rakuten Connector</label>
+                    <sort_order>670</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <frontend_class>complex</frontend_class>
+                    <fields>
+                        <connector type="group" translate="label">
+                            <label>Configurações Gerais</label>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <fields>
+                                <comment translate="label">
+                                    <label></label>
+                                    <comment>
+                                        <model>rakuten_connector/adminhtml_config</model>
+                                    </comment>
+                                    <frontend_type>label</frontend_type>
+
+                                    <sort_order>1</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                </comment>
+                                <environment translate="label">
+                                    <label>AMBIENTE</label>
+                                    <tooltip>Define o ambiente de uso.</tooltip>
+                                    <frontend_type>select</frontend_type>
+                                    <source_model>rakuten_connector/environment</source_model>
+                                    <sort_order>30</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                </environment>
+                                <cnpj translate="label">
+                                    <label>CNPJ</label>
+                                    <frontend_type>text</frontend_type>
+                                    <sort_order>40</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                </cnpj>
+                                <api_key translate="label">
+                                    <label>API KEY</label>
+                                    <frontend_type>text</frontend_type>
+                                    <sort_order>41</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                </api_key>
+                                <signature_key translate="label">
+                                    <label>SIGNATURE KEY</label>
+                                    <frontend_type>text</frontend_type>
+                                    <sort_order>42</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                </signature_key>
+                                <email translate="label">
+                                    <label>E-MAIL</label>
+                                    <frontend_type>text</frontend_type>
+                                    <sort_order>45</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                </email>
+                                <log translate="label">
+                                    <label>ATIVAR LOG</label>
+                                    <tooltip>Criar arquivo de log? (Recomendado deixar ativo)</tooltip>
+                                    <frontend_type>select</frontend_type>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>90</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                </log>
+                                <log_file translate="label">
+                                    <label>ARQUIVO</label>
+                                    <tooltip>Caminho para o arquivo de log. (Se em branco, usa arquivo padrão)</tooltip>
+                                    <frontend_type>text</frontend_type>
+                                    <sort_order>100</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                    <depends>
+                                        <log>1</log>
+                                    </depends>
+                                </log_file>
+                                <log_download translate="label">
+                                    <label>DOWNLOAD DO LOG</label>
+                                    <frontend_type>button</frontend_type>
+                                    <frontend_model>rakuten_connector/adminhtml_downloadlogbutton</frontend_model>
+                                    <sort_order>110</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                    <depends>
+                                        <log>1</log>
+                                    </depends>
+                                </log_download>
+                            </fields>
+                        </connector>
+
+                        <!--Checkout configuration-->
+                        <connector_rakutenpay_payment type="group" translate="label">
+                            <label>Configurar Tipos de Checkout</label>
+                            <sort_order>690</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <fields>
+                                <connector_rakutenpay_credit_card type="group" translate="label">
+                                    <label>Checkout Transparente - Cartão de Crédito</label>
+                                    <sort_order>20</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                    <fields>
+                                        <active translate="label">
+                                            <label>ATIVAR</label>
+                                            <tooltip>Ativa / desativa o meio de pagamento Checkout Transparente - Cartão de Crédito</tooltip>
+                                            <frontend_type>select</frontend_type>
+                                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                                            <sort_order>10</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                        </active>
+                                        <title translate="label">
+                                            <label>NOME DE EXIBIÇÃO</label>
+                                            <tooltip>Informe o nome que deve ser apresentado para este meio de pagamento no checkout de sua loja.</tooltip>
+                                            <frontend_type>text</frontend_type>
+                                            <sort_order>20</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                        </title>
+                                        <installments translate="label">
+                                            <label>LISTAR PARCELAMENTO</label>
+                                            <tooltip>Habilita a exibição da listagem de parcelas na tela de visualização do produto. (Irá exibir o maior parcelamento disponível para o produto no pagamento com cartão de crédito)</tooltip>
+                                            <frontend_type>select</frontend_type>
+                                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                                            <sort_order>190</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                        </installments>
+                                        <customer_interest translate="label">
+                                            <label>ATIVAR JUROS COMPRADOR</label>
+                                            <tooltip>Habilita Juros Comprador via Rakuten Payments. Ignora a configuração de valor mínimo de parcelas.</tooltip>
+                                            <frontend_type>select</frontend_type>
+                                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                                            <sort_order>200</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                            <depends>
+                                                <installments>1</installments>
+                                            </depends>
+                                        </customer_interest>
+                                        <customer_interest_minimum_installments>
+                                            <label>MÍNIMO DE PARCELAS PARA JUROS COMPRADOR</label>
+                                            <tooltip>Número mínimo de parcelas sobre o qual será cobrado juros. Para uma quantidade de parcelas abaixo desse número, o valor cobrado por parcela será sem juros.</tooltip>
+                                            <frontend_type>select</frontend_type>
+                                            <source_model>rakuten_connector/rakutenpay_minimumInstallments</source_model>
+                                            <sort_order>210</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                            <depends>
+                                                <customer_interest>1</customer_interest>
+                                            </depends>
+                                        </customer_interest_minimum_installments>
+                                        <minimum_installment translate="label">
+                                            <label>VALOR MÍNIMO DE PARCELA</label>
+                                            <tooltip>Valor mínimo de parcela, utilizado para o cálculo do número máximo de parcelas.</tooltip>
+                                            <frontend_type>text</frontend_type>
+                                            <sort_order>220</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                            <depends>
+                                                <installments>1</installments>
+                                                <customer_interest>0</customer_interest>
+                                            </depends>
+                                        </minimum_installment>
+                                    </fields>
+                                </connector_rakutenpay_credit_card>
+                                <connector_rakutenpay_boleto type="group" translate="label">
+                                    <label>Checkout Transparente - Boleto Bancário</label>
+                                    <sort_order>30</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                    <fields>
+                                        <active translate="label">
+                                            <label>ATIVAR</label>
+                                            <tooltip>Ativa / desativa o meio de pagamento Checkout Transparente - Boleto</tooltip>
+                                            <frontend_type>select</frontend_type>
+                                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                                            <sort_order>10</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                        </active>
+                                        <title translate="label">
+                                            <label>NOME DE EXIBIÇÃO</label>
+                                            <tooltip>Informe o nome que deve ser apresentado para este meio de pagamento no checkout de sua loja.</tooltip>
+                                            <frontend_type>text</frontend_type>
+                                            <sort_order>20</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                        </title>
+                                        <expiration translate="label">
+                                            <label>DIAS ATÉ O VENCIMENTO DO BOLETO</label>
+                                            <tooltip>Tempo, em dias, para o vencimento do boleto.</tooltip>
+                                            <frontend_type>text</frontend_type>
+                                            <sort_order>200</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                        </expiration>
+                                    </fields>
+                                </connector_rakutenpay_boleto>
+                            </fields>
+                        </connector_rakutenpay_payment>
+                    </fields>
+                </connector_settings>
+            </groups>
+        </payment>
+    </sections>
+</config>
