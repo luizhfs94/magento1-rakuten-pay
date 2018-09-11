@@ -19,6 +19,8 @@
 
 namespace RakutenPay\Resources;
 
+use RakutenPay\Helpers\JsonFormat;
+
 /**
  * Class Http
  * @package RakutenPay\Resources
@@ -120,7 +122,8 @@ class Http
         $auth = $cnpj . ':' . $api_key;
         $auth_base64 = base64_encode($auth);
         if (strtoupper($method) === 'POST') {
-            $postData = json_encode($data);
+            $postData = JsonFormat::getJson($data);
+
             \RakutenPay\Resources\Log\Logger::info(sprintf("POST: %s", $postData), ['service' => 'HTTP_POST']);
             $sig_key = \Mage::getStoreConfig('payment/rakutenpay/signature_key');
             $signature = hash_hmac('sha256', $postData, $sig_key, true);
