@@ -64,8 +64,8 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
     private function environmentNotification()
     {
         \RakutenPay\Resources\Log\Logger::info('Processing environmentNotification.');
-        $versions = \RakutenPay\Helpers\EnvironmentInformation::getVersions();
-        \RakutenPay\Resources\Log\Logger::info($versions);
+        \RakutenPay\Helpers\EnvironmentInformation::writeLogVersions();
+        \RakutenPay\Helpers\EnvironmentInformation::writeLogPHPConfiguration();
         $environment = Mage::getStoreConfig('payment/rakutenpay/environment');
         //Define table name with their prefix
         $tp = (string)Mage::getConfig()->getTablePrefix();

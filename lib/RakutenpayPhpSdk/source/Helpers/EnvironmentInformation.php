@@ -20,6 +20,7 @@
 namespace RakutenPay\Helpers;
 
 use Mage;
+use RakutenPay\Resources\Log\Logger;
 
 /**
  * Class EnvironmentInformation
@@ -29,6 +30,8 @@ use Mage;
  */
 class EnvironmentInformation
 {
+    const PHPINFO_INFO_CONFIGURATION = 'INFO_CONFIGURATION';
+
     /**
      * @return string
      */
@@ -50,10 +53,66 @@ class EnvironmentInformation
     }
 
     /**
-     * @return string
+     * Record system version on Log
+     * @void
      */
-    public static function getVersions()
+    public static function writeLogVersions()
     {
-        return self::getPHPVersion() . ' - ' . self::getMagentoVersion();
+        Logger::info(self::getPHPVersion() . ' - ' . self::getMagentoVersion(), ['service' => 'version']);
+    }
+
+    /**
+     * Record config php.ini on Log
+     *
+     * @param null $constant
+     * @void
+     */
+    public static function writeLogPHPConfiguration($constant = null)
+    {
+        if (is_null($constant)) {
+            $constant = self::PHPINFO_INFO_CONFIGURATION;
+        }
+        $phpInfo = self::phpinfoToArray($constant);
+        if (count($phpInfo)) {
+            foreach (array_pop($phpInfo) as $key => $info) {
+                Logger::info(sprintf('Key: %s => master: %s | local: %s', $key, $info['master'], $info['local']), ['service' => 'php.ini']);
+            }
+        }
+    }
+
+    /**
+     * @see http://www.php.net/manual/en/function.phpinfo.php#87463
+     *
+     * @param null $constant
+     * @return array
+     */
+    private static function phpinfoToArray($constant = null)
+    {
+        $infoArray = [];
+        try {
+            ob_start();
+            if (is_null($constant)) {
+                phpinfo();
+            } else {
+                phpinfo(constant($constant));
+            }
+            $infoArray = array();
+            $infoLines = explode("\n", strip_tags(ob_get_clean(), "<tr><td><h2>"));
+            $cat = "General";
+            foreach ($infoLines as $line) {
+                // new cat?
+                preg_match("~<h2>(.*)</h2>~", $line, $title) ? $cat = $title[1] : null;
+                if (preg_match("~<tr><td[^>]+>([^<]*)</td><td[^>]+>([^<]*)</td></tr>~", $line, $val)) {
+                    $infoArray[$cat][$val[1]] = $val[2];
+                } elseif (preg_match("~<tr><td[^>]+>([^<]*)</td><td[^>]+>([^<]*)</td><td[^>]+>([^<]*)</td></tr>~", $line, $val)) {
+                    $infoArray[$cat][$val[1]] = array("local" => $val[2], "master" => $val[3]);
+                }
+            }
+
+            return $infoArray;
+        } catch (\Exception $e) {
+            Logger::error('Error in phpinfoToArray in EnvironmentInformation: ' . $e->getMessage());
+            return $infoArray;
+        }
     }
 }

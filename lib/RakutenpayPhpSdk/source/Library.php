@@ -54,13 +54,13 @@ class Library
             define('RP_BASEPATH', __DIR__);
         }
         if (!defined('RP_CONFIG_PATH')) {
-            define('RP_CONFIG_PATH', RP_BASEPATH. "/Configuration/");
+            define('RP_CONFIG_PATH', RP_BASEPATH . "/Configuration/");
         }
         if (!defined('RP_CONFIG')) {
-            define('RP_CONFIG', RP_CONFIG_PATH."Properties/Conf.xml");
+            define('RP_CONFIG', RP_CONFIG_PATH . "Properties/Conf.xml");
         }
         if (!defined('RP_RESOURCES')) {
-            define('RP_RESOURCES', RP_CONFIG_PATH."Properties/Resources.xml");
+            define('RP_RESOURCES', RP_CONFIG_PATH . "Properties/Resources.xml");
         }
         //Validates for cUrl and SimpleXml.
         self::validate();
