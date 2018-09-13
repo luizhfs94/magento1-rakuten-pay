@@ -19,6 +19,8 @@
 
 namespace RakutenPay\Helpers;
 
+use RakutenPay\Resources\Log\Logger;
+
 /**
  * Class JsonFormat
  * With helper functions to Json encode and format
@@ -28,6 +30,16 @@ namespace RakutenPay\Helpers;
 class JsonFormat
 {
     /**
+     * @var array
+     */
+    private static $installmentsToFloat = [
+        'interest_percent',
+        'interest_amount',
+        'installment_amount',
+        'total',
+    ];
+
+    /**
      * Json encode and Check if const exists based from PHP Version
      *
      * @param array $data
@@ -35,6 +47,7 @@ class JsonFormat
      */
     public static function getJson(array $data)
     {
+        Logger::info('Processing getJson in JsonFormat.');
         if (defined('JSON_PRESERVE_ZERO_FRACTION')) {
 
             return  json_encode($data, JSON_PRESERVE_ZERO_FRACTION);
@@ -51,12 +64,21 @@ class JsonFormat
     private static function preserveZeroFractionInstallments(array $data)
     {
         $jsonData = json_encode($data);
-        $payments = $data['payments'];
-        foreach ($payments as $key => $item) {
-            $jsonData = self::getNewInstallments($item['installments'], $jsonData);
-        }
+        try {
+            $payments = $data['payments'];
+            foreach ($payments as $item) {
+                if (!array_key_exists('installments', $item)) {
+                    break;
+                }
+                $jsonData = self::installmentsToFloat($item['installments'], $jsonData);
+            }
 
-        return $jsonData;
+            return $jsonData;
+        } catch (\Exception $e) {
+            Logger::error($e->getMessage(), ['service' => 'json_encode']);
+
+            return $jsonData;
+        }
     }
 
     /**
@@ -64,17 +86,14 @@ class JsonFormat
      * @param $jsonData
      * @return mixed|string
      */
-    private static function getNewInstallments(array $installments, $jsonData)
+    private static function installmentsToFloat(array $installments, $jsonData)
     {
-        $interestPercent = $installments['interest_percent'];
-        $interestAmount = $installments['interest_amount'];
-        $installmentAmount = $installments['installment_amount'];
-        $total = $installments['total'];
-
-        $jsonData = str_replace('"interest_percent":'. $interestPercent, '"interest_percent":'. number_format($interestPercent, 2) . '', $jsonData);
-        $jsonData = str_replace('"interest_amount":' . $interestAmount, '"interest_amount":'. number_format($interestAmount, 2) . '', $jsonData);
-        $jsonData = str_replace('"installment_amount":' . $installmentAmount, '"installment_amount":'. number_format($installmentAmount, 2) . '', $jsonData);
-        $jsonData = str_replace('"total":' . $total, '"total":'. number_format($total, 2) . '', $jsonData);
+        Logger::info('Processing installmentsToFloat in JsonFormat.');
+        foreach (self::$installmentsToFloat as $field) {
+            if (array_key_exists($field, $installments)) {
+                $jsonData = str_replace('"' . $field . '":'. $installments[$field], '"' . $field . '":'. number_format($installments[$field], 2) . '', $jsonData);
+            }
+        }
 
         return $jsonData;
     }
