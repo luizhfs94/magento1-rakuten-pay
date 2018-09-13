@@ -18,9 +18,9 @@
  */
 
 /**
- * Class Rakuten_RakutenPay_Model_OrderAddress
+ * Class Rakuten_Connector_Model_RakutenPay_OrderAddress
  */
-class Rakuten_Connector_Model_OrderAddress
+class Rakuten_Connector_Model_RakutenPay_OrderAddress
 {
     /**
      * @var Mage_Sales_Model_Order_Address
@@ -36,8 +36,7 @@ class Rakuten_Connector_Model_OrderAddress
     private $shippingAddress;
 
     /**
-     * Rakuten_RakutenPay_Model_OrderAddress constructor.
-     *
+     * Rakuten_Connector_Model_RakutenPay_OrderAddress constructor.
      * @param Mage_Sales_Model_Order $order
      */
     public function __construct(Mage_Sales_Model_Order $order)

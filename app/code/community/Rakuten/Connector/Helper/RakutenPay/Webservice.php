@@ -20,15 +20,15 @@
 /**
  * Class Rakuten_Connector_Helper_RakutenPay_Webservice
  */
-class Rakuten_Connector_Helper_RakutenPay_Webservice extends Rakuten_Connector_Helper_RakutenPay_Data
+class Rakuten_Connector_Helper_RakutenPay_Webservice extends Rakuten_Connector_Helper_Data
 {
     /**
-     * @var Rakuten_RakutenPay_Model_Library
+     * @var Rakuten_Connector_Model_RakutenPay_Library
      */
     private $library;
 
     /**
-     * Rakuten_RakutenPay_Helper_Webservice constructor.
+     * Rakuten_Connector_RakutenPay_Helper_Webservice constructor.
      */
     public function __construct()
     {
@@ -103,9 +103,9 @@ class Rakuten_Connector_Helper_RakutenPay_Webservice extends Rakuten_Connector_H
     {
         \RakutenPay\Resources\Log\Logger::info('Processing requestRakutenPayService in HelperWebservice.');
         try {
-            if ($class == 'Rakuten_RakutenPay_Adminhtml_RefundController') {
+            if ($class == 'Rakuten_Connector_Adminhtml_RefundController') {
                 return \RakutenPay\Services\Transactions\Refund::create($transactionCode);
-            } elseif ($class == 'Rakuten_RakutenPay_Model_NotificationMethod') {
+            } elseif ($class == 'Rakuten_Connector_Model_RakutenPay_NotificationMethod') {
                 return \RakutenPay\Services\Transactions\Notification::check();
             }
         } catch (Exception $e) {

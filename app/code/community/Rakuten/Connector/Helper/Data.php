@@ -64,7 +64,7 @@ class Rakuten_Connector_Helper_Data extends Mage_Payment_Helper_Data
     private function environmentNotification()
     {
         \RakutenPay\Resources\Log\Logger::info('Processing environmentNotification.');
-        $environment = Mage::getStoreConfig('connector/environment');
+        $environment = Mage::getStoreConfig('payment/connector/environment');
         //Define table name with their prefix
         $tp = (string)Mage::getConfig()->getTablePrefix();
         $table = $tp.'adminnotification_inbox';
@@ -235,31 +235,31 @@ class Rakuten_Connector_Helper_Data extends Mage_Payment_Helper_Data
         \RakutenPay\Resources\Log\Logger::info('Processing getDiscount.');
         $storeId = Mage::app()->getStore()->getStoreId();
         if (Mage::getStoreConfig('payment/rakutenpay/discount_credit_card', $storeId) == 1) {
-            $creditCard = (double)Mage::getStoreConfig('payment/rakutenpay/discount_credit_card_value', $storeId);
+            $creditCard = (double)Mage::getStoreConfig('payment/connector/discount_credit_card_value', $storeId);
             if ($creditCard && $creditCard != 0.00) {
                 $paymentRequest->addPaymentMethodConfig('CREDIT_CARD', $creditCard, 'DISCOUNT_PERCENT');
             }
         }
         if (Mage::getStoreConfig('payment/rakutenpay/discount_electronic_debit', $storeId) == 1) {
-            $eft = (double)Mage::getStoreConfig('payment/rakutenpay/discount_electronic_debit_value', $storeId);
+            $eft = (double)Mage::getStoreConfig('payment/connector/discount_electronic_debit_value', $storeId);
             if ($eft && $eft != 0.00) {
                 $paymentRequest->addPaymentMethodConfig('EFT', $eft, 'DISCOUNT_PERCENT');
             }
         }
         if (Mage::getStoreConfig('payment/rakutenpay/discount_boleto', $storeId) == 1) {
-            $boleto = (double)Mage::getStoreConfig('payment/rakutenpay/discount_boleto_value', $storeId);
+            $boleto = (double)Mage::getStoreConfig('payment/connector/discount_boleto_value', $storeId);
             if ($boleto && $boleto != 0.00) {
                 $paymentRequest->addPaymentMethodConfig('BOLETO', $boleto, 'DISCOUNT_PERCENT');
             }
         }
         if (Mage::getStoreConfig('payment/rakutenpay/discount_deposit_account', $storeId)) {
-            $deposit = (double)Mage::getStoreConfig('payment/rakutenpay/discount_deposit_account_value', $storeId);
+            $deposit = (double)Mage::getStoreConfig('payment/connector/discount_deposit_account_value', $storeId);
             if ($deposit && $deposit != 0.00) {
                 $paymentRequest->addPaymentMethodConfig('DEPOSIT', $deposit, 'DISCOUNT_PERCENT');
             }
         }
         if (Mage::getStoreConfig('payment/rakutenpay/discount_balance', $storeId)) {
-            $balance = (double)Mage::getStoreConfig('payment/rakutenpay/discount_balance_value', $storeId);
+            $balance = (double)Mage::getStoreConfig('payment/connector/discount_balance_value', $storeId);
             if ($balance && $balance != 0.00) {
                 $paymentRequest->addPaymentMethodConfig('BALANCE', $balance, 'DISCOUNT_PERCENT');
             }
@@ -603,7 +603,7 @@ class Rakuten_Connector_Helper_Data extends Mage_Payment_Helper_Data
             }
             $sql = "UPDATE `".$table."` SET ".$value." WHERE order_id = ".$orderId;
         } else {
-            $environment = ucfirst(Mage::getStoreConfig('payment/rakutenpay/environment'));
+            $environment = ucfirst(Mage::getStoreConfig('payment/connector/environment'));
             if ($send == true) {
                 $column = " (`order_id`, `sent`, `environment`) ";
                 $values = " (`$orderId`, 1, `$environment`) ";

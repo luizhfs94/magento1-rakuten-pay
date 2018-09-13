@@ -22,7 +22,7 @@ class Rakuten_Connector_Model_RakutenPay_Checkout
     public function toOptionArray()
     {
         \RakutenPay\Resources\Log\Logger::info('Processing toOptionArray in ModelCheckout.');
-        $helper = Mage::helper('connector_rakutenpay');
+        $helper = Mage::helper('connector');
 
         return array(
             array('value' => 'PADRAO', 'label' => $helper->__('Padrão')),

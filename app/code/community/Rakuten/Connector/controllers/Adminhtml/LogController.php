@@ -27,11 +27,11 @@ class Rakuten_Connector_AdminHtml_LogController extends Mage_Adminhtml_Controlle
 
     public function downloadAction()
     {
-        $filepath = Mage::getBaseDir('base') . '/' . Logger::filepath();
+        $filePath = Mage::getBaseDir('base') . '/' . Logger::filepath();
 
         if (Logger::active()) {
             try {
-                $this->_prepareDownloadResponse(Logger::filepath(), array('type' => 'filename', 'value' => $filepath));
+                $this->_prepareDownloadResponse(Logger::filepath(), array('type' => 'filename', 'value' => $filePath));
             } catch (Exception $e) {
                 throw $e;
             }

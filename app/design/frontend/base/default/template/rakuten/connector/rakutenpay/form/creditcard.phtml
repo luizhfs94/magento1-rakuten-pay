@@ -26,7 +26,7 @@
     var head = document.getElementsByTagName("head")[0];
     var script = document.createElement("script");
     script.async = 1;
-<?php if(strtolower(Mage::getStoreConfig('payment/rakutenpay/environment')) == "sandbox"): ?>
+<?php if(strtolower(Mage::getStoreConfig('payment/connector/environment')) == "sandbox"): ?>
     script.src = "https://static.rakutenpay.com.br/rpayjs/rpay-latest.dev.min.js";
 <?php else: ?>
     script.src = "https://static.rakutenpay.com.br/rpayjs/rpay-latest.min.js";
@@ -41,7 +41,7 @@
     var x = document.getElementsByTagName("script");
     var header_already_added = false;
     for (var i=0; i< x.length; i++){
-      if (x[i].src == "<?php echo $this->getSkinUrl('rakuten/rakutenpay/js/rakutenpay-before-save.js') ?>"){
+      if (x[i].src == "<?php echo $this->getSkinUrl('rakuten/connector/rakutenpay/js/rakutenpay-before-save.js') ?>"){
              header_already_added = true;
     }
   }
@@ -51,7 +51,7 @@
     var head = document.getElementsByTagName("head")[0];
     var s = document.createElement('script');
     s.type = 'text/javascript';
-    s.src = '<?php echo $this->getSkinUrl('rakuten/rakutenpay/js/rakutenpay-before-save.js') ?>';
+    s.src = '<?php echo $this->getSkinUrl('rakuten/connector/rakutenpay/js/rakutenpay-before-save.js') ?>';
     head.appendChild(s);
   }
 //]]>
@@ -216,8 +216,7 @@
                     disabled onchange="cardInstallmentOnChange(this.value)" onclick="validateCreditCardInstallment(this)">
                 <option value="null" disabled selected>Escolha o N° de parcelas</option>
                 <?php
-                    $helper = Mage::helper('rakutenpay');
-
+                    $helper = Mage::helper('connector');
                     $installments = $helper->installmentsModel()->create($this->getGrandTotal());
                     if ($installments) {
                         $totalAmount = str_replace('.', ',', $installments[$countInstallment-1]['totalAmount']);
@@ -247,7 +246,7 @@
         <ul class="rakutenpay-direct-payment-ul">
             <div class="rakutenpay-cc-input-div">
                 <li>Esta compra está sendo feita no Brasil
-                    <img class="flag-origin-country-img" src="<?php echo $this->getSkinUrl('rakuten/rakutenpay/images/flag-origin-country.png'); ?>">
+                    <img class="flag-origin-country-img" src="<?php echo $this->getSkinUrl('rakuten/connector/rakutenpay/images/flag-origin-country.png'); ?>">
                 </li>
             </div>
         </ul>

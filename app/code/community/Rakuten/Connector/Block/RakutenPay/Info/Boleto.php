@@ -24,7 +24,7 @@ class Rakuten_Connector_Block_RakutenPay_Info_Boleto extends Mage_Payment_Block_
   protected function _construct()
   {
     parent::_construct();
-    $this->setTemplate('rakuten/rakutenpay/info/boleto.phtml');
+    $this->setTemplate('rakuten/connector/rakutenpay/info/boleto.phtml');
   }
 
   public function getBilletUrl()

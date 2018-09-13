@@ -42,8 +42,8 @@ class Rakuten_Connector_Model_RakutenPay_Observer
     */
     public function adminSystemConfigPaymentSave()
     {
-        if (!Mage::getStoreConfig("payment/rakutenpay/init")) {
-            Mage::getConfig()->saveConfig('payment/rakutenpay/init', 1);
+        if (!Mage::getStoreConfig("payment/connector/init")) {
+            Mage::getConfig()->saveConfig('payment/connector/init', 1);
         }
 
         if (Mage::getStoreConfig("payment/connector/email") && Mage::getStoreConfig("payment/connector/cnpj")

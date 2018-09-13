@@ -35,9 +35,10 @@ class Rakuten_Connector_Model_RakutenPay_CreditCard extends Mage_Payment_Model_M
     /**
      * @var string, path to the template form block
      */
-    protected $_formBlockType = 'rakuten_connector_rakutenpay/form_creditCard';
-    protected $_infoBlockType = 'rakuten_connector_rakutenpay/info_creditCard';
-/**
+    protected $_formBlockType = 'rakuten_connector/rakutenpay_form_creditCard';
+    protected $_infoBlockType = 'rakuten_connector/rakutenpay_info_creditCard';
+
+    /**
      * Assign block data
      * @param type $data
      * @return $this

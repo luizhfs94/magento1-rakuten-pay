@@ -24,9 +24,9 @@ use Mage_Payment_Model_Method_Abstract as MethodAbstract;
  */
 class Rakuten_Connector_Model_RakutenPay_InstallmentsMethod extends MethodAbstract
 {
-    protected $_code = 'connector_rakutenpay';
+    protected $_code = 'rakutenpay';
     /**
-     * @var Rakuten_RakutenPay_Model_Library
+     * @var Rakuten_Connector_Model_RakutenPay_Library
      */
     private $library;
 
@@ -36,7 +36,7 @@ class Rakuten_Connector_Model_RakutenPay_InstallmentsMethod extends MethodAbstra
     public function __construct()
     {
         \RakutenPay\Resources\Log\Logger::info('Constructing ModelInstallmentsMethod.');
-        $this->helper = Mage::helper('connector_rakutenpay');
+        $this->helper = Mage::helper('connector');
         $this->library = new Rakuten_Connector_Model_RakutenPay_Library();
     }
 
@@ -51,7 +51,7 @@ class Rakuten_Connector_Model_RakutenPay_InstallmentsMethod extends MethodAbstra
     public function create($amount)
     {
         \RakutenPay\Resources\Log\Logger::info('Processing create in ModelInstallmentsMethod.');
-        $this->helper = Mage::helper('connector_rakutenpay');
+        $this->helper = Mage::helper('connector');
         try {
             $session = \Mage::getSingleton('checkout/session');
             $minimum_value = \Mage::getStoreConfig("payment/rakutenpay_credit_card/minimum_installment");
@@ -86,12 +86,12 @@ class Rakuten_Connector_Model_RakutenPay_InstallmentsMethod extends MethodAbstra
     {
         \RakutenPay\Resources\Log\Logger::info('Processing createInstallments in ModelInstallmentsMethod.');
         $arr = [];
-        if (Mage::getStoreConfig('payment/rakutenpay_credit_card/customer_interest') == 1)
+        if (Mage::getStoreConfig('payment/connector_rakutenpay_credit_card/customer_interest') == 1)
         {
             $checkout = \RakutenPay\Services\Transactions\Checkout::get(
                 ['amount' => $amount]
             );
-            $minimum_installment = (int)Mage::getStoreConfig('payment/rakutenpay_credit_card/customer_interest_minimum_installments');
+            $minimum_installment = (int)Mage::getStoreConfig('payment/connector_rakutenpay_credit_card/customer_interest_minimum_installments');
             foreach($checkout->getCreditCardPayment()->getInstallments() as $customerInterestInstallment) {
                 $installment = new RakutenPay\Domains\Responses\Installment;
                 if ((int)$customerInterestInstallment->getQuantity() >= $minimum_installment){
@@ -256,7 +256,7 @@ class Rakuten_Connector_Model_RakutenPay_InstallmentsMethod extends MethodAbstra
     public function enabled()
     {
         \RakutenPay\Resources\Log\Logger::info('Processing enabled in ModelInstallmentsMethod.');
-        return (Mage::getStoreConfig('payment/rakutenpay/installments') == 1) ?
+        return (Mage::getStoreConfig('payment/connector/installments') == 1) ?
             true :
             false;
     }

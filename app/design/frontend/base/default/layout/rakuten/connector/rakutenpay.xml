@@ -5,32 +5,32 @@
         <reference name="head">
             <action method="addItem">
                 <type>skin_css</type>
-                <script>rakuten/rakutenpay/css/rakutenpay-module.css</script>
+                <script>rakuten/connector/rakutenpay/css/rakutenpay-module.css</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
             <action method="addItem">
                 <type>skin_css</type>
-                <script>rakuten/rakutenpay/css/rakutenpay-modal.css</script>
+                <script>rakuten/connector/rakutenpay/css/rakutenpay-modal.css</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
             <action method="addItem">
                 <type>skin_css</type>
-                <script>rakuten/rakutenpay/css/styles.css</script>
+                <script>rakuten/connector/rakutenpay/css/styles.css</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
             <action method="addItem">
                 <type>skin_js</type>
-                <script>rakuten/rakutenpay/js/rakutenpay-module.js</script>
+                <script>rakuten/connector/rakutenpay/js/rakutenpay-module.js</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
             <action method="addItem">
                 <type>skin_js</type>
-                <script>rakuten/rakutenpay/js/jquery.colorbox-min.js</script>
+                <script>rakuten/connector/rakutenpay/js/jquery.colorbox-min.js</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
             <action method="addItem">
                 <type>skin_js</type>
-                <script>rakuten/rakutenpay/js/vanilla-masker.min.js</script>
+                <script>rakuten/connector/rakutenpay/js/vanilla-masker.min.js</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
         </reference>
@@ -50,7 +50,7 @@
         </reference>
         <reference name="content">
             <block type="checkout/onepage_success" name="checkout.success" template="checkout/success.phtml"/>
-            <block type="page/html" name="direct" template="rakuten/rakutenpay/direct/success.phtml"/>
+            <block type="page/html" name="direct" template="rakuten/connector/rakutenpay/direct/success.phtml"/>
         </reference>
     </rakutenpay_payment_success>
 
@@ -62,7 +62,7 @@
             </action>
         </reference>
         <reference name="content">
-            <block type="page/html" name="direct" template="rakuten/rakutenpay/payment-error.phtml"/>
+            <block type="page/html" name="direct" template="rakuten/connector/rakutenpay/payment-error.phtml"/>
         </reference>
     </rakutenpay_payment_error>
 
@@ -71,27 +71,27 @@
         <reference name="head">
             <action method="addItem">
                 <type>skin_css</type>
-                <script>rakuten/rakutenpay/css/rakutenpay-module.css</script>
+                <script>rakuten/connector/rakutenpay/css/rakutenpay-module.css</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
             <action method="addItem">
                 <type>skin_css</type>
-                <script>rakuten/rakutenpay/css/rakutenpay-modal.css</script>
+                <script>rakuten/connector/rakutenpay/css/rakutenpay-modal.css</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
             <action method="addItem">
                 <type>skin_css</type>
-                <script>rakuten/rakutenpay/css/styles.css</script>
+                <script>rakuten/connector/rakutenpay/css/styles.css</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
             <action method="addItem">
                 <type>skin_js</type>
-                <script>rakuten/rakutenpay/js/rakutenpay-module.js</script>
+                <script>rakuten/connector/rakutenpay/js/rakutenpay-module.js</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
             <action method="addItem">
                 <type>skin_js</type>
-                <script>rakuten/rakutenpay/js/jquery.colorbox-min.js</script>
+                <script>rakuten/connector/rakutenpay/js/jquery.colorbox-min.js</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
         </reference>
@@ -101,7 +101,7 @@
             </action>
         </reference>
         <reference name="content">
-            <block type="rakuten_rakutenpay/payment" name="payment" template="rakuten/rakutenpay/default/payment.phtml"/>
+            <block type="rakuten_connector/rakutenpay_payment" name="payment" template="rakuten/connector/rakutenpay/default/payment.phtml"/>
         </reference>
     </rakutenpay_payment_default>
 
@@ -113,7 +113,7 @@
             </action>
         </reference>
         <reference name="content">
-            <block type="rakuten_rakutenpay/return" name="return" template="rakuten/rakutenpay/return.phtml"/>
+            <block type="rakuten_connector/rakutenpay_return" name="return" template="rakuten/connector/rakutenpay/return.phtml"/>
         </reference>
     </rakutenpay_payment_payment>
 
@@ -125,13 +125,13 @@
             </action>
         </reference>
         <reference name="content">
-            <block type="rakuten_rakutenpay/error" name="error" template="rakuten/rakutenpay/error.phtml"/>
+            <block type="rakuten_connector/rakutenpay_error" name="error" template="rakuten/connector/rakutenpay/error.phtml"/>
         </reference>
     </rakutenpay_payment_payment>
 
     <checkout_onepage_index translate="label">
         <reference name="head">
-            <block type="rakuten_rakutenpay/payment" name="loading" template="rakuten/rakutenpay/loading.phtml"/>
+            <block type="rakuten_connector/rakutenpay_payment" name="loading" template="rakuten/connector/rakutenpay/loading.phtml"/>
         </reference>
     </checkout_onepage_index>
 
@@ -139,19 +139,19 @@
         <reference name="head">
             <action method="addItem">
                 <type>skin_css</type>
-                <script>rakuten/rakutenpay/css/installments.css</script>
+                <script>rakuten/connector/rakutenpay/css/installments.css</script>
                 <params>                    <![CDATA[media="all"]]></params>
             </action>
         </reference>
 
         <reference name="product.info.addtocart">
-            <block type="core/template" name="rakutenpay.installments.table" template="rakuten/rakutenpay/installments.phtml" after="-"/>
+            <block type="core/template" name="rakutenpay.installments.table" template="rakuten/connector/rakutenpay/installments.phtml" after="-"/>
         </reference>
     </catalog_product_view>
 
     <sales_order_view>
         <reference name="order_totals">
-            <block type="rakuten_rakutenpay/sales_order_rakutenfee" name="rakutenfee" />
+            <block type="rakuten_connector/rakutenpay_sales_order_rakutenfee" name="rakutenfee" />
         </reference>
     </sales_order_view>
 </layout>

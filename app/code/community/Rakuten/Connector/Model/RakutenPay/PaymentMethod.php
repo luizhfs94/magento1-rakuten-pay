@@ -37,11 +37,11 @@ class Rakuten_Connector_Model_RakutenPay_PaymentMethod extends Mage_Payment_Mode
      */
     protected $order;
     /**
-     * @var Rakuten_RakutenPay_Helper_Data
+     * @var Rakuten_Connector_Helper_Data
      */
     private $helper;
     /**
-     * @var Rakuten_RakutenPay_Model_Library
+     * @var Rakuten_Connector_Model_RakutenPay_Library
      */
     private $library;
 
@@ -53,8 +53,8 @@ class Rakuten_Connector_Model_RakutenPay_PaymentMethod extends Mage_Payment_Mode
     public function __construct()
     {
         \RakutenPay\Resources\Log\Logger::info('Constructing PaymentMethod.');
-        $this->library = new Rakuten_RakutenPay_Model_Library();
-        $this->helper = new Rakuten_RakutenPay_Helper_Data();
+        $this->library = new Rakuten_Connector_Model_RakutenPay_Library();
+        $this->helper = new Rakuten_Connector_Helper_Data();
     }
 
     /**
@@ -115,7 +115,7 @@ class Rakuten_Connector_Model_RakutenPay_PaymentMethod extends Mage_Payment_Mode
     public function getPaymentSession()
     {
         \RakutenPay\Resources\Log\Logger::info('Processing getPaymentSession.');
-        return \Mage::getSingleton('checkout/session');;
+        return \Mage::getSingleton('checkout/session');
 //        return \RakutenPay\Services\Session::create($this->library->getAccountCredentials());
     }
 

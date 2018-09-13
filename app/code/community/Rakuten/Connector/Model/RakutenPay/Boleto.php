@@ -33,8 +33,8 @@ class Rakuten_Connector_Model_RakutenPay_Boleto extends Mage_Payment_Model_Metho
     protected $_canVoid = true;
     protected $_code = 'rakutenpay_boleto';
     protected $_isGateway = true;
-    protected $_formBlockType = 'rakuten_connector_rakutenpay/form_boleto';
-    protected $_infoBlockType = 'rakuten_connector_rakutenpay/info_boleto';
+    protected $_formBlockType = 'rakuten_connector/rakutenpay_form_boleto';
+    protected $_infoBlockType = 'rakuten_connector/rakutenpay_info_boleto';
 
     public function assignData($data)
     {

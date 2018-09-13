@@ -17,6 +17,9 @@
  ************************************************************************
  */
 
+/**
+ * Class Rakuten_Connector_Adminhtml_RefundController
+ */
 class Rakuten_Connector_Adminhtml_RefundController extends Mage_Adminhtml_Controller_Action
 {
     /**
@@ -24,20 +27,20 @@ class Rakuten_Connector_Adminhtml_RefundController extends Mage_Adminhtml_Contro
      */
     private $days;
     /**
-     * @var Rakuten_RakutenPay_Helper_Log
+     * @var Rakuten_Connector_Helper_RakutenPay_Log
      */
     private $log;
     /**
-     * @var Rakuten_RakutenPay_Helper_Refund
+     * @var Rakuten_Connector_Helper_RakutenPay_Refund
      */
     private $refund;
 
     /**
-     * Rakuten_RakutenPay_Adminhtml_ConciliationController constructor.
+     * Rakuten_Connector_Adminhtml_RefundController constructor.
      */
     public function _construct()
     {
-        $this->log = new Rakuten_RakutenPay_Helper_Log();
+        $this->log = new Rakuten_Connector_Helper_RakutenPay_Log();
     }
 
     public function doRefundAction()
@@ -87,7 +90,7 @@ class Rakuten_Connector_Adminhtml_RefundController extends Mage_Adminhtml_Contro
 
     private function builder()
     {
-        $this->refund = Mage::helper('rakutenpay/refund');
+        $this->refund = Mage::helper('connector/rakutenpay/refund');
         if ($this->getRequest()->getPost('days')) {
             $this->days = $this->getRequest()->getPost('days');
         }

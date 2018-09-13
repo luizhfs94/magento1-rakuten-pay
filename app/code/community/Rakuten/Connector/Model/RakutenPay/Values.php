@@ -31,7 +31,7 @@ class Rakuten_Connector_Model_RakutenPay_Values
     {
         \RakutenPay\Resources\Log\Logger::info('Processing toOptionArray in ModelValues.');
         self::alertRequeriments();
-        $helper = Mage::helper('connector_rakutenpay');
+        $helper = Mage::helper('connector');
 
         return array(
             array("value" => "UTF-8", "label" => $helper->__("UTF-8")),
@@ -47,7 +47,7 @@ class Rakuten_Connector_Model_RakutenPay_Values
         \RakutenPay\Resources\Log\Logger::info('Processing alertRequeriments in ModelValues.');
         $requirements = \RakutenPay\Library::validate();
         if (!$requirements) {
-            $message = $helper = Mage::helper('connector_rakutenpay')->__("Requerimentos para o sistema funcionar:".$requirements);
+            $message = $helper = Mage::helper('connector')->__("Requerimentos para o sistema funcionar:".$requirements);
             Mage::getSingleton('core/session')->addError($message);
         }
     }

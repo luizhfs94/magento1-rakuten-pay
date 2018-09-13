@@ -24,6 +24,6 @@ class Rakuten_Connector_Block_RakutenPay_Info_CreditCard extends Mage_Payment_Bl
   protected function _construct()
   {
     parent::_construct();
-    $this->setTemplate('rakuten/rakutenpay/info/credit_card.phtml');
+    $this->setTemplate('rakuten/connector/rakutenpay/info/credit_card.phtml');
   }
 }

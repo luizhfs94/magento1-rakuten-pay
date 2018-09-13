@@ -33,7 +33,7 @@ class Rakuten_Connector_Model_RakutenPay_NotificationMethod extends MethodAbstra
     public function __construct()
     {
         \RakutenPay\Resources\Log\Logger::info('Constructing ModelNotificationMethod.');
-        $this->helper = Mage::helper('connector_rakutenpay');
+        $this->helper = Mage::helper('connector');
     }
 
     public function initialize($post, $state)

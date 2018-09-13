@@ -18,17 +18,17 @@
  */
 
 /**
- * Class Rakuten_Connector_RakutenPay_PaymentController
+ * Class Rakuten_Connector_PaymentController
  */
 class Rakuten_Connector_PaymentController extends Mage_Core_Controller_Front_Action
 {
     /**
-     * @var Rakuten_RakutenPay_Model_PaymentMethod
+     * @var Rakuten_Connector_Model_RakutenPay_PaymentMethod
      */
     private $payment;
 
     /**
-     * Rakuten_RakutenPay_PaymentController constructor.
+     * Rakuten_Connector_PaymentController constructor.
      */
     public function _construct()
     {

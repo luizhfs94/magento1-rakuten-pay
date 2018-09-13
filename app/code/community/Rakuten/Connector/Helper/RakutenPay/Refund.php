@@ -17,7 +17,7 @@
  ************************************************************************
  */
 
-class Rakuten_RakutenPay_Helper_Refund extends Rakuten_RakutenPay_Helper_Data
+class Rakuten_Connector_Helper_RakutenPay_Refund extends Rakuten_RakutenPay_Helper_Data
 {
     /**
      * @var array
@@ -128,7 +128,7 @@ class Rakuten_RakutenPay_Helper_Refund extends Rakuten_RakutenPay_Helper_Data
         if (!empty($this->magentoPaymentList)) {
             foreach ($this->magentoPaymentList as $orderId) {
                 $orderHandler = Mage::getModel('sales/order')->load($orderId);
-                if (Mage::getStoreConfig('payment/rakutenpay/environment') == strtolower(trim($this->getOrderEnvironment($orderId)))
+                if (Mage::getStoreConfig('payment/connector/environment') == strtolower(trim($this->getOrderEnvironment($orderId)))
                 ) {
                     if (!is_null(Mage::getSingleton('core/session')->getData("store_id"))) {
                         if (Mage::getSingleton('core/session')->getData("store_id") == $orderHandler->getStoreId()) {

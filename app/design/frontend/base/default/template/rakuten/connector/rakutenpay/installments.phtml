@@ -16,7 +16,7 @@
  * limitations under the License.
  ************************************************************************
  */
-$helper = Mage::helper('rakutenpay');
+$helper = Mage::helper('connector');
 
 $productPrice = Mage::registry('current_product')->getFinalPrice();
 $installments = $helper->installmentsModel()->create($productPrice);

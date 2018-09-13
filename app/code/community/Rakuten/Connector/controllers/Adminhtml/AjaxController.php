@@ -24,7 +24,7 @@ class Rakuten_Connector_Adminhtml_AjaxController extends Mage_Adminhtml_Controll
     public function indexAction()
     {
         $this->log = Mage::helper('connector/rakutenpay_log');
-        $helper = Mage::helper('connector/rakutenpay');
+        $helper = Mage::helper('connector');
 
         $origin = $this->getRequest()->getPost('origin');
         $sendmail = $this->getRequest()->getPost('sendmail');
