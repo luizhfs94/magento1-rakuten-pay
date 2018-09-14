@@ -37,9 +37,7 @@ class EnvironmentInformation
      */
     public static function getPHPVersion()
     {
-        $phpVersion = 'Current PHP version: ' . phpversion();
-
-        return $phpVersion;
+        return phpversion();
     }
 
     /**
@@ -47,37 +45,7 @@ class EnvironmentInformation
      */
     public static function getMagentoVersion()
     {
-        $phpVersion = 'Magento Version: ' . Mage::getVersion();
-
-        return $phpVersion;
-    }
-
-    /**
-     * Record system version on Log
-     * @void
-     */
-    public static function writeLogVersions()
-    {
-        Logger::info(self::getPHPVersion() . ' - ' . self::getMagentoVersion(), ['service' => 'version']);
-    }
-
-    /**
-     * Record config php.ini on Log
-     *
-     * @param null $constant
-     * @void
-     */
-    public static function writeLogPHPConfiguration($constant = null)
-    {
-        if (is_null($constant)) {
-            $constant = self::PHPINFO_INFO_CONFIGURATION;
-        }
-        $phpInfo = self::phpinfoToArray($constant);
-        if (count($phpInfo)) {
-            foreach (array_pop($phpInfo) as $key => $info) {
-                Logger::info(sprintf('Key: %s => master: %s | local: %s', $key, $info['master'], $info['local']), ['service' => 'php.ini']);
-            }
-        }
+        return Mage::getVersion();
     }
 
     /**
@@ -86,7 +54,7 @@ class EnvironmentInformation
      * @param null $constant
      * @return array
      */
-    private static function phpinfoToArray($constant = null)
+    public static function phpinfoToArray($constant = null)
     {
         $infoArray = [];
         try {
