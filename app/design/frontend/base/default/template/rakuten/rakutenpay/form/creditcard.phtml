@@ -219,7 +219,8 @@
                     $helper = Mage::helper('rakutenpay');
 
                     $installments = $helper->installmentsModel()->create($this->getGrandTotal());
-                    if ($installments) {
+                    if (is_array($installments)) {
+                        $countInstallment = count($installments);
                         $totalAmount = str_replace('.', ',', $installments[$countInstallment-1]['totalAmount']);
                         for($i = 0; $i < count($installments); $i++) {
                             $value = json_encode($installments[$i]);
