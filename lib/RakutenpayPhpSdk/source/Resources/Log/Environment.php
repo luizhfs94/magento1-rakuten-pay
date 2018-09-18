@@ -31,7 +31,7 @@ class Environment extends EnvironmentInformation
      * Record system version on Log
      * @void
      */
-    public static function infoVersions()
+    public static function logInfoVersions()
     {
         Logger::info(sprintf('Current PHP Version: %s - Magento Version: %s - RakutenPay Version: %s',
             self::getPHPVersion(), self::getMagentoVersion(), self::getModuleVersion()), ['service' => 'versions']);
@@ -43,7 +43,7 @@ class Environment extends EnvironmentInformation
      * @param null $constant
      * @void
      */
-    public static function infoPHPConfiguration($constant = null)
+    public static function logInfoPHPConfiguration($constant = null)
     {
         if (is_null($constant)) {
             $constant = self::PHPINFO_INFO_CONFIGURATION;
