@@ -33,7 +33,8 @@ class Environment extends EnvironmentInformation
      */
     public static function infoVersions()
     {
-        Logger::info(self::getPHPVersion() . ' - ' . self::getMagentoVersion(), ['service' => 'version']);
+        Logger::info(sprintf('Current PHP Version: %s - Magento Version: %s - RakutenPay Version: %s',
+            self::getPHPVersion(), self::getMagentoVersion(), self::getModuleVersion()), ['service' => 'versions']);
     }
 
     /**

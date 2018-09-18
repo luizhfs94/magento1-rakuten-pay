@@ -49,6 +49,14 @@ class EnvironmentInformation
     }
 
     /**
+     * @return string
+     */
+    public static function getModuleVersion()
+    {
+        return Mage::getConfig()->getModuleConfig("Rakuten_RakutenPay")->version;
+    }
+
+    /**
      * @see http://www.php.net/manual/en/function.phpinfo.php#87463
      *
      * @param null $constant
