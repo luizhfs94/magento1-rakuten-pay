@@ -21,7 +21,7 @@ namespace RakutenPay\Services\Transactions;
 
 use RakutenPay\Parsers\Transaction\Cancel\Request;
 use RakutenPay\Resources\Connection;
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 use RakutenPay\Resources\Log\Logger;
 use RakutenPay\Resources\Responsibility;
 

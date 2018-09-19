@@ -20,7 +20,7 @@
 namespace RakutenPay\Services\Transactions;
 
 use RakutenPay\Resources\Connection;
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 use RakutenPay\Resources\Log\Logger;
 use RakutenPay\Resources\Responsibility;
 

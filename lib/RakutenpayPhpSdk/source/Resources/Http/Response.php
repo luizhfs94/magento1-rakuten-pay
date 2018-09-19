@@ -17,19 +17,52 @@
  ************************************************************************
  */
 
-namespace RakutenPay\Parsers\DirectPayment\Boleto;
+namespace RakutenPay\Resources\Http;
 
-use RakutenPay\Parsers\Error;
-use RakutenPay\Parsers\Parser;
-
-class Billet extends Error implements Parser
+/**
+ * Class Response
+ * @package RakutenPay\Resources\RakutenPay\Http
+ */
+class Response
 {
-    public static function success(\RakutenPay\Resources\RakutenPay\Http $http) {
-        $data = json_decode($http->getResponse(), true);
-        return $data['html'];
+    /**
+     * @var
+     */
+    private $status;
+    /**
+     * @var
+     */
+    private $response;
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
-    public static function error(\RakutenPay\Resources\RakutenPay\Http $http) {
-        \RakutenPay\Resources\Log\Logger::error('Failed to obtain billet data.');
+    /**
+     * @param $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @param $response
+     */
+    public function setResponse($response)
+    {
+        $this->response = $response;
     }
 }

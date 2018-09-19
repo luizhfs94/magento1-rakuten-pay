@@ -20,7 +20,7 @@
 namespace RakutenPay\Services\DirectPayment;
 
 use RakutenPay\Resources\Connection;
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 use RakutenPay\Resources\Log\Logger;
 use RakutenPay\Resources\Responsibility;
 use RakutenPay\Parsers\DirectPayment\Boleto\Request;

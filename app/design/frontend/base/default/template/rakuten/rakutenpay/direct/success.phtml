@@ -21,7 +21,7 @@
 <script>
     <?php if (array_key_exists('billet', $_GET)): ?>
     <?php
-    $http = new \RakutenPay\Resources\Http();
+    $http = new \RakutenPay\Resources\RakutenPay\Http();
     $http->get($_GET['billet'], 20, 'ISO-8859-1', false);
     $response = \RakutenPay\Resources\Responsibility::http($http,
             new \RakutenPay\Parsers\DirectPayment\Boleto\Billet());

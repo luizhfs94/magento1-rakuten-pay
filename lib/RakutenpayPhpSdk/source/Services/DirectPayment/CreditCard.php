@@ -23,7 +23,7 @@ use RakutenPay\Domains\Account\Credentials;
 use RakutenPay\Helpers\Crypto;
 use RakutenPay\Parsers\DirectPayment\CreditCard\Request;
 use RakutenPay\Resources\Connection;
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 use RakutenPay\Resources\Log\Logger;
 use RakutenPay\Resources\Responsibility;
 
