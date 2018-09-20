@@ -20,10 +20,10 @@
 namespace RakutenPay\Resources\Http;
 
 /**
- * Interface HttpMethod
+ * Interface Method
  * @package RakutenPay\Resources\RakutenPay\Http
  */
-interface HttpMethod
+interface Method
 {
     /**
      * @param $url
@@ -33,7 +33,7 @@ interface HttpMethod
      * @return bool
      * @throws \Exception
      */
-    public function post($url, array $data = array(), $timeout = 20, $charset = 'ISO-8859-1');
+    public function post($url, array $data = [], $timeout = 20, $charset = 'ISO-8859-1');
 
     /**
      * @param $url

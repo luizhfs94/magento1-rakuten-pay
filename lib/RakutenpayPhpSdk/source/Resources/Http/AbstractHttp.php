@@ -25,7 +25,7 @@ use RakutenPay\Resources\Log\Logger;
  * Class AbstractHttp
  * @package RakutenPay\Resources
  */
-abstract class AbstractHttp extends Response implements HttpMethod
+abstract class AbstractHttp extends Response implements Method
 {
     /**
      * @param $method
@@ -46,7 +46,7 @@ abstract class AbstractHttp extends Response implements HttpMethod
      * @return bool
      * @throws \Exception
      */
-    public function post($url, array $data = array(), $timeout = 20, $charset = 'ISO-8859-1')
+    public function post($url, array $data = [], $timeout = 20, $charset = 'ISO-8859-1')
     {
         Logger::info('Processing post.');
         return $this->curlConnection('POST', $url, $timeout, $charset, $data);
