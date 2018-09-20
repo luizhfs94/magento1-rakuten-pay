@@ -92,6 +92,7 @@ class Http extends AbstractHttp
             Logger::error($e->getMessage());
         }
     }
+
     /**
      * @param $method
      * @param $url

@@ -19,7 +19,6 @@
 
 namespace RakutenPay\Resources\RakutenPay\Validator;
 
-use RakutenPay\Enum\Http\Status;
 use RakutenPay\Resources\Log\Logger;
 use Mage;
 
@@ -74,15 +73,11 @@ class ResponseValidate
 
         if ($error) {
             Logger::info(sprintf('Processing checkErrors in ResponseValidate'));
-            switch (true) {
-                case self::hasTransferClosed($errorMessage):
-                    return $result;
-                case self::hasChargeAlreadyExists($errorMessage):
-                    $result['status'] = Status::OK;
-                    return $result;
-                default:
-                    throw new \Exception("CURL can't connect: $errorMessage");
+            if (self::hasTransferClosed($errorMessage)) {
+
+                return $result;
             }
+            throw new \Exception("CURL can't connect: $errorMessage");
         }
 
         return $result;
@@ -91,6 +86,7 @@ class ResponseValidate
     /**
      * @param $errorMessage
      * @return bool
+     * @throws \Exception
      */
     private static function hasTransferClosed($errorMessage)
     {
@@ -102,20 +98,4 @@ class ResponseValidate
 
         return false;
     }
-
-    /**
-     * @param $errorMessage
-     * @return bool
-     */
-    private static function hasChargeAlreadyExists($errorMessage)
-    {
-        if (strpos($errorMessage, 'Charge already exists with authorized status') !== false) {
-            Logger::info(sprintf('CURL: %s', $errorMessage, ['service' => 'HTTP.Response']));
-
-            return true;
-        }
-
-        return false;
-    }
-
 }
