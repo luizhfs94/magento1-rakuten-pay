@@ -28,8 +28,8 @@ use RakutenConnector\Resources\Log\Logger;
 class Crypto
 {
     private static $list = [
-        "senderPhone" => array("phone", \RakutenPay\Enum\Mask::PHONE),
-        "senderCPF" => array("cpf", \RakutenPay\Enum\Mask::CPF)
+        "senderPhone" => array("phone", \RakutenConnector\Enum\Mask::PHONE),
+        "senderCPF" => array("cpf", \RakutenConnector\Enum\Mask::CPF)
     ];
 
     public static function encrypt($parameters)

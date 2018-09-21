@@ -29,7 +29,7 @@ class Rakuten_RakutenPay_Model_Values
      */
     public function toOptionArray()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing toOptionArray in ModelValues.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing toOptionArray in ModelValues.');
         self::alertRequeriments();
         $helper = Mage::helper('rakutenpay');
 
@@ -44,8 +44,8 @@ class Rakuten_RakutenPay_Model_Values
      */
     public function alertRequeriments()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing alertRequeriments in ModelValues.');
-        $requirements = \RakutenPay\Library::validate();
+        \RakutenConnector\Resources\Log\Logger::info('Processing alertRequeriments in ModelValues.');
+        $requirements = \RakutenConnector\Library::validate();
         if (!$requirements) {
             $message = $helper = Mage::helper('rakutenpay')->__("Requerimentos para o sistema funcionar:".$requirements);
             Mage::getSingleton('core/session')->addError($message);

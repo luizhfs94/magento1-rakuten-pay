@@ -20,20 +20,19 @@
 class Rakuten_RakutenPay_Model_Observer
 {
 
-    protected $lib_path;
+    protected $libPath;
 
     /**
      * Rakuten_RakutenPay_Model_Observer constructor.
-     * @param string $lib_path
      */
-    public function __construct($lib_path)
+    public function __construct()
     {
-        $this->lib_path = Mage::getBaseDir('lib'). '/RakutenpayPhpSdk/vendor/autoload.php';
+        $this->libPath = Mage::getBaseDir('lib'). '/Rakuten/Connector/vendor/autoload.php';
     }
 
     public function addAutoloader()
     {
-        include_once($this->lib_path);
+        include_once($this->libPath);
         return $this;
     }
 
@@ -73,7 +72,7 @@ class Rakuten_RakutenPay_Model_Observer
 
     public function adminOrderAfterSave($observer)
     {
-        \RakutenPay\Configuration\Configure::setEnvironment(Mage::getStoreConfig('payment/rakutenpay/environment'));
+        \RakutenConnector\Configuration\Configure::setEnvironment(Mage::getStoreConfig('payment/rakutenpay/environment'));
         $order = $observer->getEvent()->getOrder();
 
         if (!$order->getId()) {
@@ -86,13 +85,13 @@ class Rakuten_RakutenPay_Model_Observer
         if ($paymentMethod === 'rakutenpay_boleto' || $paymentMethod === 'rakutenpay_credit_card'){
             /* @var $order Mage_Sales_Model_Order */
 
-            \RakutenPay\Resources\Log\Logger::info('Processing admin orderAfterSave');
+            \RakutenConnector\Resources\Log\Logger::info('Processing admin orderAfterSave');
 
             $OldStatus=$order->getOrigData('status');
             $NewStatus=$order->getStatus();
 
-            \RakutenPay\Resources\Log\Logger::info(sprintf('OldStatus: %s', $OldStatus));
-            \RakutenPay\Resources\Log\Logger::info(sprintf('NewStatus: %s', $NewStatus));
+            \RakutenConnector\Resources\Log\Logger::info(sprintf('OldStatus: %s', $OldStatus));
+            \RakutenConnector\Resources\Log\Logger::info(sprintf('NewStatus: %s', $NewStatus));
 
             if($OldStatus!=$NewStatus){
                 $magentoCancelStatus = array('chargeback', 'refunded', 'canceled');

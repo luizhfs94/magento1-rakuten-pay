@@ -208,13 +208,13 @@ class Logger implements LoggerInterface
      */
     public static function active()
     {
-        return \RakutenPay\Configuration\Configure::getLog()->getActive();
+        return \RakutenConnector\Configuration\Configure::getLog()->getActive();
     }
 
     public static function filepath()
     {
-        if (\RakutenPay\Configuration\Configure::getLog()->getLocation()) {
-            return \RakutenPay\Configuration\Configure::getLog()->getLocation();
+        if (\RakutenConnector\Configuration\Configure::getLog()->getLocation()) {
+            return \RakutenConnector\Configuration\Configure::getLog()->getLocation();
         } else {
             return self::DEFAULT_FILE;
         }
@@ -226,8 +226,8 @@ class Logger implements LoggerInterface
      */
     private static function location()
     {
-        if (\RakutenPay\Configuration\Configure::getLog()->getLocation()) {
-            return \RakutenPay\Configuration\Configure::getLog()->getLocation() . '/' . self::DEFAULT_FILE;
+        if (\RakutenConnector\Configuration\Configure::getLog()->getLocation()) {
+            return \RakutenConnector\Configuration\Configure::getLog()->getLocation() . '/' . self::DEFAULT_FILE;
         } else {
             return sprintf("%1s/../%1s", '', self::DEFAULT_FILE);
         }

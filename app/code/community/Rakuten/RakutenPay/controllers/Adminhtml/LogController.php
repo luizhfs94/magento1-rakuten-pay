@@ -17,7 +17,7 @@
 ************************************************************************
 */
 
-use RakutenPay\Resources\Log\Logger;
+use RakutenConnector\Resources\Log\Logger;
 
 class Rakuten_RakutenPay_AdminHtml_LogController extends Mage_Adminhtml_Controller_Action
 {

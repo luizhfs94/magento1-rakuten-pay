@@ -53,7 +53,7 @@ class Rakuten_RakutenPay_Helper_Refund extends Rakuten_RakutenPay_Helper_Data
      */
     public function initialize($days)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing initialize in HelperRefund.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing initialize in HelperRefund.');
         $this->days = $days;
         $this->getRakutenPayPayments();
         $this->getMagentoPayments();
@@ -69,7 +69,7 @@ class Rakuten_RakutenPay_Helper_Refund extends Rakuten_RakutenPay_Helper_Data
      */
     private function getRakutenPayPayments($page = null)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getRakutenPayPayments in HelperRefund.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getRakutenPayPayments in HelperRefund.');
         if (is_null($page)) {
             $page = 1;
         }
@@ -105,7 +105,7 @@ class Rakuten_RakutenPay_Helper_Refund extends Rakuten_RakutenPay_Helper_Data
      */
     protected function getMagentoPayments()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getMagentoPayments in HelperRefund.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getMagentoPayments in HelperRefund.');
         $date = new DateTime ("now");
         $date->setTimezone(new DateTimeZone ("America/Sao_Paulo"));
         $dateInterval = "P".( string )$this->days."D";
@@ -124,7 +124,7 @@ class Rakuten_RakutenPay_Helper_Refund extends Rakuten_RakutenPay_Helper_Data
      */
     private function requestTransactionsToRefund()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing requestTransactionsToRefund in HelperRefund.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing requestTransactionsToRefund in HelperRefund.');
         if (!empty($this->magentoPaymentList)) {
             foreach ($this->magentoPaymentList as $orderId) {
                 $orderHandler = Mage::getModel('sales/order')->load($orderId);
@@ -174,7 +174,7 @@ class Rakuten_RakutenPay_Helper_Refund extends Rakuten_RakutenPay_Helper_Data
      */
     private function getOrderEnvironment($orderId)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getOrderEnvironment in HelperRefund.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getOrderEnvironment in HelperRefund.');
         $reader = Mage::getSingleton("core/resource")->getConnection('core_read');
         $table = Mage::getConfig()->getTablePrefix().'rakutenpay_orders';
         $query = "SELECT environment FROM ".$table." WHERE order_id = ".$orderId;
@@ -194,7 +194,7 @@ class Rakuten_RakutenPay_Helper_Refund extends Rakuten_RakutenPay_Helper_Data
      */
     private function findRakutenPayTransactionByReference($orderId)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing findRakutenPayTransactionByReference in HelperRefund.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing findRakutenPayTransactionByReference in HelperRefund.');
         foreach ($this->RakutenPayPaymentList->getTransactions() as $list) {
             if ($this->getReferenceDecryptOrderID($list->getReference()) == $orderId) {
                 return $list;
@@ -204,7 +204,7 @@ class Rakuten_RakutenPay_Helper_Refund extends Rakuten_RakutenPay_Helper_Data
 
     public function build($RakutenPaySummaryItem, $order)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing build in HelperRefund.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing build in HelperRefund.');
         $RakutenPayStatusValue = $this->getPaymentStatusFromKey($RakutenPaySummaryItem->getStatus());
         $config = "class='action' data-config='" . $order->getId() . '/'
                 . $RakutenPaySummaryItem->getCode() . '/'

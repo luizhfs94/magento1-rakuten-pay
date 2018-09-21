@@ -24,7 +24,7 @@ namespace RakutenConnector\Domains\DirectPayment;
  *
  * @package RakutenConnector\Domains\Requests\DirectPayment
  */
-class Sender extends \RakutenPay\Domains\Sender
+class Sender extends \RakutenConnector\Domains\Sender
 {
     /**
      * @var

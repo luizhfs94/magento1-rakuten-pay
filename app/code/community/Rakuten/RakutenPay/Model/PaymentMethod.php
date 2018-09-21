@@ -52,7 +52,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
      */
     public function __construct()
     {
-        \RakutenPay\Resources\Log\Logger::info('Constructing PaymentMethod.');
+        \RakutenConnector\Resources\Log\Logger::info('Constructing PaymentMethod.');
         $this->library = new Rakuten_RakutenPay_Model_Library();
         $this->helper = new Rakuten_RakutenPay_Helper_Data();
     }
@@ -62,7 +62,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
      */
     public function addRakutenpayOrders(Mage_Sales_Model_Order $order)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing addRakutenpayOrders.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing addRakutenpayOrders.');
         $orderId = $order->getEntityId();
         $enviroment = $this->library->getEnvironment();
         $table = Mage::getConfig()->getTablePrefix().'rakutenpay_orders';
@@ -80,7 +80,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
      */
     public function clearCheckoutSession(Mage_Sales_Model_Order $order)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing clearCheckoutSession.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing clearCheckoutSession.');
         $cart = Mage::getSingleton('checkout/cart');
         foreach (Mage::getSingleton('checkout/session')->getQuote()->getItemsCollection() as $item) {
             $cart->removeItem($item->getId());
@@ -94,7 +94,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
      */
     public function getOrderPlaceRedirectUrl()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getOrderPlaceRedirectUrl.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getOrderPlaceRedirectUrl.');
         return Mage::getUrl('rakutenpay/payment/request');
     }
 
@@ -105,7 +105,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
      */
     public function getPaymentCheckoutType()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getPaymentCheckoutType.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getPaymentCheckoutType.');
         return $this->library->getPaymentCheckoutType();
     }
 
@@ -114,83 +114,83 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
      */
     public function getPaymentSession()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getPaymentSession.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getPaymentSession.');
         return \Mage::getSingleton('checkout/session');;
-//        return \RakutenPay\Services\Session::create($this->library->getAccountCredentials());
+//        return \RakutenConnector\Services\Session::create($this->library->getAccountCredentials());
     }
 
     /**
-     * @return \RakutenPay\Domains\Requests\DirectPayment\Boleto|\RakutenPay\Domains\Requests\DirectPayment\CreditCard
+     * @return \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard
      */
     public function paymentDefault()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing paymentDefault.');
-        $payment = new \RakutenPay\Domains\Requests\Payment();
+        \RakutenConnector\Resources\Log\Logger::info('Processing paymentDefault.');
+        $payment = new \RakutenConnector\Domains\Requests\Payment();
 
         return $this->payment($payment);
     }
 
     /**
-     * @param \RakutenPay\Domains\Requests\DirectPayment\Boleto|\RakutenPay\Domains\Requests\DirectPayment\CreditCard|\RakutenPay\Domains\Requests\Payment $payment
+     * @param \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard|\RakutenConnector\Domains\Requests\Payment $payment
      *
-     * @return \RakutenPay\Domains\Requests\DirectPayment\Boleto|\RakutenPay\Domains\Requests\DirectPayment\CreditCard
+     * @return \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard
      */
     private function payment($payment)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing payment.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing payment.');
         $shippingAddress = $this->order->getShippingAddress();
         if ($shippingAddress === false) {
             $shippingAddress = $this->order->getBillingAddress();
         }
 
-        \RakutenPay\Resources\Log\Logger::info('Setting payment info...');
+        \RakutenConnector\Resources\Log\Logger::info('Setting payment info...');
         $payment->setReference($this->order->getId());
-        \RakutenPay\Resources\Log\Logger::info('Reference set.');
+        \RakutenConnector\Resources\Log\Logger::info('Reference set.');
         $payment->setCurrency('BRL');
-        \RakutenPay\Resources\Log\Logger::info('Currency set.');
+        \RakutenConnector\Resources\Log\Logger::info('Currency set.');
         $payment->setTotal($this->order->getGrandTotal());
-        \RakutenPay\Resources\Log\Logger::info('Total set.');
+        \RakutenConnector\Resources\Log\Logger::info('Total set.');
         $this->setItems($payment);
-        \RakutenPay\Resources\Log\Logger::info('Items set.');
+        \RakutenConnector\Resources\Log\Logger::info('Items set.');
         $payment->setSender()->setName($this->order->getCustomerName());
-        \RakutenPay\Resources\Log\Logger::info('Name set.');
+        \RakutenConnector\Resources\Log\Logger::info('Name set.');
         $payment->setSender()->setEmail($this->order->getCustomerEmail());
-        \RakutenPay\Resources\Log\Logger::info('Email set.');
+        \RakutenConnector\Resources\Log\Logger::info('Email set.');
         $phone = $this->helper->formatPhone($shippingAddress->getTelephone());
-        \RakutenPay\Resources\Log\Logger::info('Phone formatted.');
+        \RakutenConnector\Resources\Log\Logger::info('Phone formatted.');
         $payment->setSender()->setPhone()->withParameters($phone['areaCode'], $phone['number']);
-        \RakutenPay\Resources\Log\Logger::info('Phone set.');
+        \RakutenConnector\Resources\Log\Logger::info('Phone set.');
         $orderAddress = new Rakuten_RakutenPay_Model_OrderAddress($this->order);
-        \RakutenPay\Resources\Log\Logger::info('Order address created.');
+        \RakutenConnector\Resources\Log\Logger::info('Order address created.');
         if (method_exists($orderAddress, 'getShippingAddress()')) {
             $payment->setShipping()->setAddress()->instance($orderAddress->getShippingAddress());
         } else {
             $payment->setShipping()->setAddress()->instance($orderAddress->getBillingAddress());
         }
-        \RakutenPay\Resources\Log\Logger::info('Shipping set.');
+        \RakutenConnector\Resources\Log\Logger::info('Shipping set.');
         $payment->setBilling()->setAddress()->instance($orderAddress->getBillingAddress());
-        \RakutenPay\Resources\Log\Logger::info('Billing set.');
+        \RakutenConnector\Resources\Log\Logger::info('Billing set.');
         $payment->setShipping()->setType()->withParameters(SHIPPING_TYPE);
-        \RakutenPay\Resources\Log\Logger::info('Shipping type set.');
+        \RakutenConnector\Resources\Log\Logger::info('Shipping type set.');
         $payment->setShipping()->setCost()->withParameters(number_format($this->order->getShippingAmount(), 2, '.',
             ''));
-        \RakutenPay\Resources\Log\Logger::info('Shipping costs set.');
+        \RakutenConnector\Resources\Log\Logger::info('Shipping costs set.');
         $payment->setNotificationUrl($this->getNotificationURL());
-        \RakutenPay\Resources\Log\Logger::info('Callback URL set.');
+        \RakutenConnector\Resources\Log\Logger::info('Callback URL set.');
         $payment->setSender()->setGender($this->order->getCustomerGender());
-        \RakutenPay\Resources\Log\Logger::info('Gender set.');
+        \RakutenConnector\Resources\Log\Logger::info('Gender set.');
         $payment->setSender()->setBirthdate($this->order->getCustomerDob());
-        \RakutenPay\Resources\Log\Logger::info('DOB set.');
-        \RakutenPay\Resources\Log\Logger::info('All info set, returning.');
+        \RakutenConnector\Resources\Log\Logger::info('DOB set.');
+        \RakutenConnector\Resources\Log\Logger::info('All info set, returning.');
         return $payment;
     }
 
     /**
-     * @param \RakutenPay\Domains\Requests\DirectPayment\Boleto|\RakutenPay\Domains\Requests\DirectPayment\CreditCard $payment
+     * @param \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard $payment
      */
     private function setItems($payment)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing setItems.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing setItems.');
         foreach ($this->order->getAllVisibleItems() as $product) {
             $payment->addItems()->withParameters(
                 'SKU' . $product->getSku(),
@@ -205,7 +205,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
 
     private function getNotificationURL()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getNotificationURL.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getNotificationURL.');
         $notificationPath = Mage::getStoreConfig('payment/rakutenpay/notification');
 
         if ($notificationPath) {
@@ -222,18 +222,18 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
     * and instantiate the respective payment object
     * @param string $paymentMethod
     * @param array $paymentData
-    * @return \RakutenPay\Domains\Requests\DirectPayment\Boleto
-    *           || \RakutenPay\Domains\Requests\DirectPayment\CreditCard $payment
+    * @return \RakutenConnector\Domains\Requests\DirectPayment\Boleto
+    *           || \RakutenConnector\Domains\Requests\DirectPayment\CreditCard $payment
     */
     public function paymentDirect($paymentMethod, $paymentData)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing payment for ' . $paymentMethod);
+        \RakutenConnector\Resources\Log\Logger::info('Processing payment for ' . $paymentMethod);
         $payment = null;
 
         switch ($paymentMethod) {
             case 'rakutenpay_boleto':
                 $formatedDocument = $this->helper->formatDocument($paymentData['boletoDocument']);
-                $payment = new \RakutenPay\Domains\Requests\DirectPayment\Boleto();
+                $payment = new \RakutenConnector\Domains\Requests\DirectPayment\Boleto();
                 $payment->setFingerprint($paymentData['fingerprint']);
                 $payment->setSender()->setDocument()->withParameters(
                     $formatedDocument['type'],
@@ -245,7 +245,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
             case 'rakutenpay_credit_card':
                 $formatedDocument = $this->helper->formatDocument($paymentData['creditCardDocument']);
 
-                $payment = new \RakutenPay\Domains\Requests\DirectPayment\CreditCard();
+                $payment = new \RakutenConnector\Domains\Requests\DirectPayment\CreditCard();
                 $payment->setFingerprint($paymentData['fingerprint']);
                 $payment->setToken($paymentData['creditCardToken']);
                 $payment->setCvv($paymentData['creditCardCode']);
@@ -275,32 +275,32 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
                 break;
         }
 
-        /** @var \RakutenPay\Domains\Requests\DirectPayment\Boleto|\RakutenPay\Domains\Requests\DirectPayment\CreditCard $payment */
-        \RakutenPay\Resources\Log\Logger::info('Processing done.');
+        /** @var \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard $payment */
+        \RakutenConnector\Resources\Log\Logger::info('Processing done.');
         return $this->payment($payment);
     }
 
     /**
-     * @param \RakutenPay\Domains\Requests\DirectPayment\Boleto|\RakutenPay\Domains\Requests\DirectPayment\CreditCard|\RakutenPay\Domains\Requests\Payment $payment
+     * @param \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard|\RakutenConnector\Domains\Requests\Payment $payment
      *
      * @param bool $code
      *
-     * @return bool|\RakutenPay\Domains\Requests\DirectPayment\Boleto $response
+     * @return bool|\RakutenConnector\Domains\Requests\DirectPayment\Boleto $response
      */
     public function paymentRegister($payment, $code = false)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing paymentRegister.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing paymentRegister.');
         $response = false;
         try {
             if ($code) {
-                /** @var \RakutenPay\Domains\Requests\Payment $response */
+                /** @var \RakutenConnector\Domains\Requests\Payment $response */
                 $response = $payment->register($this->library->getAccountCredentials(), true)->getCode();
             } else {
-                /** @var \RakutenPay\Domains\Requests\DirectPayment\Boleto $payment */
+                /** @var \RakutenConnector\Domains\Requests\DirectPayment\Boleto $payment */
                 $response = $payment->register($this->library->getAccountCredentials());
             }
         } catch (Exception $exception) {
-            \RakutenPay\Resources\Log\Logger::error($exception);
+            \RakutenConnector\Resources\Log\Logger::error($exception);
             Mage::logException($exception);
         }
 
@@ -314,7 +314,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
      */
     public function setOrder(Mage_Sales_Model_Order $order)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing setOrder.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing setOrder.');
         return $this->order = $order;
     }
 
@@ -324,7 +324,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
      */
     public function getSession()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getSession.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getSession.');
         if (is_null($this->_session) || empty($this->_session)) {
             $this->_session = $this->getPaymentSession()->getResult();
         }

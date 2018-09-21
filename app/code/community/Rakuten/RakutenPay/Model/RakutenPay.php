@@ -39,7 +39,7 @@ class Rakuten_RakutenPay_Model_Rakutenpay extends Mage_Payment_Model_Method_Abst
      */
     public function getOrderPlaceRedirectUrl()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getOrderPlaceRedirectUrl in ModelRakutenpay.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getOrderPlaceRedirectUrl in ModelRakutenpay.');
         return Mage::getUrl('rakutenpay/payment/request');
     }
 

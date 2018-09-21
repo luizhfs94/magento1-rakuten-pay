@@ -23,7 +23,7 @@ namespace RakutenConnector\Parsers\Transaction\CreditCard;
  * Class Response
  * @package RakutenConnector\Parsers\Transaction\CreditCard
  */
-class Response extends \RakutenPay\Parsers\Transaction\Response
+class Response extends \RakutenConnector\Parsers\Transaction\Response
 {
     private $result;
 

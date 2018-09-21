@@ -20,12 +20,12 @@
 
 <script>
 <?php
-    $http = new \RakutenPay\Resources\RakutenPay\Http();
+    $http = new \RakutenConnector\Resources\RakutenPay\Http();
     $billet_url = $this->getBilletUrl();
     if(!empty($billet_url)):
         $http->get($this->getBilletUrl(), 20, 'ISO-8859-1', false);
-        $response = \RakutenPay\Resources\Responsibility::http($http,
-                new \RakutenPay\Parsers\DirectPayment\Boleto\Billet());?>
+        $response = \RakutenConnector\Resources\Responsibility::http($http,
+                new \RakutenConnector\Parsers\DirectPayment\Boleto\Billet());?>
         function pop_up() {
             var win = window.open('', '_blank');
             win.document.body.innerHTML = `<?= $response ?>`;

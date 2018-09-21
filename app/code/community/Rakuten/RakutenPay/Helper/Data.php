@@ -54,7 +54,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function __construct()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing __construct in HelperData.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing __construct in HelperData.');
         $this->environmentNotification();
     }
 
@@ -63,9 +63,9 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     private function environmentNotification()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing environmentNotification.');
-        \RakutenPay\Resources\Log\Environment::logInfoVersions();
-        \RakutenPay\Resources\Log\Environment::logInfoPHPConfiguration();
+        \RakutenConnector\Resources\Log\Logger::info('Processing environmentNotification.');
+        \RakutenConnector\Resources\Log\Environment::logInfoVersions();
+        \RakutenConnector\Resources\Log\Environment::logInfoPHPConfiguration();
         $environment = Mage::getStoreConfig('payment/rakutenpay/environment');
         //Define table name with their prefix
         $tp = (string)Mage::getConfig()->getTablePrefix();
@@ -96,7 +96,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     private function insertEnvironmentNotice($table)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing insertEnvironmentNotice.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing insertEnvironmentNotice.');
         // force default time zone
         Mage::app()->getLocale()->date();
         $date = date("Y-m-d H:i:s");
@@ -116,7 +116,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     private function getEnvironmentIncrement($table)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getEnvironmentIncrement.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getEnvironmentIncrement.');
         $sql = "SELECT MAX(notification_id) AS 'max_id' FROM `".$table."`";
         $readConnection = Mage::getSingleton('core/resource')->getConnection('core_read');
         $results = $readConnection->fetchAll($sql);
@@ -130,7 +130,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     private function removeEnvironmentNotice($table, $id)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing removeEnvironmentNotice.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing removeEnvironmentNotice.');
         $sql = "DELETE FROM `".$table."` WHERE notification_id = ".$id;
         $connection = Mage::getSingleton('core/resource')->getConnection('core_write');
         $connection->query($sql);
@@ -142,7 +142,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     final public function checkCredentials()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing checkCredentials.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing checkCredentials.');
         $date = new DateTime ("now");
         $date->setTimezone(new DateTimeZone ("America/Sao_Paulo"));
         $date->sub(new DateInterval ('P1D'));
@@ -166,7 +166,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     final public function webserviceHelper()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing webserviceHelper.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing webserviceHelper.');
         return Mage::helper('rakutenpay/webservice');
     }
 
@@ -175,7 +175,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function checkTransactionAccess()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing checkTransactionAccess.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing checkTransactionAccess.');
         $module = 'RakutenPay - ';
         $configUrl = Mage::getSingleton('adminhtml/url')->getUrl('adminhtml/system_config/edit/section/payment/');
         $email = $this->paymentModel()->getConfigData('email');
@@ -202,7 +202,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     final public function paymentModel()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing paymentModel.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing paymentModel.');
         return Mage::getModel('Rakuten_RakutenPay_Model_PaymentMethod');
     }
 
@@ -213,7 +213,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function formatPhone($phone)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing formatPhone.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing formatPhone.');
         $phone = preg_replace('/[^0-9]/', '', $phone);
         $ddd = '';
         if (strlen($phone) > 9) {
@@ -234,7 +234,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getDiscount($paymentRequest)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getDiscount.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getDiscount.');
         $storeId = Mage::app()->getStore()->getStoreId();
         if (Mage::getStoreConfig('payment/rakutenpay/discount_credit_card', $storeId) == 1) {
             $creditCard = (double)Mage::getStoreConfig('payment/rakutenpay/discount_credit_card_value', $storeId);
@@ -277,7 +277,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getEditOrderUrl($idOrder)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getEditOrderUrl.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getEditOrderUrl.');
         $adminhtmlUrl = Mage::getSingleton('adminhtml/url');
         $url = $adminhtmlUrl->getUrl('adminhtml/sales_order/view', array('order_id' => $idOrder));
 
@@ -291,7 +291,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getPaymentStatusFromKey($key)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getPaymentStatusFromKey.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getPaymentStatusFromKey.');
         if (array_key_exists($key, $this->arrayPaymentStatusList)) {
             return $this->arrayPaymentStatusList[$key];
         }
@@ -306,7 +306,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getPaymentStatusFromValue($value)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getPaymentStatusFromValue.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getPaymentStatusFromValue.');
         $key = array_search($value, $this->arrayPaymentStatusList);
         return $key;
     }
@@ -318,7 +318,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getPaymentStatusToString($key)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getPaymentStatusToString.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getPaymentStatusToString.');
         if (array_key_exists($key, $this->arrayPaymentStatusList)) {
             switch ($this->arrayPaymentStatusList[$key]) {
                 case 'pending':
@@ -354,7 +354,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getReferenceDecrypt($reference)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getReferenceDecrypt.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getReferenceDecrypt.');
         return '';
     }
 
@@ -365,7 +365,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getReferenceDecryptOrderID($reference)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getReferenceDecryptOrderID.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getReferenceDecryptOrderID.');
         return $reference;
     }
 
@@ -376,7 +376,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getOrderIdFromReference($reference)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getOrderIdFromReference.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getOrderIdFromReference.');
         //remove the 'Pedido#' tag at the beggining
         return str_replace(RakutenPay\Enum\Properties\Current::ORDER_TAG, '', $reference);
     }
@@ -386,7 +386,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getStoreReference()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getStoreReference.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getStoreReference.');
         return Mage::getStoreConfig('rakuten_rakutenpay/store/reference');
     }
 
@@ -397,7 +397,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getTransactionGrid($array)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getTransactionGrid.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getTransactionGrid.');
         $dataSet = '[';
         $j = 1;
         foreach ($array as $info) {
@@ -420,7 +420,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function getVersion()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getVersion.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getVersion.');
         return Mage::getConfig()->getModuleConfig("Rakuten_RakutenPay")->version;
     }
 
@@ -429,7 +429,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function installmentsModel()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing installmentsModel.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing installmentsModel.');
         return Mage::getSingleton('Rakuten_RakutenPay_Model_InstallmentsMethod');
     }
 
@@ -438,7 +438,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     final public function notificationModel()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing notificationModel.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing notificationModel.');
         return Mage::getSingleton('Rakuten_RakutenPay_Model_NotificationMethod');
     }
 
@@ -446,7 +446,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
     public function updateOrderStatusMagento($class, $orderId, $transactionCode, $orderStatus, $amount = false)
     {
         try {
-            \RakutenPay\Resources\Log\Logger::info(
+            \RakutenConnector\Resources\Log\Logger::info(
                 "Updating order with orderId: " . $orderId .
                 "; Status: "                    . $orderStatus .
                 "; Amount: "                    . $amount .
@@ -454,7 +454,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
                 ['service' => 'WEBHOOK']);
 
             if ($this->getLastStatusOrder($orderId) != $orderStatus) {
-                \RakutenPay\Resources\Log\Logger::info(
+                \RakutenConnector\Resources\Log\Logger::info(
                     "Order status has changed, so we notify the customer.",
                     ['service' => 'WEBHOOK']
                 );
@@ -464,22 +464,22 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
                 Mage::helper('rakutenpay/log')
                 ->setUpdateOrderLog($class, $orderId, $transactionCode, $orderStatus);
             } else {
-                \RakutenPay\Resources\Log\Logger::info(
+                \RakutenConnector\Resources\Log\Logger::info(
                     "Order status has not changed.",
                     ['service' => 'WEBHOOK']
                 );
             }
 
             if ($amount) {
-                \RakutenPay\Resources\Log\Logger::info("Amount was updated, so we update the amount.", ['service' => 'WEBHOOK']);
+                \RakutenConnector\Resources\Log\Logger::info("Amount was updated, so we update the amount.", ['service' => 'WEBHOOK']);
                 $this->setOrderPaymentValue($orderId, $amount);
             } else {
-                \RakutenPay\Resources\Log\Logger::info("Amount has not changed.", ['service' => 'WEBHOOK']);
+                \RakutenConnector\Resources\Log\Logger::info("Amount has not changed.", ['service' => 'WEBHOOK']);
             }
 
             $this->setTransactionRecord($orderId, $transactionCode, false, $amount);
         } catch (Exception $pse) {
-            \RakutenPay\Resources\Log\Logger::info("Exception: " . var_export($pse, true), ['service' => 'WEBHOOK']);
+            \RakutenConnector\Resources\Log\Logger::info("Exception: " . var_export($pse, true), ['service' => 'WEBHOOK']);
             throw $pse;
         }
     }
@@ -487,7 +487,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
     public function updateOrderStatusMagentoRefund($orderId, $transactionCode, $orderStatus, $amount,
             $kind = 'total', $reason = 'merchant_other', $bankData = null, $paymentId = null)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing updateOrderStatusMagentoRefund.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing updateOrderStatusMagentoRefund.');
         try {
             $order = Mage::getModel('sales/order')->load($orderId);
             $paymentMethod = $order->getPayment()->getMethod();
@@ -518,9 +518,9 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
     }
 
     public function updateOrderStatusMagentoCancel($orderId, $transactionCode, $orderStatus) {
-        \RakutenPay\Resources\Log\Logger::info('Processing updateOrderStatusMagentoCancel.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing updateOrderStatusMagentoCancel.');
         try {
-            \RakutenPay\Services\Transactions\Cancel::create($transactionCode)
+            \RakutenConnector\Services\Transactions\Cancel::create($transactionCode)
             ->getResult();
 
             if ($result['result'] === 'failure') {
@@ -540,7 +540,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     protected function getLastStatusOrder($orderId)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getLastStatusOrder.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getLastStatusOrder.');
         $order = Mage::getModel('sales/order')->load($orderId);
 
         return $order->getStatus();
@@ -548,7 +548,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
 
     protected function setOrderPaymentValue($orderId, $amount)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing setOrderPaymentValue.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing setOrderPaymentValue.');
         $order = Mage::getModel('sales/order')->load($orderId);
         if ($amount > 0) {
             $order->setTotalPaid($amount);
@@ -564,7 +564,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     private function notifyCustomer($orderId, $orderStatus, $cancel = false)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing notifyCustomer.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing notifyCustomer.');
         if ($cancel) {
             $order = Mage::getModel('sales/order')->load($orderId);
             $order->cancel();
@@ -588,7 +588,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     final public function setTransactionRecord($orderId, $transactionCode = false, $send = false)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing setTransactionRecord.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing setTransactionRecord.');
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
         $writeConnection = $resource->getConnection('core_write');
@@ -625,7 +625,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     protected function alertConciliation($action)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing alertConciliation.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing alertConciliation.');
         $message = $this->__('Não foi possível executar esta ação. Utilize a conciliação de transações primeiro');
         $message .= $this->__(' ou tente novamente mais tarde.');
 
@@ -639,13 +639,13 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     protected function getOrderMagetoDateConvert($date)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getOrderMagetoDateConvert.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getOrderMagetoDateConvert.');
         return date("d/m/Y H:i:s", Mage::getModel("core/date")->timestamp($date));
     }
 
     public function getRakutenPayDirectPaymentJs()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getRakutenPayDirectPaymentJs.');
+        \RakutenConnector\Resources\Log\Logger::info('Processing getRakutenPayDirectPaymentJs.');
          if (Mage::getStoreConfig('payment/rakutenpay/environment') === 'production') {
             return 'https://static.rakutenpay.com.br/rpayjs/rpay-latest.min.js';
         }
@@ -662,7 +662,7 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function formatDocument($document)
     {
-       \RakutenPay\Resources\Log\Logger::info('Processing formatDocument.');
+       \RakutenConnector\Resources\Log\Logger::info('Processing formatDocument.');
        $documentNumbers = preg_replace('/[^0-9]/', '', $document);
        switch (strlen($documentNumbers)) {
             case 14:

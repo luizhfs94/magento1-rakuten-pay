@@ -23,7 +23,7 @@ namespace RakutenConnector\Parsers\Transaction\Boleto;
  * Class Response
  * @package RakutenConnector\Parsers\Transaction\Boleto
  */
-class Response extends \RakutenPay\Parsers\Transaction\Response
+class Response extends \RakutenConnector\Parsers\Transaction\Response
 {
     private $result;
 
