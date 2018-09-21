@@ -21,7 +21,7 @@ namespace RakutenPay\Services\Checkout;
 
 use RakutenPay\Helpers\Crypto;
 use RakutenPay\Resources\Connection;
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 use RakutenPay\Resources\Log\Logger;
 use RakutenPay\Resources\Responsibility;
 

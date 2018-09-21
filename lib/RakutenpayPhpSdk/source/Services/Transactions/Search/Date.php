@@ -22,7 +22,7 @@ namespace RakutenPay\Services\Transactions\Search;
 use RakutenPay\Enum\Properties\Current;
 use RakutenPay\Parsers\Transaction\Search\Date\Request;
 use RakutenPay\Resources\Connection;
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 use RakutenPay\Resources\Log\Logger;
 use RakutenPay\Resources\Responsibility;
 

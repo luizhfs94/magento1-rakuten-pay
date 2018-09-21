@@ -17,19 +17,31 @@
  ************************************************************************
  */
 
-namespace RakutenPay\Parsers\DirectPayment\Boleto;
+namespace RakutenPay\Resources\Http;
 
-use RakutenPay\Parsers\Error;
-use RakutenPay\Parsers\Parser;
-
-class Billet extends Error implements Parser
+/**
+ * Interface Method
+ * @package RakutenPay\Resources\RakutenPay\Http
+ */
+interface Method
 {
-    public static function success(\RakutenPay\Resources\RakutenPay\Http $http) {
-        $data = json_decode($http->getResponse(), true);
-        return $data['html'];
-    }
+    /**
+     * @param $url
+     * @param array $data
+     * @param int $timeout
+     * @param string $charset
+     * @return bool
+     * @throws \Exception
+     */
+    public function post($url, array $data = [], $timeout = 20, $charset = 'ISO-8859-1');
 
-    public static function error(\RakutenPay\Resources\RakutenPay\Http $http) {
-        \RakutenPay\Resources\Log\Logger::error('Failed to obtain billet data.');
-    }
+    /**
+     * @param $url
+     * @param int $timeout
+     * @param string $charset
+     * @param bool $secureGet
+     * @return bool
+     * @throws \Exception
+     */
+    public function get($url, $timeout = 20, $charset = 'ISO-8859-1', $secureGet = true);
 }

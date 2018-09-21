@@ -19,7 +19,7 @@
 
 namespace RakutenPay\Parsers;
 
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 
 /**
  * Interface Parser

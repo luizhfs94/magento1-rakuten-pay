@@ -22,7 +22,7 @@ namespace RakutenPay\Parsers\Transaction\Cancel;
 use RakutenPay\Enum\Properties\Current;
 use RakutenPay\Parsers\Error;
 use RakutenPay\Parsers\Parser;
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 
 class Request extends Error implements Parser
 {

@@ -33,7 +33,7 @@ use RakutenPay\Parsers\Shipping;
 use RakutenPay\Parsers\Metadata;
 use RakutenPay\Parsers\Parameter;
 use RakutenPay\Parsers\ReceiverEmail;
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 
 /**
  * Class Payment
@@ -78,7 +78,7 @@ class Request extends Error implements Parser
     }
 
     /**
-     * @param \RakutenPay\Resources\Http $http
+     * @param \RakutenPay\Resources\RakutenPay\Http $http
      * @return Response
      */
     public static function success(Http $http)
@@ -89,7 +89,7 @@ class Request extends Error implements Parser
     }
 
     /**
-     * @param \RakutenPay\Resources\Http $http
+     * @param \RakutenPay\Resources\RakutenPay\Http $http
      * @return \RakutenPay\Domains\Error
      */
     public static function error(Http $http)

@@ -22,7 +22,7 @@ namespace RakutenPay\Parsers\Transaction\Search\Date;
 use RakutenPay\Parsers\Error;
 use RakutenPay\Parsers\Parser;
 use RakutenPay\Parsers\Transaction\Search\Date\Response;
-use RakutenPay\Resources\Http;
+use RakutenPay\Resources\RakutenPay\Http;
 
 /**
  * Class Payment
@@ -32,7 +32,7 @@ class Request extends Error implements Parser
 {
 
     /**
-     * @param \RakutenPay\Resources\Http $http
+     * @param \RakutenPay\Resources\RakutenPay\Http $http
      * @return Response
      */
     public static function success(Http $http)
@@ -54,7 +54,7 @@ class Request extends Error implements Parser
     }
 
     /**
-     * @param \RakutenPay\Resources\Http $http
+     * @param \RakutenPay\Resources\RakutenPay\Http $http
      * @return \RakutenPay\Domains\Error
      */
     public static function error(Http $http)
