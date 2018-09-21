@@ -4,7 +4,7 @@
         <payment>
             <groups>
                 <rakutenpay_settings translate="label" module="paygate">
-                    <label>RakutenPay</label>
+                    <label>Rakuten Connector</label>
                     <sort_order>670</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>

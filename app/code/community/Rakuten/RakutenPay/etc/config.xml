@@ -109,7 +109,7 @@
         </translate>
         <menu>
             <rakutenpay_menu translate="title" module="rakutenpay">
-                <title>RakutenPay</title>
+                <title>Rakuten Connector</title>
                 <sort_order>1000</sort_order>
                 <children>
                     <rakutenpay_configuration translate="title" module="rakutenpay">
