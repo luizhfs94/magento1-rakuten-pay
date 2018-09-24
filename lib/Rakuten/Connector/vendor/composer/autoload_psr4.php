@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'RakutenConnector\\' => array($baseDir . '/source'),
+    'Rakuten\\Connector\\' => array($baseDir . '/src'),
 );

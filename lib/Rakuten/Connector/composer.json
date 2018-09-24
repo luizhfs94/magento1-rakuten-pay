@@ -4,7 +4,8 @@
     "license": "",
   "authors": [
     {
-      "name": "RakutenConnector"
+      "name": "Rakuten Connector",
+      "email": "paytech@rakuten.com.br"
     }
   ],
   "require": {
@@ -15,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "RakutenConnector\\": "source/"
+      "Rakuten\\Connector\\": "src/"
     }
   }
 }

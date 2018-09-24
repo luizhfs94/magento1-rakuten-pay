@@ -32,13 +32,13 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
      */
     public function _construct()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Constructing PaymentController.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Constructing PaymentController.');
         $this->payment = new Rakuten_RakutenPay_Model_PaymentMethod();
     }
 
     public function canceledAction()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing canceledAction.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing canceledAction.');
         $order = Mage::getModel('sales/order')->load($this->getCheckout()->getLastOrderId());
         $this->canceledStatus($order);
 
@@ -50,7 +50,7 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
      */
     private function getCheckout()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing getCheckout.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getCheckout.');
         return Mage::getSingleton('checkout/session');
     }
 
@@ -61,7 +61,7 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
      */
     private function canceledStatus($order)
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing canceledStatus.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing canceledStatus.');
         $order->cancel();
         $order->save();
     }
@@ -75,7 +75,7 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
      */
     private function loadAndRenderLayout(Array $items = [], $returnAaJson = false)
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing loadAndRenderLayout.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing loadAndRenderLayout.');
         if ($returnAaJson) {
             $this->getResponse()->clearHeaders()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(json_encode($items));
@@ -95,7 +95,7 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
      */
     public function defaultAction()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing defaultAction in PaymentController.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing defaultAction in PaymentController.');
         $link = null;
 
         try {
@@ -103,7 +103,7 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
             $order = Mage::getModel('sales/order')->load($this->getCheckout()->getLastOrderId());
             $this->payment->setOrder($order);
             /**
-             * @var \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard $payment
+             * @var \Rakuten\Connector\Domains\Requests\DirectPayment\Boleto|\Rakuten\Connector\Domains\Requests\DirectPayment\CreditCard $payment
              */
 
             $payment = $this->payment->paymentDefault();
@@ -111,12 +111,12 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
             $this->payment->addRakutenpayOrders($order);
             $this->payment->clearCheckoutSession($order);
             /**
-             * @var \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard $result
+             * @var \Rakuten\Connector\Domains\Requests\DirectPayment\Boleto|\Rakuten\Connector\Domains\Requests\DirectPayment\CreditCard $result
              */
             $link = $this->payment->paymentRegister($payment);
             $order->sendNewOrderEmail();
         } catch (Exception $exception) {
-            \RakutenConnector\Resources\Log\Logger::error($exception);
+            \Rakuten\Connector\Resources\Log\Logger::error($exception);
             Mage::logException($exception);
             $this->canceledStatus($order);
         }
@@ -131,7 +131,7 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
      */
     public function directAction()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing directAction.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing directAction.');
         $paymentSession = null;
         $order          = null;
         $link           = null;
@@ -140,33 +140,33 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
         $redirect       = null;
 
         try {
-            \RakutenConnector\Resources\Log\Logger::info('Processing directAction in PaymentController.');
+            \Rakuten\Connector\Resources\Log\Logger::info('Processing directAction in PaymentController.');
             /** @var Mage_Sales_Model_Order $order */
             $order = Mage::getModel('sales/order')->load($this->getCheckout()->getLastOrderId());
-            \RakutenConnector\Resources\Log\Logger::info('Loaded the order.');
+            \Rakuten\Connector\Resources\Log\Logger::info('Loaded the order.');
 
             $customerPaymentData = Mage::getSingleton('customer/session')->getData();
-            \RakutenConnector\Resources\Log\Logger::info('Got the payment data.');
+            \Rakuten\Connector\Resources\Log\Logger::info('Got the payment data.');
 
             $this->payment->setOrder($order);
             /**
-             * @var \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard $payment
+             * @var \Rakuten\Connector\Domains\Requests\DirectPayment\Boleto|\Rakuten\Connector\Domains\Requests\DirectPayment\CreditCard $payment
              */
-            \RakutenConnector\Resources\Log\Logger::info('Getting the payment data.');
+            \Rakuten\Connector\Resources\Log\Logger::info('Getting the payment data.');
             $payment = $this->payment->paymentDirect($order->getPayment()->getMethod(), $customerPaymentData);
-            \RakutenConnector\Resources\Log\Logger::info('Got the payment data.');
+            \Rakuten\Connector\Resources\Log\Logger::info('Got the payment data.');
             $this->payment->addRakutenpayOrders($order);
-            \RakutenConnector\Resources\Log\Logger::info('Added the orders.');
+            \Rakuten\Connector\Resources\Log\Logger::info('Added the orders.');
             $this->payment->clearCheckoutSession($order);
-            \RakutenConnector\Resources\Log\Logger::info('Cleared checkout session.');
+            \Rakuten\Connector\Resources\Log\Logger::info('Cleared checkout session.');
             /**
-             * @var \RakutenConnector\Domains\Requests\DirectPayment\Boleto|\RakutenConnector\Domains\Requests\DirectPayment\CreditCard $result
+             * @var \Rakuten\Connector\Domains\Requests\DirectPayment\Boleto|\Rakuten\Connector\Domains\Requests\DirectPayment\CreditCard $result
              */
             $result = $this->payment->paymentRegister($payment);
-            \RakutenConnector\Resources\Log\Logger::info('Registered the payment.');
+            \Rakuten\Connector\Resources\Log\Logger::info('Registered the payment.');
 
             if ($result === false) {
-                \RakutenConnector\Resources\Log\Logger::error('Result is false...');
+                \Rakuten\Connector\Resources\Log\Logger::error('Result is false...');
                 $this->canceledStatus($order);
                 return Mage_Core_Controller_Varien_Action::_redirect('rakutenpay/payment/error', array('_secure'=> false));
             }
@@ -190,11 +190,11 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
                 $redirect = 'rakutenpay/payment/success';
                 $redirectParams = array();
             }
-            \RakutenConnector\Resources\Log\Logger::info('Redirect params: $redirect: ' . var_export($redirect, true) . '\n $redirectParams: ' . var_export($redirectParams, true));
+            \Rakuten\Connector\Resources\Log\Logger::info('Redirect params: $redirect: ' . var_export($redirect, true) . '\n $redirectParams: ' . var_export($redirectParams, true));
             $order->sendNewOrderEmail();
 
         } catch (\Exception $exception) {
-            \RakutenConnector\Resources\Log\Logger::error('Got an exception: ' . var_export($exception, true));
+            \Rakuten\Connector\Resources\Log\Logger::error('Got an exception: ' . var_export($exception, true));
             $this->canceledStatus($order);
             return Mage_Core_Controller_Varien_Action::_redirect('rakutenpay/payment/error', array('_secure'=> false));
         }
@@ -210,14 +210,14 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
      */
     public function requestAction()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing requestAction in PaymentController.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing requestAction in PaymentController.');
         $order = Mage::getModel('sales/order')->load($this->getCheckout()->getLastOrderId());
         $orderPaymentMethod = $order->getPayment()->getMethod();
 
         if ($orderPaymentMethod === 'rakutenpay_boleto' ||$orderPaymentMethod === 'rakutenpay_credit_card') {
             $this->_redirectUrl(Mage::getUrl('rakutenpay/payment/direct'));
         } else {
-            \RakutenConnector\Resources\Log\Logger::error('Método de pagamento inválido para o RakutenPay');
+            \Rakuten\Connector\Resources\Log\Logger::error('Método de pagamento inválido para o RakutenPay');
             return Mage_Core_Controller_Varien_Action::_redirect('rakutenpay/payment/error', array('_secure'=> false));
         }
     }
@@ -227,7 +227,7 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
      */
     public function successAction()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing successAction in PaymentController.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing successAction in PaymentController.');
         return $this->loadAndRenderLayout();
     }
 
@@ -237,7 +237,7 @@ class Rakuten_RakutenPay_PaymentController extends Mage_Core_Controller_Front_Ac
      */
     public function errorAction()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing errorAction in PaymentController.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing errorAction in PaymentController.');
         return $this->loadAndRenderLayout();
     }
 

@@ -72,7 +72,7 @@ class Rakuten_RakutenPay_Model_Observer
 
     public function adminOrderAfterSave($observer)
     {
-        \RakutenConnector\Configuration\Configure::setEnvironment(Mage::getStoreConfig('payment/rakutenpay/environment'));
+        \Rakuten\Connector\Configuration\Configure::setEnvironment(Mage::getStoreConfig('payment/rakutenpay/environment'));
         $order = $observer->getEvent()->getOrder();
 
         if (!$order->getId()) {
@@ -85,13 +85,13 @@ class Rakuten_RakutenPay_Model_Observer
         if ($paymentMethod === 'rakutenpay_boleto' || $paymentMethod === 'rakutenpay_credit_card'){
             /* @var $order Mage_Sales_Model_Order */
 
-            \RakutenConnector\Resources\Log\Logger::info('Processing admin orderAfterSave');
+            \Rakuten\Connector\Resources\Log\Logger::info('Processing admin orderAfterSave');
 
             $OldStatus=$order->getOrigData('status');
             $NewStatus=$order->getStatus();
 
-            \RakutenConnector\Resources\Log\Logger::info(sprintf('OldStatus: %s', $OldStatus));
-            \RakutenConnector\Resources\Log\Logger::info(sprintf('NewStatus: %s', $NewStatus));
+            \Rakuten\Connector\Resources\Log\Logger::info(sprintf('OldStatus: %s', $OldStatus));
+            \Rakuten\Connector\Resources\Log\Logger::info(sprintf('NewStatus: %s', $NewStatus));
 
             if($OldStatus!=$NewStatus){
                 $magentoCancelStatus = array('chargeback', 'refunded', 'canceled');

@@ -24,10 +24,10 @@ class Rakuten_RakutenPay_NotificationController extends Mage_Core_Controller_Fro
      */
     public function sendAction()
     {
-        \RakutenConnector\Resources\Log\Logger::info("Received webhook call.", ['service' => 'WEBHOOK']);
+        \Rakuten\Connector\Resources\Log\Logger::info("Received webhook call.", ['service' => 'WEBHOOK']);
         $entity_headers = null;
         if (!function_exists('apache_request_headers')) {
-            \RakutenConnector\Resources\Log\Logger::info("We ain't got the (apache_request_headers) method...", ['service' => 'WEBHOOK']);
+            \Rakuten\Connector\Resources\Log\Logger::info("We ain't got the (apache_request_headers) method...", ['service' => 'WEBHOOK']);
             $headers = [];
             foreach ($_SERVER as $name => $value)
             {
@@ -40,26 +40,26 @@ class Rakuten_RakutenPay_NotificationController extends Mage_Core_Controller_Fro
         } else {
             $entity_headers = apache_request_headers();
         }
-        \RakutenConnector\Resources\Log\Logger::info("Got all headers.", ['service' => 'WEBHOOK']);
+        \Rakuten\Connector\Resources\Log\Logger::info("Got all headers.", ['service' => 'WEBHOOK']);
         $entity_body = file_get_contents('php://input');
-        \RakutenConnector\Resources\Log\Logger::info("Got the contents.", ['service' => 'WEBHOOK']);
+        \Rakuten\Connector\Resources\Log\Logger::info("Got the contents.", ['service' => 'WEBHOOK']);
         $sig_key = \Mage::getStoreConfig('payment/rakutenpay/signature_key');
-        \RakutenConnector\Resources\Log\Logger::info("Got the sig key.", ['service' => 'WEBHOOK']);
+        \Rakuten\Connector\Resources\Log\Logger::info("Got the sig key.", ['service' => 'WEBHOOK']);
         $signature = hash_hmac('sha256', $entity_body, $sig_key, true);
-        \RakutenConnector\Resources\Log\Logger::info("Calculated the signature.", ['service' => 'WEBHOOK']);
+        \Rakuten\Connector\Resources\Log\Logger::info("Calculated the signature.", ['service' => 'WEBHOOK']);
         $signature_base64 = base64_encode($signature);
-        \RakutenConnector\Resources\Log\Logger::info("Encoded the signature.", ['service' => 'WEBHOOK']);
+        \Rakuten\Connector\Resources\Log\Logger::info("Encoded the signature.", ['service' => 'WEBHOOK']);
         if (empty($entity_body)) {
-            \RakutenConnector\Resources\Log\Logger::info("Empty entity body.", ['service' => 'WEBHOOK']);
+            \Rakuten\Connector\Resources\Log\Logger::info("Empty entity body.", ['service' => 'WEBHOOK']);
             return;
         }
         if (!array_key_exists('Signature', $entity_headers) || $entity_headers['Signature'] !== $signature_base64) {
-            \RakutenConnector\Resources\Log\Logger::info("Signature does not match.", ['service' => 'WEBHOOK']);
+            \Rakuten\Connector\Resources\Log\Logger::info("Signature does not match.", ['service' => 'WEBHOOK']);
             throw new \Exception("Signature does not match...");
         }
-        \RakutenConnector\Resources\Log\Logger::info("All OK, processing.", ['service' => 'WEBHOOK']);
+        \Rakuten\Connector\Resources\Log\Logger::info("All OK, processing.", ['service' => 'WEBHOOK']);
         $helper = Mage::helper('rakutenpay');
-        \RakutenConnector\Resources\Log\Logger::info("Created helper.", ['service' => 'WEBHOOK']);
+        \Rakuten\Connector\Resources\Log\Logger::info("Created helper.", ['service' => 'WEBHOOK']);
         $helper->notificationModel()->initialize($entity_body, $entity_headers);
     }
 }

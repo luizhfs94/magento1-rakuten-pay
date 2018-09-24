@@ -32,13 +32,13 @@ class Rakuten_RakutenPay_Model_NotificationMethod extends MethodAbstract
      */
     public function __construct()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Constructing ModelNotificationMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Constructing ModelNotificationMethod.');
         $this->helper = Mage::helper('rakutenpay');
     }
 
     public function initialize($post, $state)
     {
-        \RakutenConnector\Resources\Log\Logger::info("Initializing the notification model.", ['service' => 'WEBHOOK']);
+        \Rakuten\Connector\Resources\Log\Logger::info("Initializing the notification model.", ['service' => 'WEBHOOK']);
         $this->post = json_decode($post, true);
         $this->getNotificationPost();
         $this->setNotificationUpdateOrder();
@@ -46,7 +46,7 @@ class Rakuten_RakutenPay_Model_NotificationMethod extends MethodAbstract
 
     private function getNotificationPost()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing getNotificationPost in ModelNotificationMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getNotificationPost in ModelNotificationMethod.');
         $this->webhookStatus = $this->post['status'];
         $this->webhookReference = $this->post['reference'];
         if ($this->webhookStatus == 'approved') {
@@ -61,15 +61,15 @@ class Rakuten_RakutenPay_Model_NotificationMethod extends MethodAbstract
 
     private function setNotificationUpdateOrder()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing setNotificationUpdateOrder in ModelNotificationMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing setNotificationUpdateOrder in ModelNotificationMethod.');
         $orderId = $this->helper->getOrderIdFromReference($this->webhookReference);
         $transactionCode = $this->webhookStatus;
         $orderStatus = $this->helper->getPaymentStatusFromKey($transactionCode);
-        \RakutenConnector\Resources\Log\Logger::info("Processing webhook with transaction: " . $orderId
+        \Rakuten\Connector\Resources\Log\Logger::info("Processing webhook with transaction: " . $orderId
                     . "; Status: ". $orderStatus . "; Amount: " . $this->amount,
                     ['service' => 'WEBHOOK']);
         if ($orderStatus == false) {
-            \RakutenConnector\Resources\Log\Logger::error("Cannot process webhook with transaction: " . $transactionCode,
+            \Rakuten\Connector\Resources\Log\Logger::error("Cannot process webhook with transaction: " . $transactionCode,
                     ['service' => 'WEBHOOK']);
             return;
         }

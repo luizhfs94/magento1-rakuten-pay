@@ -21,7 +21,7 @@ class Rakuten_RakutenPay_Model_Checkout
 {
     public function toOptionArray()
     {
-        \RakutenConnector\Resources\Log\Logger::info('Processing toOptionArray in ModelCheckout.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing toOptionArray in ModelCheckout.');
         $helper = Mage::helper('rakutenpay');
 
         return array(
