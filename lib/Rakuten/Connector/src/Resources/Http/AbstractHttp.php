@@ -28,6 +28,18 @@ use Rakuten\Connector\Resources\Log\Logger;
 abstract class AbstractHttp extends Response implements Method
 {
     /**
+     * Http constructor.
+     * @throws \Exception
+     */
+    public function __construct()
+    {
+        Logger::info('Constructing Http in RakutenConnector.');
+        if (!function_exists('curl_init')) {
+            throw new \Exception('RakutenConnector Library: cURL library is required.');
+        }
+    }
+
+    /**
      * @param $method
      * @param $url
      * @param $timeout

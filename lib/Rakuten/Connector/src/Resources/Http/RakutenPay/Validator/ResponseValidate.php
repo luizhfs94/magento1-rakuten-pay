@@ -17,14 +17,14 @@
  ************************************************************************
  */
 
-namespace Rakuten\Connector\Resources\RakutenPay\Validator;
+namespace Rakuten\Connector\Resources\Http\RakutenPay\Validator;
 
 use Rakuten\Connector\Resources\Log\Logger;
 use Mage;
 
 /**
  * Class ResponseValidate
- * @package Rakuten\Connector\Resources\RakutenPay\Validator
+ * @package Rakuten\Connector\Resources\Http\RakutenPay\Validator
  */
 class ResponseValidate
 {

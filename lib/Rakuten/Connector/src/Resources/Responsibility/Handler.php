@@ -19,7 +19,7 @@
 
 namespace Rakuten\Connector\Resources\Responsibility;
 
-use \Rakuten\Connector\Resources\RakutenPay\Http;
+use \Rakuten\Connector\Resources\Http\RakutenPay\Http;
 
 /**
  * Interface Handler
@@ -34,7 +34,7 @@ interface Handler
     public function successor($next);
 
     /**
-     * @param \Rakuten\Connector\Resources\RakutenPay\Http $http
+     * @param \Rakuten\Connector\Resources\Http\RakutenPay\Http $http
      * @param $class
      * @return mixed
      */

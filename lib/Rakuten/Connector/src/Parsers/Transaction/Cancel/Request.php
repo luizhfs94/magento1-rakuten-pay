@@ -22,7 +22,7 @@ namespace Rakuten\Connector\Parsers\Transaction\Cancel;
 use Rakuten\Connector\Enum\Properties\Current;
 use Rakuten\Connector\Parsers\Error;
 use Rakuten\Connector\Parsers\Parser;
-use Rakuten\Connector\Resources\RakutenPay\Http;
+use Rakuten\Connector\Resources\Http\RakutenPay\Http;
 
 /**
  * Class Request

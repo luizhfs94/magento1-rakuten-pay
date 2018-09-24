@@ -22,7 +22,7 @@ namespace Rakuten\Connector\Parsers\Transaction\Notification;
 use Rakuten\Connector\Parsers\Error;
 use Rakuten\Connector\Parsers\Parser;
 use Rakuten\Connector\Parsers\Transaction\Response;
-use Rakuten\Connector\Resources\RakutenPay\Http;
+use Rakuten\Connector\Resources\Http\RakutenPay\Http;
 
 /**
  * Class Request
@@ -32,7 +32,7 @@ class Request extends Error implements Parser
 {
 
     /**
-     * @param \Rakuten\Connector\Resources\RakutenPay\Http $http
+     * @param \Rakuten\Connector\Resources\Http\RakutenPay\Http $http
      * @return Response
      */
     public static function success(Http $http)
@@ -62,7 +62,7 @@ class Request extends Error implements Parser
     }
 
     /**
-     * @param \Rakuten\Connector\Resources\RakutenPay\Http $http
+     * @param \Rakuten\Connector\Resources\Http\RakutenPay\Http $http
      * @return \RakutenPay\Domains\Error
      */
     public static function error(Http $http)

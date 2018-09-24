@@ -29,14 +29,14 @@ use Rakuten\Connector\Resources\Log\Logger;
  */
 class Billet extends Error implements Parser
 {
-    public static function success(\Rakuten\Connector\Resources\RakutenPay\Http $http)
+    public static function success(\Rakuten\Connector\Resources\Http\RakutenPay\Http $http)
     {
         $data = json_decode($http->getResponse(), true);
 
         return $data['html'];
     }
 
-    public static function error(\Rakuten\Connector\Resources\RakutenPay\Http $http)
+    public static function error(\Rakuten\Connector\Resources\Http\RakutenPay\Http $http)
     {
         Logger::error('Failed to obtain billet data.');
     }

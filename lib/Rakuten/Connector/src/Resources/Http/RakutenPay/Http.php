@@ -17,32 +17,20 @@
  ************************************************************************
  */
 
-namespace Rakuten\Connector\Resources\RakutenPay;
+namespace Rakuten\Connector\Resources\Http\RakutenPay;
 
 use Rakuten\Connector\Resources\Http\AbstractHttp;
 use Rakuten\Connector\Resources\Log\Logger;
 use Rakuten\Connector\Helpers\JsonFormat;
-use Rakuten\Connector\Resources\RakutenPay\Validator\ResponseValidate;
+use Rakuten\Connector\Resources\Http\RakutenPay\Validator\ResponseValidate;
 use Mage;
 
 /**
  * Class Http
- * @package Rakuten\Connector\Resources\RakutenPay
+ * @package Rakuten\Connector\Resources\Http\RakutenPay
  */
 class Http extends AbstractHttp
 {
-    /**
-     * Http constructor.
-     * @throws \Exception
-     */
-    public function __construct()
-    {
-        Logger::info('Constructing Http in Domain RakutenPay.');
-        if (!function_exists('curl_init')) {
-            throw new \Exception('RakutenConnector Library: cURL library is required.');
-        }
-    }
-
     /**
      * @param $method
      * @param $url
@@ -55,6 +43,7 @@ class Http extends AbstractHttp
      */
     protected function curlConnection($method, $url, $timeout, $charset, array $data = null, $secureGet = true)
     {
+        Logger::info('Processing curlConnection in RakutenPay.');
         $options = [
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
@@ -71,6 +60,7 @@ class Http extends AbstractHttp
 
             $methodOptions = $this->getCurlHeader($method, $url, $data);
             $options = ($options + $methodOptions);
+            Logger::info(sprintf('Headers RakutenPay: %s', json_encode($options)), ['service' => 'HTTP.HEADER']);
             $curl = curl_init();
             curl_setopt_array($curl, $options);
             $response = curl_exec($curl);

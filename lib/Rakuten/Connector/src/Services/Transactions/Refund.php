@@ -21,7 +21,7 @@ namespace Rakuten\Connector\Services\Transactions;
 
 use Rakuten\Connector\Parsers\Transaction\Refund\Request;
 use Rakuten\Connector\Resources\Connection;
-use Rakuten\Connector\Resources\RakutenPay\Http;
+use Rakuten\Connector\Resources\Http\RakutenPay\Http;
 use Rakuten\Connector\Resources\Log\Logger;
 use Rakuten\Connector\Resources\Responsibility;
 

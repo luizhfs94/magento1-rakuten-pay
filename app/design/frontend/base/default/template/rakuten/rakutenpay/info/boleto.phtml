@@ -20,7 +20,7 @@
 
 <script>
 <?php
-    $http = new \Rakuten\Connector\Resources\RakutenPay\Http();
+    $http = new \Rakuten\Connector\Resources\Http\RakutenPay\Http();
     $billet_url = $this->getBilletUrl();
     if(!empty($billet_url)):
         $http->get($this->getBilletUrl(), 20, 'ISO-8859-1', false);

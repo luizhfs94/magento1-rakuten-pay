@@ -49,9 +49,17 @@ class EnvironmentInformation
     /**
      * @return string
      */
-    public static function getModuleVersion()
+    public static function getRakutenPayVersion()
     {
         return Mage::getConfig()->getModuleConfig("Rakuten_RakutenPay")->version;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getRakutenLogisticsVersion()
+    {
+        return Mage::getConfig()->getModuleConfig("Rakuten_RakutenLogistics")->version;
     }
 
     /**

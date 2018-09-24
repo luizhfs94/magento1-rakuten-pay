@@ -179,7 +179,7 @@ class Logger implements LoggerInterface
 
         $dateTime = new \DateTime('NOW');
         return sprintf(
-            "\n%1s RakutenPay.%s[%1s]: %s", //"%1sRakutenPay.%2s[%3s]: %4s"
+            "\n%1s RakutenConnector.%s[%1s]: %s", //"%1sRakutenConnector.%2s[%3s]: %4s"
             $dateTime->format("d/m/Y H:i:s"),
             !array_key_exists("service", $context)? '' :sprintf("%1s", $context['service']),
             $level,

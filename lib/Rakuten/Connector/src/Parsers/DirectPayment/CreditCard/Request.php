@@ -25,7 +25,7 @@ use Rakuten\Connector\Parsers\Customer;
 use Rakuten\Connector\Parsers\Error;
 use Rakuten\Connector\Parsers\Order;
 use Rakuten\Connector\Parsers\Parser;
-use Rakuten\Connector\Resources\RakutenPay\Http;
+use Rakuten\Connector\Resources\Http\RakutenPay\Http;
 use Rakuten\Connector\Parsers\Transaction\CreditCard\Response;
 use Rakuten\Connector\Domains\Requests\DirectPayment\CreditCard;
 use Rakuten\Connector\Resources\Log\Logger;

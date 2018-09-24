@@ -19,7 +19,7 @@
 
 namespace Rakuten\Connector\Parsers;
 
-use Rakuten\Connector\Resources\RakutenPay\Http;
+use Rakuten\Connector\Resources\Http\RakutenPay\Http;
 
 /**
  * Class Error
@@ -28,7 +28,7 @@ use Rakuten\Connector\Resources\RakutenPay\Http;
 class Error
 {
     /**
-     * @param \Rakuten\Connector\Resources\RakutenPay\Http $http
+     * @param \Rakuten\Connector\Resources\Http\RakutenPay\Http $http
      * @return \Rakuten\Connector\Domains\Error
      */
     protected static function error(Http $http)
