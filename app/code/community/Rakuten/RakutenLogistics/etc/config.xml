@@ -115,7 +115,7 @@
          <carriers>
             <rakuten_rakutenlogistics>
                 <active>1</active>
-                <model>rakuten_rakutenlogistics/shipping_carrier_rakutenlogistics</model>
+                <model>Rakuten_RakutenLogistics_Model_Shipping_Carrier_RakutenLogistics</model>
                 <title>Rakuten Logistics</title>
                 <name>Default Rate</name>
                 <sallowspecific>0</sallowspecific>
