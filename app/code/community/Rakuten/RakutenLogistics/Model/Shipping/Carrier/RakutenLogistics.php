@@ -39,15 +39,13 @@ class Rakuten_RakutenLogistics_Model_Shipping_Carrier_RakutenLogistics
      * @param Mage_Shipping_Model_Rate_Request $request
      * @return bool|false|Mage_Core_Model_Abstract|Mage_Shipping_Model_Rate_Result|null
      */
-    public function collectRates(
-        Mage_Shipping_Model_Rate_Request $request
-    )
+    public function collectRates(Mage_Shipping_Model_Rate_Request $request)
     {
         \Rakuten\Connector\Resources\Log\Logger::info('Processing collectRates in RakutenLogistics');
-        $enabled = Mage::getStoreConfig('carriers/rakutenlogistics_settings/enabled');
+        $isActive = (bool) Mage::getStoreConfig('carriers/rakutenlogistics_settings/active');
 
-        if($enabled == "no"){
-            return false;
+        if (false === $isActive) {
+            return $isActive;
         } 
         
         $result = Mage::getModel('shipping/rate_result');
@@ -59,7 +57,7 @@ class Rakuten_RakutenLogistics_Model_Shipping_Carrier_RakutenLogistics
         $dataHelper = Mage::helper('rakutenlogistics/data');
         $dataHelper->saveCalculationCode($carriers['content']['code']);
 
-        foreach($shippingOptions as $option){
+        foreach($shippingOptions as $option) {
             $rate = Mage::getModel('shipping/rate_result_method');
 
             $rate->setCarrier($this->_code);
@@ -69,8 +67,8 @@ class Rakuten_RakutenLogistics_Model_Shipping_Carrier_RakutenLogistics
             $rate->setPrice($option['final_cost']);
             $rate->setCost(0);
             $result->append($rate);
-        }   
-      
+        }
+
         return $result;
     }
 
@@ -91,5 +89,4 @@ class Rakuten_RakutenLogistics_Model_Shipping_Carrier_RakutenLogistics
 
         return $result;
     }
-
 }
