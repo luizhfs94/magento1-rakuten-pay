@@ -31,7 +31,6 @@ class Rakuten_RakutenLogistics_InvoiceDataController extends Mage_Adminhtml_Cont
         \Rakuten\Connector\Resources\Log\Logger::info('Processing editAction in InvoiceDataController.');
         $orderIncrementId = $this->getRequest()->getParam('order_increment_id');  
         $order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
-        \Rakuten\Connector\Resources\Log\Logger::info('Order: ', ['service' => json_encode($order)]);
         if ($order->getId()) {
             Mage::register('order_data', $order);
             $this->loadLayout();
@@ -54,7 +53,6 @@ class Rakuten_RakutenLogistics_InvoiceDataController extends Mage_Adminhtml_Cont
         \Rakuten\Connector\Resources\Log\Logger::info('Processing saveAction in InvoiceDataController.');
         $orderIncrementId = $this->getRequest()->getParam('order_increment_id');  
         $order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
-        \Rakuten\Connector\Resources\Log\Logger::info('Order: ', ['service' => json_encode($order)]);
         if ($order->getId() || $orderIncrementId == 0) {
             $parameters = $this->getRequest()->getParams();
             $order->setOrderInvoiceSerie($parameters['order_invoice_serie']);
