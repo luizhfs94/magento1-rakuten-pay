@@ -1,0 +1,22 @@
+{
+  "name": "rakuten/connector",
+  "description": "Biblioteca de integração com o RakutenPay e RakutenLogistics",
+    "license": "",
+  "authors": [
+    {
+      "name": "Rakuten Connector",
+      "email": "paytech@rakuten.com.br"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.27",
+    "ext-curl": "*",
+    "lib-curl": "*",
+    "lib-openssl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Rakuten\\Connector\\": "src/"
+    }
+  }
+}

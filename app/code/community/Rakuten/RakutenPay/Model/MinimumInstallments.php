@@ -21,7 +21,7 @@ class Rakuten_RakutenPay_Model_MinimumInstallments
 {
     public function toOptionArray()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing toOptionArray in ModelMinimumInstallment.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing toOptionArray in ModelMinimumInstallment.');
         return array(
             array("value" => 1, "label" => "1"),
             array("value" => 2, "label" => "2"),

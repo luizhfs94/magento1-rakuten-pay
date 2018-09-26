@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Rakuten_RakutenPay>
-            <version>1.0.9</version>
+            <version>1.1.0</version>
         </Rakuten_RakutenPay>
     </modules>
     <global>
@@ -109,11 +109,11 @@
         </translate>
         <menu>
             <rakutenpay_menu translate="title" module="rakutenpay">
-                <title>RakutenPay</title>
+                <title>Rakuten Connector</title>
                 <sort_order>1000</sort_order>
                 <children>
                     <rakutenpay_configuration translate="title" module="rakutenpay">
-                        <title>Configura&#xE7;&#xE3;o</title>
+                        <title>Pay</title>
                         <action>adminhtml/system_config/edit/section/payment/</action>
                         <sort_order>2000</sort_order>
                     </rakutenpay_configuration>

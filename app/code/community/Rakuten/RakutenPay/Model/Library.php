@@ -30,10 +30,10 @@ class Rakuten_RakutenPay_Model_Library
         defined("SHIPPING_TYPE") or define("SHIPPING_TYPE", 3);
         defined("SHIPPING_COST") or define("SHIPPING_COST", 0.00);
         defined("CURRENCY") or define("CURRENCY", "BRL");
-        \RakutenPay\Library::initialize();
-        \RakutenPay\Library::cmsVersion()->setName('Magento')->setRelease(Mage::getVersion());
-        \RakutenPay\Library::moduleVersion()->setName('RakutenPay')->setRelease(Mage::getConfig()->getModuleConfig("Rakuten_RakutenPay")->version);
-        \RakutenPay\Configuration\Configure::setCharset('UTF-8');
+        \Rakuten\Connector\Library::initialize();
+        \Rakuten\Connector\Library::cmsVersion()->setName('Magento')->setRelease(Mage::getVersion());
+        \Rakuten\Connector\Library::moduleVersion()->setName('RakutenPay')->setRelease(Mage::getConfig()->getModuleConfig("Rakuten_RakutenPay")->version);
+        \Rakuten\Connector\Configuration\Configure::setCharset('UTF-8');
         $this->setCharset();
         $this->setEnvironment();
         $this->setLog();
@@ -44,7 +44,7 @@ class Rakuten_RakutenPay_Model_Library
      */
     private function setCharset()
     {
-        \RakutenPay\Configuration\Configure::setCharset('UTF-8');
+        \Rakuten\Connector\Configuration\Configure::setCharset('UTF-8');
     }
 
     /**
@@ -52,7 +52,7 @@ class Rakuten_RakutenPay_Model_Library
      */
     private function setEnvironment()
     {
-        \RakutenPay\Configuration\Configure::setEnvironment(Mage::getStoreConfig('payment/rakutenpay/environment'));
+        \Rakuten\Connector\Configuration\Configure::setEnvironment(Mage::getStoreConfig('payment/rakutenpay/environment'));
     }
 
     /**
@@ -61,25 +61,25 @@ class Rakuten_RakutenPay_Model_Library
     private function setLog()
     {
         if (Mage::getStoreConfig('payment/rakutenpay/log')) {
-            \RakutenPay\Configuration\Configure::setLog(true,
+            \Rakuten\Connector\Configuration\Configure::setLog(true,
                 Mage::getBaseDir().Mage::getStoreConfig('payment/rakutenpay/log_file'));
         } else {
-            \RakutenPay\Configuration\Configure::setLog(false, null);
+            \Rakuten\Connector\Configuration\Configure::setLog(false, null);
         }
     }
 
     /**
-     * @return \RakutenPay\Domains\AccountCredentials
+     * @return \Rakuten\Connector\Domains\AccountCredentials
      */
     public function getAccountCredentials()
     {
-        \RakutenPay\Configuration\Configure::setAccountCredentials(
+        \Rakuten\Connector\Configuration\Configure::setAccountCredentials(
             Mage::getStoreConfig('payment/rakutenpay/cnpj'),
             Mage::getStoreConfig('payment/rakutenpay/api_key'),
             Mage::getStoreConfig('payment/rakutenpay/signature_key')
         );
 
-        return \RakutenPay\Configuration\Configure::getAccountCredentials();
+        return \Rakuten\Connector\Configuration\Configure::getAccountCredentials();
     }
 
     /**

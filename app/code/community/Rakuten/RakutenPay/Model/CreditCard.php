@@ -44,7 +44,7 @@ class Rakuten_RakutenPay_Model_CreditCard extends Mage_Payment_Model_Method_Abst
      */
     public function assignData($data)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing assignData in ModelCreditCard.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing assignData in ModelCreditCard.');
         $info = $this->getInfoInstance();
 
         if ($data->getCreditCardCpf()) {
@@ -123,7 +123,7 @@ class Rakuten_RakutenPay_Model_CreditCard extends Mage_Payment_Model_Method_Abst
      */
     public function validate()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing validate in ModelCreditCard.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing validate in ModelCreditCard.');
         parent::validate();
         $info = $this->getInfoInstance();
 
@@ -135,7 +135,7 @@ class Rakuten_RakutenPay_Model_CreditCard extends Mage_Payment_Model_Method_Abst
      */
     public function getOrderPlaceRedirectUrl()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getOrderPlaceRedirectUrl in ModelCreditCard.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getOrderPlaceRedirectUrl in ModelCreditCard.');
         return Mage::getUrl('rakutenpay/payment/request');
     }
 }

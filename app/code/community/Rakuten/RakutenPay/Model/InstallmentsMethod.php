@@ -35,7 +35,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     public function __construct()
     {
-        \RakutenPay\Resources\Log\Logger::info('Constructing ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Constructing ModelInstallmentsMethod.');
         $this->helper = Mage::helper('rakutenpay');
         $this->library = new Rakuten_RakutenPay_Model_Library();
     }
@@ -50,7 +50,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     public function create($amount)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing create in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing create in ModelInstallmentsMethod.');
         $this->helper = Mage::helper('rakutenpay');
         try {
             $session = \Mage::getSingleton('checkout/session');
@@ -71,7 +71,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     private function getMaxNoInstallments($amount, $minimum_value)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getMaxNoInstallments in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getMaxNoInstallments in ModelInstallmentsMethod.');
         if (is_null($minimum_value) || is_nan($minimum_value) || $minimum_value < 0) {
             $minimum_value = 10.0;
         }
@@ -84,16 +84,16 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     private function createInstallments($amount, $minimum_value)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing createInstallments in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing createInstallments in ModelInstallmentsMethod.');
         $arr = [];
         if (Mage::getStoreConfig('payment/rakutenpay_credit_card/customer_interest') == 1)
         {
-            $checkout = \RakutenPay\Services\Transactions\Checkout::get(
+            $checkout = \Rakuten\Connector\Services\Transactions\Checkout::get(
                 ['amount' => $amount]
             );
             $minimum_installment = (int)Mage::getStoreConfig('payment/rakutenpay_credit_card/customer_interest_minimum_installments');
             foreach($checkout->getCreditCardPayment()->getInstallments() as $customerInterestInstallment) {
-                $installment = new RakutenPay\Domains\Responses\Installment;
+                $installment = new Rakuten\Connector\Domains\Responses\Installment;
                 if ((int)$customerInterestInstallment->getQuantity() >= $minimum_installment){
                     $installment
                     ->setAmount($customerInterestInstallment->getInstallmentAmount())
@@ -122,7 +122,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
                 $value = ceil($value * 100) / 100;// rounds up to the nearest cent
                 $total = $value * $mo;
                 $total = ceil($total * 100) / 100;
-                $installment = new RakutenPay\Domains\Responses\Installment;
+                $installment = new Rakuten\Connector\Domains\Responses\Installment;
                 $installment
                 ->setAmount($value)
                 ->setQuantity($mo)
@@ -146,7 +146,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     private function output($installments, $maxInstallment)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing output in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing output in ModelInstallmentsMethod.');
         return ($maxInstallment) ?
             $this->formatOutput($this->getMaxInstallment($installments)) :
             $this->formatOutput($installments);
@@ -161,7 +161,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     private function formatOutput($installments)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing formatOutput in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing formatOutput in ModelInstallmentsMethod.');
         $response = $this->getOptions();
         foreach ($installments as $installment) {
             $response['installments'][] = $this->formatInstallments($installment);
@@ -179,11 +179,11 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     private function formatInstallments($installment)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing formatInstallments in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing formatInstallments in ModelInstallmentsMethod.');
         return array(
             'quantity'        => $installment->getQuantity(),
             'amount'          => $installment->getAmount(),
-            'totalAmount'     => RakutenPay\Helpers\Currency::toDecimal($installment->getTotalAmount()),
+            'totalAmount'     => Rakuten\Connector\Helpers\Currency::toDecimal($installment->getTotalAmount()),
             'text'            => str_replace('.', ',', $this->getInstallmentText($installment)),
             'interestAmount'  => $installment->getInterestAmount(),
             'interestPercent' => $installment->getInterestPercent()
@@ -199,7 +199,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     private function getInstallmentText($installment)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getInstallmentText in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getInstallmentText in ModelInstallmentsMethod.');
         return sprintf(
             "%s x de R$ %.2f %s juros",
             $installment->getQuantity(),
@@ -216,7 +216,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     private function getInterestFreeText($insterestFree)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getInterestFreeText in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getInterestFreeText in ModelInstallmentsMethod.');
         return ($insterestFree == 'true') ? 'sem' : 'com';
     }
 
@@ -229,7 +229,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     private function getMaxInstallment($installments)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getMaxInstallment in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getMaxInstallment in ModelInstallmentsMethod.');
         $final = $current = array('brand' => '', 'start' => 0, 'final' => 0, 'quantity' => 0);
         foreach ($installments as $key => $installment) {
             if ($current['brand'] !== $installment->getCardBrand()) {
@@ -255,7 +255,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      */
     public function enabled()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing enabled in ModelInstallmentsMethod.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing enabled in ModelInstallmentsMethod.');
         return (Mage::getStoreConfig('payment/rakutenpay/installments') == 1) ?
             true :
             false;

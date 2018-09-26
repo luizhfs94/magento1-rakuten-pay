@@ -33,19 +33,19 @@ class Rakuten_RakutenPay_Helper_Webservice extends Rakuten_RakutenPay_Helper_Dat
     public function __construct()
     {
         parent::__construct();
-        \RakutenPay\Resources\Log\Logger::info('Constructing HelperWebservice.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Constructing HelperWebservice.');
         $this->library = new Rakuten_RakutenPay_Model_Library();
     }
 
     /**
      * @param $transactionCode
      *
-     * @return \RakutenPay\Services\Transactions\Notification
+     * @return \Rakuten\Connector\Services\Transactions\Notification
      */
     public function getNotification()
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getNotification in HelperWebservice.');
-        return \RakutenPay\Services\Transactions\Notification::check();
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getNotification in HelperWebservice.');
+        return \Rakuten\Connector\Services\Transactions\Notification::check();
     }
 
     /**
@@ -58,10 +58,10 @@ class Rakuten_RakutenPay_Helper_Webservice extends Rakuten_RakutenPay_Helper_Dat
      */
     public function getTransactionsByDate($page, $maxPageResults, $initialDate)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing getTransactionsByDate in HelperWebservice.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getTransactionsByDate in HelperWebservice.');
         $response = null;
         try {
-            $response = \RakutenPay\Services\Transactions\Search\Date::search(
+            $response = \Rakuten\Connector\Services\Transactions\Search\Date::search(
                 array('initial_date' => $initialDate, 'page' => $page, 'max_per_page' => $maxPageResults)
             );
         } catch (Exception $e) {
@@ -76,13 +76,13 @@ class Rakuten_RakutenPay_Helper_Webservice extends Rakuten_RakutenPay_Helper_Dat
     /**
      * @param $transactionCode
      *
-     * @return \RakutenPay\Services\Transactions\Refund
+     * @return \Rakuten\Connector\Services\Transactions\Refund
      */
     public function refundRequest($transactionCode, $refundValue = null, $kind = 'total',
             $reason = 'merchant_other', $bankData = null, $paymentId = null)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing refundRequest in HelperWebservice.');
-        return \RakutenPay\Services\Transactions\Refund::create(
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing refundRequest in HelperWebservice.');
+        return \Rakuten\Connector\Services\Transactions\Refund::create(
             $transactionCode,
             $refundValue,
             $kind,
@@ -101,12 +101,12 @@ class Rakuten_RakutenPay_Helper_Webservice extends Rakuten_RakutenPay_Helper_Dat
      */
     public function requestRakutenPayService($class, $transactionCode)
     {
-        \RakutenPay\Resources\Log\Logger::info('Processing requestRakutenPayService in HelperWebservice.');
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing requestRakutenPayService in HelperWebservice.');
         try {
             if ($class == 'Rakuten_RakutenPay_Adminhtml_RefundController') {
-                return \RakutenPay\Services\Transactions\Refund::create($transactionCode);
+                return \Rakuten\Connector\Services\Transactions\Refund::create($transactionCode);
             } elseif ($class == 'Rakuten_RakutenPay_Model_NotificationMethod') {
-                return \RakutenPay\Services\Transactions\Notification::check();
+                return \Rakuten\Connector\Services\Transactions\Notification::check();
             }
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
