@@ -62,20 +62,20 @@
         <div class="rakutenpay-cc-label-div">
             <label
                 class="rakutenpay-required"
-                for="creditCardNum">
+                for="creditCardNumVisible">
                 Número do cartão
             </label>
         </div>
         <div class="rakutenpay-cc-input-div">
             <input
                 class="rakutenpay-cc-input"
-                id="creditCardNum"
+                id="creditCardNumVisible"
                 type="text"
                 data-rkp="card-number"
                 maxlength="19"
                 onkeydown="creditCardMask(event, this)"
                 onblur="creditCardMask(event, this); getBrand(this);">
-            <div class="display-none validation-advice creditCardNum-error-message">Insira um número de cartão válido</div>
+            <div class="display-none validation-advice creditCardNumVisible-error-message">Insira um número de cartão válido</div>
         </div>
     </div>
     <div class="rakutenpay-label-spacing rakutenpay-cc-group-div">
@@ -197,6 +197,7 @@
         </div>
     </div>
 
+    <input type="hidden" id="creditCardNum" data-rkp="card-number">
     <input type="hidden" id="creditCardHash" value="" name="payment[credit_card_hash]">
     <input type="hidden" id="creditCardToken" value="" name="payment[credit_card_token]">
     <input type="hidden" id="creditCardBrand" name="payment[credit_card_brand]">

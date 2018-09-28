@@ -167,8 +167,12 @@ function validateCnpj(self) {
  * @returns {undefined}
  */
 function displayError(target, error = true) {
-  target = document.getElementsByClassName(target.id + '-error-message')[0]
-  if (error && target.classList.contains('display-none')) {
+    if (target.id === 'creditCardNum') {
+        target = document.getElementsByClassName(target.id + 'Visible-error-message')[0]
+    } else {
+        target = document.getElementsByClassName(target.id + '-error-message')[0]
+    }
+    if (error && target.classList.contains('display-none')) {
     target.classList.remove('display-none')
   } else if (!error) {
     target.classList.add('display-none')
@@ -223,6 +227,8 @@ function MaskCPF(event, cpf) {
  * @returns {Boolean}
  */
 function creditCardMask(event, cc) {
+  var creditCardNum = document.getElementById("creditCardNum");
+  creditCardNum.value = cc.value;
   maskInteger(event, cc);
   return formatField(cc, '0000 0000 0000 0000', event);
 }

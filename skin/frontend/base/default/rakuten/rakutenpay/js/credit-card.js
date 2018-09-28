@@ -115,10 +115,10 @@ function validateCreditCardInstallment(self) {
 function getBrand(self) {
   if (validateCreditCard(self)) {
     var rpay = new RPay();
-    brand = rpay.cardBrand(unmask(document.getElementById('creditCardNum').value));
+    brand = rpay.cardBrand(unmask(document.getElementById('creditCardNumVisible').value));
     document.getElementById('creditCardBrand').value = brand;
   } else {
-    displayError(document.getElementById('creditCardNum'))
+    displayError(document.getElementById('creditCardNumVisible'))
   }
 }
 
