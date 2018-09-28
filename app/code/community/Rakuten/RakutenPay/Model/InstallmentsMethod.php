@@ -24,6 +24,9 @@ use Mage_Payment_Model_Method_Abstract as MethodAbstract;
  */
 class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
 {
+    const DEFAULT_MINIMUM_VALUE = 10.0;
+    const DEFAULT_INSTALLMENTS = 1;
+
     protected $_code = 'rakutenpay';
     /**
      * @var Rakuten_RakutenPay_Model_Library
@@ -54,8 +57,8 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
         $this->helper = Mage::helper('rakutenpay');
         try {
             $session = \Mage::getSingleton('checkout/session');
-            $minimum_value = \Mage::getStoreConfig("payment/rakutenpay_credit_card/minimum_installment");
-            $installments = self::createInstallments($amount, $minimum_value);
+            $minimumValue = \Mage::getStoreConfig("payment/rakutenpay_credit_card/minimum_installment");
+            $installments = self::createInstallments($amount, $minimumValue);
             $format = $this->output($installments, true);
 
             return $format['installments'];
@@ -68,21 +71,32 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
 
     /**
      * Returns the maximum number of installments
+     * @param $amount
+     * @param $minimumValue
+     * @return float
      */
-    private function getMaxNoInstallments($amount, $minimum_value)
+    private function getMaxNoInstallments($amount, $minimumValue)
     {
         \Rakuten\Connector\Resources\Log\Logger::info('Processing getMaxNoInstallments in ModelInstallmentsMethod.');
-        if (is_null($minimum_value) || is_nan($minimum_value) || $minimum_value < 0) {
-            $minimum_value = 10.0;
+        if (is_null($minimumValue) || is_nan($minimumValue) || $minimumValue < 0) {
+            $minimumValue = self::DEFAULT_MINIMUM_VALUE;
         }
-        $installments = $amount / $minimum_value;
-        return floor($installments);
+        $installments = floor ($amount / (float) $minimumValue);
+        if ($installments <= (float) $minimumValue) {
+            return self::DEFAULT_INSTALLMENTS;
+        }
+
+        return $installments;
     }
 
     /**
      * Returns an array of installments
+     * @param $amount
+     * @param $minimumValue
+     * @return array
+     * @throws Exception
      */
-    private function createInstallments($amount, $minimum_value)
+    private function createInstallments($amount, $minimumValue)
     {
         \Rakuten\Connector\Resources\Log\Logger::info('Processing createInstallments in ModelInstallmentsMethod.');
         $arr = [];
@@ -91,10 +105,10 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
             $checkout = \Rakuten\Connector\Services\Transactions\Checkout::get(
                 ['amount' => $amount]
             );
-            $minimum_installment = (int)Mage::getStoreConfig('payment/rakutenpay_credit_card/customer_interest_minimum_installments');
+            $minimumInstallment = (int)Mage::getStoreConfig('payment/rakutenpay_credit_card/customer_interest_minimum_installments');
             foreach($checkout->getCreditCardPayment()->getInstallments() as $customerInterestInstallment) {
                 $installment = new Rakuten\Connector\Domains\Responses\Installment;
-                if ((int)$customerInterestInstallment->getQuantity() >= $minimum_installment){
+                if ((int)$customerInterestInstallment->getQuantity() >= $minimumInstallment){
                     $installment
                     ->setAmount($customerInterestInstallment->getInstallmentAmount())
                     ->setQuantity($customerInterestInstallment->getQuantity())
@@ -116,7 +130,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
                 $arr[] = $installment;
             }
         } else {
-            $maxNoInstallments = self::getMaxNoInstallments($amount, $minimum_value);
+            $maxNoInstallments = self::getMaxNoInstallments($amount, $minimumValue);
             for ($mo = 1; $mo <= $maxNoInstallments; $mo++) {
                 $value = $amount / $mo;
                 $value = ceil($value * 100) / 100;// rounds up to the nearest cent
@@ -252,6 +266,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
 
     /**
      * Check if installments show is enabled
+     * @return bool
      */
     public function enabled()
     {

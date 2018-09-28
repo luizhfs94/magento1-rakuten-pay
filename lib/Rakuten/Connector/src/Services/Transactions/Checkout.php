@@ -59,7 +59,7 @@ class Checkout
     private static function request(Connection\Data $connection, $params)
     {
         return sprintf(
-            "%s/?%s",
+            "%s?%s",
             $connection->buildCheckoutUrl(),
             sprintf("%s=%s", Current::INSTALLMENT_AMOUNT, $params["amount"])
         );
