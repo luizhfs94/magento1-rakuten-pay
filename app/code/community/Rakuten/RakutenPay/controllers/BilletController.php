@@ -28,6 +28,7 @@ class Rakuten_RakutenPay_BilletController extends Mage_Core_Controller_Front_Act
      */
     public function getBilletAction()
     {
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getBilletAction.');
         $billetUrl = $this->getRequest()->getPost('data');
         if (!empty($billetUrl)) {
             $http = new \Rakuten\Connector\Resources\Http\RakutenPay\Http();
@@ -36,12 +37,9 @@ class Rakuten_RakutenPay_BilletController extends Mage_Core_Controller_Front_Act
 
             $this->getResponse()->clearHeaders()->setHeader('Content-type',"text/html; charset=utf-8");
             $this->getResponse()->setBody($response);
-            $this->getResponse($response);
+        } else {
+            \Rakuten\Connector\Resources\Log\Logger::error(sprintf('getBilletAction: BilletUrl is: %s', $billetUrl));
         }
-
-//        return [
-//            'response' => false,
-//        ];
     }
 
     /**
