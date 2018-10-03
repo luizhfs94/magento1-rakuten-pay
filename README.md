@@ -1,6 +1,6 @@
-# Magento 1 Rakuten Pay
+# Magento 1 Rakuten Connector
 
-Welcome to the Magento 1 Rakuten Pay plugin on GitHub.
+Welcome to the Magento 1 Rakuten Connector plugin on GitHub.
 
 ## Instalation
 
@@ -10,4 +10,4 @@ Welcome to the Magento 1 Rakuten Pay plugin on GitHub.
 
 ## Support and subscription
 
-In order to subscribe the Rakuten Pay service or to get support access [Rakuten Digital Commerce](https://digitalcommerce.rakuten.com.br)
+In order to subscribe the Rakuten Connector service or to get support access [Rakuten Digital Commerce](https://digitalcommerce.rakuten.com.br)
