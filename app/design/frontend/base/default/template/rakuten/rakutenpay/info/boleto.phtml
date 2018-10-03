@@ -17,24 +17,34 @@
  ************************************************************************
  */
 ?>
-
 <script>
-function pop_up() {
-    jQuery.ajax({
-        url: "<?php echo $this->getUrl('rakutenpay/billet/getBillet'); ?>",
-        type: "POST",
-        data: {
-            data: "<?php echo $this->getBilletUrl(); ?>"
-        },
-        success: function (data) {
-            var w = window.open();
-            jQuery(w.document.body).html(data);
-        }
-    });
-}
+
+    var startLoading = function() {
+        jQuery('#open-billet-feedback').replaceWith('<span id="open-billet-feedback" style="font-weight: bold">(aguarde o carregamento...)</span>')
+    };
+
+    var stopLoading = function() {
+        jQuery('#open-billet-feedback').replaceWith('<span id="open-billet-feedback">(<a href="#" data-behavior="open-billet" onclick="pop_up();">clique aqui</a> para visualizar)</span>')
+    };
+
+    function pop_up() {
+        startLoading();
+        jQuery.ajax({
+            url: "<?php echo $this->getUrl('rakutenpay/billet/getBillet'); ?>",
+            type: "POST",
+            data: {
+                data: "<?php echo $this->getBilletUrl(); ?>"
+            },
+            success: function (data) {
+                stopLoading();
+                var w = window.open();
+                jQuery(w.document.body).html(data);
+            }
+        });
+    }
 </script>
 
 <?php echo $this->escapeHtml($this->getMethod()->getTitle()) ?>
 <?php if(!empty($this->getBilletUrl())): ?>
-    (<a href="#" onclick="pop_up();">clique aqui</a> para visualizar)
+    <span id="open-billet-feedback">(<a href="#" data-behavior="open-billet" onclick="pop_up();">clique aqui</a> para visualizar)</span>
 <?php endif;?>

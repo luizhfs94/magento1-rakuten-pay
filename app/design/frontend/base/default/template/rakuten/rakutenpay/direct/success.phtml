@@ -18,23 +18,36 @@
  */
 
 ?>
+<?php $billet = (array_key_exists('billet', $_GET)) ? $_GET['billet'] : false; ?>
 <script>
-    <?php if (array_key_exists('billet', $_GET)): ?>
-    <?php
-    $http = new \Rakuten\Connector\Resources\Http\RakutenPay\Http();
-    $http->get($_GET['billet'], 20, 'ISO-8859-1', false);
-    $response = \Rakuten\Connector\Resources\Responsibility::http($http,
-            new \Rakuten\Connector\Parsers\DirectPayment\Boleto\Billet());
-    ?>
+
+    var startLoading = function() {
+        jQuery('#open-billet').attr('disabled','disabled');
+    };
+
+    var stopLoading = function() {
+        jQuery('#open-billet').removeAttr('disabled');
+    };
+
     function pop_up() {
-        var win = window.open('', '_blank');
-        win.document.body.innerHTML = `<?= $response ?>`;
+        startLoading();
+        jQuery.ajax({
+            url: "<?php echo $this->getUrl('rakutenpay/billet/getBillet'); ?>",
+            type: "POST",
+            data: {
+                data: "<?php echo $billet; ?>"
+            },
+            success: function (data) {
+                stopLoading();
+                var w = window.open();
+                jQuery(w.document.body).html(data);
+            }
+        });
     }
-    <?php endif ?>
 </script>
 
     <?php if (array_key_exists('billet', $_GET)) { ?>
         <div class="buttons-set">
-            <input type="button" class="button" onclick="pop_up();" value="Clique aqui para imprimir seu Boleto" />
+            <input type="button" id="open-billet" class="button" onclick="pop_up();" value="Clique aqui para imprimir seu Boleto" />
         </div>
     <?php } ?>

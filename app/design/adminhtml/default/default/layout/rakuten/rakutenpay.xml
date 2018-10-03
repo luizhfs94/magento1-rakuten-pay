@@ -61,6 +61,10 @@
         <update handle="sales_order_grid_update_handle" />
     </adminhtml_sales_order_index>
     <adminhtml_sales_order_view>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>rakuten/rakutenpay/js/jquery-1.11.1.js</name><params/><if/></action>
+            <action method="addItem"><type>skin_js</type><name>rakuten/rakutenpay/js/noconflict.js</name><params/><if/></action>
+        </reference>
         <reference name="order_totals">
             <block type="adminhtml/sales_order_totals_item" name="rakutenfee" template="rakuten/rakutenpay/rakutenfee/total.phtml" />
         </reference>
