@@ -18,33 +18,36 @@
  */
 ?>
 <script>
-
     var startLoading = function() {
-        jQuery('#open-billet-feedback').replaceWith('<span id="open-billet-feedback" style="font-weight: bold">(aguarde o carregamento...)</span>')
+        document.getElementById("open-billet-feedback").innerHTML = '<span style="font-weight: bold">(aguarde o carregamento...)</span>';
     };
 
     var stopLoading = function() {
-        jQuery('#open-billet-feedback').replaceWith('<span id="open-billet-feedback">(<a href="#" data-behavior="open-billet" onclick="pop_up();">clique aqui</a> para visualizar)</span>')
+        document.getElementById("open-billet-feedback").innerHTML = '(<a href="#" onclick="popUp();">clique aqui</a> para visualizar)';
     };
 
-    function pop_up() {
+    function popUp() {
         startLoading();
-        jQuery.ajax({
-            url: "<?php echo $this->getUrl('rakutenpay/billet/getBillet'); ?>",
-            type: "POST",
-            data: {
-                data: "<?php echo $this->getBilletUrl(); ?>"
-            },
-            success: function (data) {
+
+        var http = new XMLHttpRequest();
+        var url = "<?php echo $this->getUrl('rakutenpay/billet/getBillet'); ?>";
+        var params = "data=<?php echo $this->getBilletUrl(); ?>";
+        http.open('POST', url, true);
+
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        http.onreadystatechange = function() {
+            if (http.readyState == 4 && http.status == 200) {
                 stopLoading();
                 var w = window.open();
-                jQuery(w.document.body).html(data);
+                w.document.body.innerHTML = http.responseText;
             }
-        });
+        }
+        http.send(params);
     }
 </script>
 
 <?php echo $this->escapeHtml($this->getMethod()->getTitle()) ?>
 <?php if(!empty($this->getBilletUrl())): ?>
-    <span id="open-billet-feedback">(<a href="#" data-behavior="open-billet" onclick="pop_up();">clique aqui</a> para visualizar)</span>
+    <span id="open-billet-feedback">(<a href="#" onclick="popUp();">clique aqui</a> para visualizar)</span>
 <?php endif;?>

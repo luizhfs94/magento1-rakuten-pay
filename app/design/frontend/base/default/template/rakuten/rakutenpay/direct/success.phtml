@@ -20,34 +20,37 @@
 ?>
 <?php $billet = (array_key_exists('billet', $_GET)) ? $_GET['billet'] : false; ?>
 <script>
-
     var startLoading = function() {
-        jQuery('#open-billet').attr('disabled','disabled');
+        document.getElementById("open-billet").disabled = true;
     };
 
     var stopLoading = function() {
-        jQuery('#open-billet').removeAttr('disabled');
+        document.getElementById("open-billet").disabled = false;
     };
 
-    function pop_up() {
+    function popUp() {
         startLoading();
-        jQuery.ajax({
-            url: "<?php echo $this->getUrl('rakutenpay/billet/getBillet'); ?>",
-            type: "POST",
-            data: {
-                data: "<?php echo $billet; ?>"
-            },
-            success: function (data) {
+
+        var http = new XMLHttpRequest();
+        var url = "<?php echo $this->getUrl('rakutenpay/billet/getBillet'); ?>";
+        var params = "data=<?php echo $billet; ?>";
+        http.open('POST', url, true);
+
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        http.onreadystatechange = function() {
+            if (http.readyState == 4 && http.status == 200) {
                 stopLoading();
                 var w = window.open();
-                jQuery(w.document.body).html(data);
+                w.document.body.innerHTML = http.responseText;
             }
-        });
+        }
+        http.send(params);
     }
 </script>
 
     <?php if (array_key_exists('billet', $_GET)) { ?>
         <div class="buttons-set">
-            <input type="button" id="open-billet" class="button" onclick="pop_up();" value="Clique aqui para imprimir seu Boleto" />
+            <input type="button" id="open-billet" class="button" onclick="popUp();" value="Clique aqui para imprimir seu Boleto" />
         </div>
     <?php } ?>
