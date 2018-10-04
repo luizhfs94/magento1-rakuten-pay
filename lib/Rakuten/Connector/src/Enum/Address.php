@@ -28,135 +28,135 @@ class Address extends Enum
     /**
      * Acronym for Acre
      */
-    const AC = 'Acre';
+    const AC = 'ACRE';
     
     /**
      * Acronym for Alagoas
      */
-    const AL = 'Alagoas';
+    const AL = 'ALAGOAS';
 
     /**
      * Acronym for Amazonas
      */
-    const AM = 'Amazonas';
+    const AM = 'AMAZONAS';
 
     /**
      * Acronym for Amapá
      */
-    const AP = 'Amapá';
+    const AP = 'AMAPA';
 
     /**
      * Acronym for Bahia
      */
-    const BA = 'Bahia';
+    const BA = 'BAHIA';
 
     /**
      * Acronym for Ceará
      */
-    const CE = 'Ceará';
+    const CE = 'CEARA';
 
     /**
      * Acronym for Espírito Santo
      */
-    const ES = 'Espírito Santos';
+    const ES = 'ESPIRITO SANTO';
 
     /**
      * Acronym for Goiás
      */
-    const GO = 'Goiás';
+    const GO = 'GOIAS';
 
     /**
      * Acronym for Maranhão
      */
-    const MA = 'Maranhão';
+    const MA = 'MARANHAO';
 
     /**
      * Acronym for Mato Grosso
      */
-    const MT = 'Mato Grosso';
+    const MT = 'MATO GROSSO';
 
     /**
      * Acronym for Mato Grosso do Sul
      */
-    const MS = 'Mato Grosso do Sul';
+    const MS = 'MATO GROSSO DO SUL';
 
     /**
      * Acronym for Minas Gerais
      */
-    const MG = 'Minas Gerais';
+    const MG = 'MINAS GERAIS';
 
     /**
      * Acronym for Pará
      */
-    const PA = 'Pará';
+    const PA = 'PARA';
 
     /**
      * Acronym for Paraíba
      */
-    const PB = 'Paraíba';
+    const PB = 'PARAIBA';
 
     /**
      * Acronym for Paraná
      */
-    const PR = 'Paraná';
+    const PR = 'PARANA';
     
     /**
      * Acronym for Pernambuco
      */
-    const PE = 'Pernambuco';
+    const PE = 'PERNAMBUCO';
 
     /**
      * Acronym for Piauí
      */
-    const PI = 'Piauí';
+    const PI = 'PIAUI';
 
     /**
      * Acronym for Rio de Janeiro
      */
-    const RJ = 'Rio de Janeiro';
+    const RJ = 'RIO DE JANEIRO';
 
     /**
      * Acronym for Rio Grande do Norte
      */
-    const RN = 'Rio Grande do Norte';
+    const RN = 'RIO GRANDE DO NORTE';
 
     /**
      * Acronym for Rondônia
      */
-    const RO = 'Rondônia';
+    const RO = 'RONDONIA';
 
     /**
      * Acronym for Rio Grande do Sul
      */
-    const RS = 'Rio Grande do Sul';
+    const RS = 'RIO GRANDE DO SUL';
 
     /**
      * Acronym for Roraima
      */
-    const RR = 'Roraima';
+    const RR = 'RORAIMA';
 
     /**
      *  Acronym for Santa Catarina
      */
-    const SC = 'Santa Catarina';
+    const SC = 'SANTA CATARINA';
 
     /**
      *  Acronym for Sergipe
      */
-    const SE = 'Sergipe';
+    const SE = 'SERGIPE';
 
     /**
      *  Acronym for São Paulo
      */
-    const SP = 'São Paulo';
+    const SP = 'SAO PAULO';
 
     /**
      *  Acronym for Tocantins
      */
-    const TO = 'Tocantins';
+    const TO = 'TOCANTINS';
 
     /**
      *  Acronym for Distrito Federal
      */
-    const DF = 'Distrito Federal';
+    const DF = 'DISTRITO FEDERAL';
 }
