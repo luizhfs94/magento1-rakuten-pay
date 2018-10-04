@@ -19,24 +19,36 @@
 ?>
 
 <script>
-<?php
-    $http = new \Rakuten\Connector\Resources\Http\RakutenPay\Http();
-    $billet_url = $this->getBilletUrl();
-    if(!empty($billet_url)):
-        $http->get($this->getBilletUrl(), 20, 'ISO-8859-1', false);
-        $response = \Rakuten\Connector\Resources\Responsibility::http($http,
-                new \Rakuten\Connector\Parsers\DirectPayment\Boleto\Billet());?>
-        function pop_up() {
-            var win = window.open('', '_blank');
-            win.document.body.innerHTML = `<?= $response ?>`;
+    var startLoading = function() {
+        document.getElementById("open-billet-feedback").innerHTML = '<span style="font-weight: bold">(aguarde o carregamento...)</span>';
+    };
+
+    var stopLoading = function() {
+        document.getElementById("open-billet-feedback").innerHTML = '(<a href="#" onclick="popUp();">clique aqui</a> para visualizar)';
+    };
+
+    function popUp() {
+        startLoading();
+
+        var http = new XMLHttpRequest();
+        var url = "<?php echo $this->getUrl('rakutenpay/billet/getBillet'); ?>";
+        var params = "data=<?php echo $this->getBilletUrl(); ?>";
+        http.open('POST', url, true);
+
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        http.onreadystatechange = function() {
+            if (http.readyState == 4 && http.status == 200) {
+                stopLoading();
+                var w = window.open();
+                w.document.body.innerHTML = http.responseText;
+            }
         }
-<?php endif;?>
+        http.send(params);
+    }
 </script>
 
-<p>
-    <b>Alterações de status feitas nesta tela podem não ser refletidas para o sistema Rakuten Pay.</b>
-</p>
 <?php echo $this->escapeHtml($this->getMethod()->getTitle()) ?>
 <?php if(!empty($this->getBilletUrl())): ?>
-    (<a href="#" onclick="pop_up();">clique aqui</a> para visualizar)
+    <span id="open-billet-feedback">(<a href="#" onclick="popUp();">clique aqui</a> para visualizar)</span>
 <?php endif;?>
