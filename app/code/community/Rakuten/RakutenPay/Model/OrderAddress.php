@@ -17,6 +17,8 @@
  ************************************************************************
  */
 
+use Rakuten\Connector\Helpers\StringFormat;
+
 /**
  * Class Rakuten_RakutenPay_Model_OrderAddress
  */
@@ -145,8 +147,9 @@ class Rakuten_RakutenPay_Model_OrderAddress
 
         $addressEnum = new \Rakuten\Connector\Enum\Address();
 
-        return (is_string($addressEnum->getType($address->getRegion()))) ?
-            strtoupper($addressEnum->getType($address->getRegion())) :
+        $state = strtoupper(StringFormat::removeAccents($address->getRegion()));
+        return (is_string($addressEnum->getType($state))) ?
+            strtoupper($addressEnum->getType($state)) :
             strtoupper($address->getRegion());
     }
 

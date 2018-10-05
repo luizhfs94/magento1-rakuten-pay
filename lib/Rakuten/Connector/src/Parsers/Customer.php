@@ -53,8 +53,11 @@ trait Customer
                 $customer_data[$properties::SENDER_EMAIL] = $request->getSender()->getEmail();
             }
             //birth_date
+            // For sale CNPJ Not BirthDate - BirthDate is Required
             if (!is_null($request->getSender()->getBirthdate())) {
                 $customer_data[$properties::BIRTH_DATE] = $request->getSender()->getBirthdate();
+            } else {
+                $customer_data[$properties::BIRTH_DATE] = "2000-10-01 00:00:00";
             }
             //gender
             if (!is_null($request->getSender()->getGender())) {
