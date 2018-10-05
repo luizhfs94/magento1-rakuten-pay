@@ -177,8 +177,6 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
         \Rakuten\Connector\Resources\Log\Logger::info('Shipping costs set.');
         $payment->setNotificationUrl($this->getNotificationURL());
         \Rakuten\Connector\Resources\Log\Logger::info('Callback URL set.');
-        $payment->setSender()->setGender($this->order->getCustomerGender());
-        \Rakuten\Connector\Resources\Log\Logger::info('Gender set.');
         $payment->setSender()->setBirthdate($this->order->getCustomerDob());
         \Rakuten\Connector\Resources\Log\Logger::info('DOB set.');
         \Rakuten\Connector\Resources\Log\Logger::info('All info set, returning.');
