@@ -29,22 +29,22 @@ class Sender
      * @var
      */
     private $name;
+
     /**
      * @var
      */
     private $email;
+
     /**
      * @var
      */
     private $phone;
+
     /**
      * @var
      */
     private $documents;
-    /**
-     * @var
-     */
-    private $gender;
+
     /**
      * @var
      */
@@ -143,24 +143,6 @@ class Sender
                 $this->documents[] = $document;
             }
         }
-    }
-
-    /**
-     * @return integer
-     */
-    public function getGender()
-    {
-        return $this->gender;
-    }
-
-    /**
-     * @param $gender
-     * @return Sender
-     */
-    public function setGender($gender)
-    {
-        $this->gender = $gender;
-        return $this;
     }
 
     /**

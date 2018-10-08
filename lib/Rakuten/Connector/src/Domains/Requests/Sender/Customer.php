@@ -64,24 +64,6 @@ trait Customer
     /**
      * @return mixed
      */
-    public function getGender()
-    {
-        return $this->sender->gender;
-    }
-
-    /**
-     * @param mixed $name
-     * @return Customer
-     */
-    public function setGender($gender)
-    {
-        $this->sender->setGender($gender);
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getBirthdate()
     {
         return $this->sender->birthdate;
