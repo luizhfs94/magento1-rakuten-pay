@@ -453,11 +453,6 @@ class Constants
     const CONTACT = "contact";
 
     /**
-     * Gender
-     */
-    const GENDER = "gender";
-
-    /**
      * Order
      */
     const ORDER = "order";

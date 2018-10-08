@@ -59,17 +59,6 @@ trait Customer
             } else {
                 $customer_data[$properties::BIRTH_DATE] = "2000-10-01 00:00:00";
             }
-            //gender
-            if (!is_null($request->getSender()->getGender())) {
-                switch ($request->getSender()->getGender()) {
-                    case 1:
-                        $customer_data[$properties::GENDER] = 'm';
-                        break;
-                    case 2:
-                        $customer_data[$properties::GENDER] = 'f';
-                        break;
-                }
-            }
             //remote_ip
             $customer_data[$properties::REMOTE_IP] = \Mage::helper('core/http')->getRemoteAddr();
             //addresses
