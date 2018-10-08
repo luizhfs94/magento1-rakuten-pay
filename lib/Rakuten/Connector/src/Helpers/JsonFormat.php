@@ -89,7 +89,7 @@ class JsonFormat
         Logger::info('Processing installmentsToFloat in JsonFormat.');
         foreach (self::$installmentsToFloat as $field) {
             if (array_key_exists($field, $installments)) {
-                $jsonData = str_replace('"' . $field . '":'. $installments[$field], '"' . $field . '":'. number_format($installments[$field], 2) . '', $jsonData);
+                $jsonData = str_replace('"' . $field . '":'. $installments[$field], '"' . $field . '":'. number_format($installments[$field], 2, ".", "") . '', $jsonData);
             }
         }
 
