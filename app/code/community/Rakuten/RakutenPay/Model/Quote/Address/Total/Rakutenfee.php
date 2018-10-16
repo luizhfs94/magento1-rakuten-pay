@@ -51,9 +51,9 @@ class Rakuten_RakutenPay_Model_Quote_Address_Total_Rakutenfee extends Mage_Sales
             $interestAmount = (float) $post['payment']['credit_card_interest_amount'];
 
             $address->setRakutenfeeAmount($interestAmount);
-            $address->setBaseRakutenfeeAmount($total);
+            $address->setBaseRakutenfeeAmount($interestAmount);
             $quote->setRakutenfeeAmount($interestAmount);
-            $quote->setBaseRakutenfeeAmount($total);
+            $quote->setBaseRakutenfeeAmount($interestAmount);
         }
 
         $address->setGrandTotal($address->getGrandTotal() + $address->getRakutenfeeAmount());
