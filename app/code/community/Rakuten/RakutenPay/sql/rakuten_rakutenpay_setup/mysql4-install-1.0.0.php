@@ -25,7 +25,7 @@ $tp = (string)Mage::getConfig()->getTablePrefix();
 $table = $tp . "sales_order_status";
 
 // Verifies that no record of the status RakutenPay created, if you have not created
-$sql .= "INSERT INTO `" . $table . "` (STATUS, label)
+$sql = "INSERT INTO `" . $table . "` (STATUS, label)
          SELECT p.status, p.label FROM(SELECT 'aguardando_pagamento_rp' AS STATUS, 'Aguardando Pagamento' AS label) p
          WHERE (SELECT COUNT(STATUS) FROM `" . $table . "` WHERE STATUS = 'aguardando_pagamento_rp') = 0;
 
