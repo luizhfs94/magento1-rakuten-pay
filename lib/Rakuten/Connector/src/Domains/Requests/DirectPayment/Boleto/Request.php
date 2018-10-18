@@ -20,6 +20,7 @@
 namespace Rakuten\Connector\Domains\Requests\DirectPayment\Boleto;
 
 use Rakuten\Connector\Domains\Requests\BasicData;
+use Rakuten\Connector\Domains\Requests\Discount;
 use Rakuten\Connector\Domains\Requests\DirectPayment\CreditCard\Billing;
 use Rakuten\Connector\Domains\Requests\DirectPayment\Mode;
 use Rakuten\Connector\Domains\Requests\DirectPayment\Sender;
@@ -40,6 +41,7 @@ class Request implements Requests
     use BasicData;
     use Billing;
     use Item;
+    use Discount;
     use Mode;
     use Notification {
         Notification::getUrl as getNotificationUrl;

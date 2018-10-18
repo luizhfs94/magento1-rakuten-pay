@@ -37,53 +37,54 @@ trait Order
     {
         Logger::info('Processing getData in trait Order.');
         $data = [];
-        $order_data = [];
+        $orderData = [];
+        $shippingCost = 0.0;
 
         if (!is_null($request->getShipping()) and !is_null($request->getShipping()->getCost())) {
-            $shipping_cost = floatval(\Rakuten\Connector\Helpers\Currency::toDecimal($request->getShipping()->getCost()->getCost()));
+            $shippingCost = floatval(\Rakuten\Connector\Helpers\Currency::toDecimal($request->getShipping()->getCost()->getCost()));
         }
 
         $items = self::getItems($request, $properties);
-        $items_amount = 0.0;
+        $itemsAmount = 0.0;
         foreach ($items as $item) {
             if (!is_null($item[$properties::TOTAL_AMOUNT])) {
-                $items_amount += $item[$properties::TOTAL_AMOUNT];
+                $itemsAmount += $item[$properties::TOTAL_AMOUNT];
             }
         }
 
-        $taxes_amount = 0.0;
+        $taxesAmount = 0.0;
         if (method_exists($request, 'getInstallment') and !is_null(current($request->getInstallment())) and !is_null(current($request->getInstallment())->getInterestAmount())) {
-            $taxes_amount = floatval(current($request->getInstallment())->getInterestAmount());
+            $taxesAmount = floatval(current($request->getInstallment())->getInterestAmount());
         }
 
         //items_amount
-        $order_data[$properties::ITEMS_AMOUNT] = $items_amount;
+        $orderData[$properties::ITEMS_AMOUNT] = $itemsAmount;
         //shipping_amount
-        $order_data[$properties::SHIPPING_AMOUNT] = $shipping_cost;
+        $orderData[$properties::SHIPPING_AMOUNT] = $shippingCost;
         //taxes_amount
-        $order_data[$properties::TAXES_AMOUNT] = $taxes_amount;
+        $orderData[$properties::TAXES_AMOUNT] = $taxesAmount;
         //discount_amount
-        $order_data[$properties::DISCOUNT_AMOUNT] = 0.0;
+        $orderData[$properties::DISCOUNT_AMOUNT] = $request->getDiscountAmount();
         //items
-        $order_data[$properties::ITEMS] = $items;
+        $orderData[$properties::ITEMS] = $items;
         //remote_ip
-        $order_data[$properties::PAYER_IP] = \Mage::helper('core/http')->getRemoteAddr();
+        $orderData[$properties::PAYER_IP] = \Mage::helper('core/http')->getRemoteAddr();
         //reference
-        $order_data[$properties::REFERENCE] = $request->getReference();
-        $data[$properties::ORDER] = $order_data;
+        $orderData[$properties::REFERENCE] = $request->getReference();
+        $data[$properties::ORDER] = $orderData;
         return $data;
     }
 
     private static function getItems($request, $properties)
     {
-        $items_data = [];
+        $itemsData = [];
         $items = $request->getItems();
         if ($request->itemLenght() > 0) {
             foreach ($items as $item) {
-                $items_data[] = self::getItem($item, $properties);
+                $itemsData[] = self::getItem($item, $properties);
             }
         }
-        return $items_data;
+        return $itemsData;
     }
 
     private static function getItem($item, $properties)
@@ -119,12 +120,12 @@ trait Order
         //categories
         if (!is_null($product) and $product->getCategoryIds() != null) {
             $categories = [];
-            $category_ids = $product->getCategoryIds();
-            foreach ($category_ids as $category_id) {
-                $_cat = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($category_id);
+            $categoryIds = $product->getCategoryIds();
+            foreach ($categoryIds as $categoryId) {
+                $_cat = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($categoryId);
                 $category = [];
                 $category[$properties::NAME] = $_cat->getName();
-                $category[$properties::ID] = $category_id;
+                $category[$properties::ID] = $categoryId;
                 $categories[] = $category;
             }
 

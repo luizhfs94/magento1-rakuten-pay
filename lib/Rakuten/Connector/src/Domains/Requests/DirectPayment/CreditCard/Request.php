@@ -20,8 +20,7 @@
 namespace Rakuten\Connector\Domains\Requests\DirectPayment\CreditCard;
 
 use Rakuten\Connector\Domains\Requests\BasicData;
-use Rakuten\Connector\Domains\Requests\DirectPayment\CreditCard\Billing;
-use Rakuten\Connector\Domains\Requests\DirectPayment\CreditCard\Holder;
+use Rakuten\Connector\Domains\Requests\Discount;
 use Rakuten\Connector\Domains\Requests\DirectPayment\Mode;
 use Rakuten\Connector\Domains\Requests\DirectPayment\Sender;
 use Rakuten\Connector\Domains\Requests\Item;
@@ -44,6 +43,7 @@ class Request implements Requests
     use Holder;
     use Item;
     use Mode;
+    use Discount;
     use Notification {
         Notification::getUrl as getNotificationUrl;
         Notification::setUrl as setNotificationUrl;
