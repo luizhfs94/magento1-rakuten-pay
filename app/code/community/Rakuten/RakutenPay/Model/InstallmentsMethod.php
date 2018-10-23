@@ -82,7 +82,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
             $minimumValue = self::DEFAULT_MINIMUM_VALUE;
         }
         $installments = floor ($amount / (float) $minimumValue);
-        if ($installments <= (float) $minimumValue) {
+        if ($amount <= (float) $minimumValue) {
             return self::DEFAULT_INSTALLMENTS;
         }
 
