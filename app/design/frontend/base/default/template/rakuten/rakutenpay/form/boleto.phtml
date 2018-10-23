@@ -38,10 +38,11 @@
 
 <script type="text/javascript">
 //<![CDATA[
+var beforeSaveJsUrl  = "<?php echo $this->getRakutenPayBeforeSaveJsSkinUrl() ?>";
 var x = document.getElementsByTagName("script");
   var header_already_added = false;
   for (var i=0; i< x.length; i++){
-      if (x[i].src == "<?php echo $this->getSkinUrl('rakuten/rakutenpay/js/rakutenpay-before-save.js') ?>"){
+      if (x[i].src == beforeSaveJsUrl){
              header_already_added = true;
       }
   }
@@ -51,7 +52,7 @@ var x = document.getElementsByTagName("script");
     var head = document.getElementsByTagName("head")[0];
     var s = document.createElement('script');
     s.type = 'text/javascript';
-    s.src = '<?php echo $this->getSkinUrl('rakuten/rakutenpay/js/rakutenpay-before-save.js') ?>';
+    s.src = beforeSaveJsUrl;
     head.appendChild(s);
   }
 //]]>

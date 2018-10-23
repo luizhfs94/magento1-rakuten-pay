@@ -135,6 +135,14 @@
         </reference>
     </checkout_onepage_index>
 
+    <!-- Inovarti OneStepCheckout compatibility -->
+    <onestepcheckout_index_index>
+        <reference name="head">
+            <block type="rakuten_rakutenpay/payment" name="loading" template="rakuten/rakutenpay/loading.phtml"/>
+        </reference>
+    </onestepcheckout_index_index>
+    <!-- \Inovarti OneStepCheckout compatibility -->
+
     <catalog_product_view>
         <reference name="head">
             <action method="addItem">
