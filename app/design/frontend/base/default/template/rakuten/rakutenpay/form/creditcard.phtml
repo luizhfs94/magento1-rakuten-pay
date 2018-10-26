@@ -59,6 +59,7 @@ var beforeSaveJsUrl = "<?php echo $this->getRakutenPayBeforeSaveJsSkinUrl() ?>";
 </script>
 <div class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
     <div id="rakutenpay-cc-method-div"></div>
+    <div class="display-none validation-advice creditCardHiddenFields-error-message">Ocorreu um problema ao validar o cartão. Por favor, tente novamente.</div>
     <div class="rakutenpay-label-spacing rakutenpay-cc-group-div">
         <div class="rakutenpay-cc-label-div">
             <label
@@ -72,7 +73,6 @@ var beforeSaveJsUrl = "<?php echo $this->getRakutenPayBeforeSaveJsSkinUrl() ?>";
                 class="rakutenpay-cc-input"
                 id="creditCardNumVisible"
                 type="text"
-                data-rkp="card-number"
                 maxlength="19"
                 onkeydown="creditCardMask(event, this)"
                 onblur="creditCardMask(event, this); getBrand(this);">

@@ -22,6 +22,7 @@
  * @object OnestepcheckoutForm.hidePriceChangeProcess
  *
  */
+addCardFieldsObserver();
 
 OnestepcheckoutForm.prototype.hidePriceChangeProcess = OnestepcheckoutForm.prototype.hidePriceChangeProcess.wrap(function(hidePriceChangeProcess){
     var granTotalAmountUpdated = convertPriceStringToFloat(this.granTotalAmount.textContent);
@@ -45,7 +46,8 @@ OnestepcheckoutForm.prototype.hidePriceChangeProcess = OnestepcheckoutForm.proto
  */
 OnestepcheckoutShipment.prototype.switchToMethod = OnestepcheckoutShipment.prototype.switchToMethod.wrap(
     function (switchToMethod, methodCode, forced) {
-        if (isRakutenPayCurrentPaymentMethod() && forced === true) {
+        if (isRakutenPayCurrentPaymentMethod()) {
+            addCardFieldsObserver();
             return false; //do nothing
         }
 
@@ -54,8 +56,8 @@ OnestepcheckoutShipment.prototype.switchToMethod = OnestepcheckoutShipment.proto
     });
 
 OnestepcheckoutForm.prototype.validate = OnestepcheckoutForm.prototype.validate.wrap(function (validate) {
-    if (validateRakutenPayActiveMethod(validate)) {
-        return validate();
+    if (validateRakutenPayActiveMethod()) {
+        return validate;
     }
 });
 
@@ -63,15 +65,14 @@ OnestepcheckoutForm.prototype.validate = OnestepcheckoutForm.prototype.validate.
  * Validate the active payment method before magento save payment
  * @returns {Boolean}
  */
-function validateRakutenPayActiveMethod(save) {
+function validateRakutenPayActiveMethod() {
     //OSCPayment.currentMethod
     switch (document.querySelector('#checkout-payment-method-load .radio:checked').value) {
         case "rakutenpay_credit_card":
-            console.log("rakutenpay_credit_card");
-            return validateCreditCardForm(save);
+            return validateCreditCardFormOneStepCheckout();
             break;
         case "rakutenpay_boleto":
-            return validateBoletoForm(save);
+            return validateBoletoFormOneStepCheckout();
             break;
         default:
             return true;
@@ -104,4 +105,97 @@ function convertPriceStringToFloat(priceString){
 function isRakutenPayCurrentPaymentMethod() {
     currentPaymentMethod = document.querySelector('input[name="payment[method]"]:checked').value;
     return (currentPaymentMethod === 'rakutenpay_credit_card' || currentPaymentMethod === 'rakutenpay_boleto');
+}
+
+
+function addCardFieldsObserver() {
+
+    try {
+        var paymentMethod = document.querySelector('#checkout-payment-method-load .radio:checked').value;
+
+        if (paymentMethod === "rakutenpay_credit_card") {
+            var creditCardNum = document.querySelector('#creditCardNumVisible');
+            var creditCardMonth = document.querySelector('#creditCardExpirationMonth');
+            var creditCardYear = document.querySelector('#creditCardExpirationYear');
+
+            Element.observe(creditCardNum,'keyup',function(e){updateCreditCardToken(creditCardNum.value, creditCardMonth.value, creditCardYear.value);});
+            Element.observe(creditCardMonth,'change',function(e){updateCreditCardToken(creditCardNum.value, creditCardMonth.value, creditCardYear.value);});
+            Element.observe(creditCardYear,'change',function(e){updateCreditCardToken(creditCardNum.value, creditCardMonth.value, creditCardYear.value);});
+        } else if (paymentMethod === "rakutenpay_boleto") {
+            updateBilletFingerprint();
+        }
+    } catch(e) {
+        console.error('Não foi possível adicionar observação aos cartões. ' + e.message);
+    }
+
+}
+
+function updateCreditCardToken(creditCardNum, creditCardMonth, creditCardYear) {
+
+    if (creditCardNum.length > 6 && creditCardMonth !== "" && creditCardYear !== "") {
+
+        var container = document.getElementById("rakutenpay-cc-method-div");
+        while (container.hasChildNodes()) {
+            container.removeChild(container.lastChild);
+        }
+        var rpay_method = document.createElement("input");
+        rpay_method.type = "hidden";
+        rpay_method.setAttribute("data-rkp", "method");
+        rpay_method.value = "credit_card";
+        container.appendChild(rpay_method);
+
+        //Gets the form element
+        var form = rpay_method.form;
+
+        //Generates the fingerprint and token
+        var rpay = new RPay();
+        rpay.listeners = {
+            "result:success": function () {
+                document.getElementsByName('rkp[fingerprint]')[0].type = "hidden";
+                document.getElementsByName('rkp[fingerprint]')[0].id = "fingerprint";
+                document.getElementsByName('rkp[fingerprint]')[0].name = "payment[fingerprint]";
+                document.getElementsByName('rkp[token]')[0].type = "hidden";
+                document.getElementById('creditCardToken').value = document.getElementsByName('rkp[token]')[0].value;
+            },
+            "result:error": function (errors) {
+                console.log(errors);
+            }
+        };
+        rpay.generate(form);
+
+        return true;
+    }
+}
+
+function updateBilletFingerprint() {
+    //Clears the div and adds the required RakutenPay method to the form
+    var container = document.getElementById("rakutenpay-billet-method-div");
+    while (container.hasChildNodes()) {
+        container.removeChild(container.lastChild);
+    }
+    var rpay_method = document.createElement("input");
+    rpay_method.type = "hidden";
+    rpay_method.setAttribute("data-rkp", "method");
+    rpay_method.value = "billet";
+    container.appendChild(rpay_method);
+
+    //Gets the form element
+    var form = rpay_method.form;
+
+    //Generates the fingerprint and token
+    var rpay = new RPay();
+    rpay.listeners = {
+        "result:success": function(){
+            //Hides the fingerprint and token fields (don't know why it isn't by default)
+            document.getElementsByName('rkp[fingerprint]')[0].type = "hidden";
+            document.getElementsByName('rkp[fingerprint]')[0].id = "payment[fingerprint]";
+            document.getElementsByName('rkp[fingerprint]')[0].name = "payment[fingerprint]";
+        },
+        "result:error":   function(errors){
+            console.log(errors);
+        }
+    };
+    rpay.generate(form);
+
+        return true;
 }
