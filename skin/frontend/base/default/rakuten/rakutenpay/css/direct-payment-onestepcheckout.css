@@ -1,0 +1,97 @@
+.display-none {
+  display: none;
+}
+
+.help-block {
+    color: #df280a;
+    font-size: small;
+}
+
+.rakutenpay-label-spacing {
+    padding: 0.5em 0em;
+    /*display: inline-flex;*/
+}
+
+.rakutenpay-label-width {
+    width: 30%;
+}
+
+.rakutenpay-input-width {
+    width: 50%;
+}
+
+span > input {
+    width: 50%;
+}
+
+.rakutenpay-label-spacing > label {
+    width: 30%;
+    text-align: right;
+}
+
+.rakutenpay-direct-payment-ul {
+    padding: 0.9em 0em 0.1em;
+    font-size: smaller;
+    font-style: italic;
+}
+
+.flag-origin-country-img {
+    position: absolute; 
+    padding-left: 0.5em;
+    display: inline;
+}
+
+.rakutenpay-cc-group-div {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+}
+
+.rakutenpay-cc-label-div {
+    float: left; 
+    width: 100%;
+    text-align: left;
+    padding-right: 4px;
+}
+
+.rakutenpay-cc-input-div {
+    float: left;
+    width: 100%;
+}
+
+.rakutenpay-cc-input-div > ul {
+    width: 365px;
+}
+
+.rakutenpay-required:after {
+    content: '*';
+    color: #df280a;
+    font-weight: normal;
+    font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+    font-size: 11px;
+}
+
+.rakutenpay-cc-input {
+    border: 1px solid silver;
+}
+
+.rakutenpay-cc-select{
+    border: 1px solid silver;
+    height: 30px;
+    padding: 0 8px;
+    font-size: 13px;
+}
+
+.rakutenpay-boleto-label-div {
+    float: left;
+    text-align: right;
+    padding-right: 4px;
+}
+
+label.required:after {
+    content: '*';
+    color: #df280a;
+    font-weight: normal;
+    font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+    font-size: 11px;
+}

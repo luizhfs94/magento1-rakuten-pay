@@ -52,3 +52,21 @@ function validateBoletoForm(save) {
 
   return false;
 }
+
+function validateBoletoFormOneStepCheckout() {
+    target = document.getElementsByClassName('boletoHiddenFields-error-message')[0];
+
+    if(document.getElementsByName('payment[fingerprint]')[0] &&
+        document.getElementsByName('payment[fingerprint]')[0].value != "" &&
+        validateDocument(document.querySelector('#bilitDocument'))) {
+        if(!target.classList.contains('display-none')){
+            target.classList.add('display-none')
+        }
+
+        return true;
+    } else if(target.classList.contains('display-none')) {
+        target.classList.remove('display-none')
+    }
+
+    return false;
+}

@@ -112,6 +112,30 @@ function validateCreditCardInstallment(self) {
   }
 }
 
+function validateHiddenFields() {
+    target = document.getElementsByClassName('creditCardHiddenFields-error-message')[0]
+
+    if (document.getElementById('creditCardNum').value != "" &&
+    document.getElementById('creditCardToken').value != "" &&
+    document.getElementById('creditCardBrand').value != "" &&
+    document.getElementById('creditCardInstallment').value != "" &&
+    document.getElementById('creditCardInstallmentValue').value != "" &&
+    document.getElementById('creditCardInterestPercent').value != "" &&
+    document.getElementById('creditCardInterestAmount').value != "" &&
+    document.getElementById('creditCardInstallmentTotalValue').value != "")
+    {
+        if(!target.classList.contains('display-none')) {
+            target.classList.add('display-none')
+        }
+
+        return true;
+    } else if (target.classList.contains('display-none')) {
+          target.classList.remove('display-none')
+    }
+
+    return false;
+}
+
 function getBrand(self) {
   if (validateCreditCard(self)) {
     var rpay = new RPay();
@@ -189,6 +213,22 @@ function validateCreditCardForm(save) {
   validateCreditCardCode(document.querySelector('#creditCardCode'))
   validateCreditCardInstallment(document.querySelector('#card_installment_option'))
   return false;
+}
+
+function validateCreditCardFormOneStepCheckout() {
+    if (
+        validateCreditCard(document.querySelector('#creditCardNumVisible')) &&
+        validateDocument(document.querySelector('#creditCardDocument')) &&
+        validateCardHolder(document.querySelector('#creditCardHolder')) &&
+        validateCreditCardMonth(document.querySelector('#creditCardExpirationMonth')) &&
+        validateCreditCardYear(document.querySelector('#creditCardExpirationYear')) &&
+        validateCreditCardCode(document.querySelector('#creditCardCode')) &&
+        validateCreditCardInstallment(document.querySelector('#card_installment_option')) &&
+        validateHiddenFields()
+    ) {
+        return true;
+    }
+    return false;
 }
 
 function validateCreateToken() {

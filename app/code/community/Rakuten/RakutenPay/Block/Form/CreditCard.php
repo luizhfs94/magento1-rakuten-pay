@@ -21,23 +21,43 @@
  */
 class Rakuten_RakutenPay_Block_Form_CreditCard extends Mage_Payment_Block_Form
 {
-  protected function _construct()
-  {
-    parent::_construct();
-    $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals()['grand_total'];
-    $this->setGrandTotal($totals->getData()['value']);
-    
-    $paymentModel = Mage::getSingleton('Rakuten_RakutenPay_Model_PaymentMethod');
-    $this->setCreditCardSession($paymentModel->getSession());
-    $this->setTemplate('rakuten/rakutenpay/form/creditcard.phtml');
-  }
-
-  protected function _prepareLayout()
-  { 
-    if ($this->getLayout()->getBlock('head')) {
-        $this->getLayout()->getBlock('head')->addItem('skin_js', 'rakuten/rakutenpay/js/direct-payment.js');
-        $this->getLayout()->getBlock('head')->addItem('skin_js', 'rakuten/rakutenpay/js/credit-card.js');
-        $this->getLayout()->getBlock('head')->addItem('skin_css', 'rakuten/rakutenpay/css/direct-payment.css');
+   protected function _construct()
+    {
+        parent::_construct();
+        $this->initializeRakutenPay();
+        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals()['grand_total'];
+        $this->setGrandTotal($totals->getData()['value']);
+        $paymentMethodModel = Mage::getSingleton('Rakuten_RakutenPay_Model_PaymentMethod');
+        $this->setCreditCardSession($paymentMethodModel->getSession());
+        $this->setTemplate('rakuten/rakutenpay/form/creditcard.phtml');
     }
-  }
+
+    protected function _prepareLayout()
+    {
+        $directPaymentCss = 'rakuten/rakutenpay/css/direct-payment.css';
+        $paymentMethodModel = Mage::getSingleton('Rakuten_RakutenPay_Model_PaymentMethod');
+        if ($paymentMethodModel->hasOneStepCheckout()) {
+            $directPaymentCss = 'rakuten/rakutenpay/css/direct-payment-onestepcheckout.css';
+        }
+
+        if ($this->getLayout()->getBlock('head')) {
+            $this->getLayout()->getBlock('head')->addItem('skin_js', 'rakuten/rakutenpay/js/direct-payment.js');
+            $this->getLayout()->getBlock('head')->addItem('skin_js', 'rakuten/rakutenpay/js/credit-card.js');
+            $this->getLayout()->getBlock('head')->addItem('skin_css', $directPaymentCss);
+        }
+    }
+
+    /**
+     * Set variables to be used in boleto form (boleto.phtml)
+     */
+    private function initializeRakutenPay()
+    {
+        $skinUrl = 'rakuten/rakutenpay/js/rakutenpay-before-save.js';
+        $paymentMethodModel = Mage::getSingleton('Rakuten_RakutenPay_Model_PaymentMethod');
+        if ($paymentMethodModel->hasOneStepCheckout()) {
+            $skinUrl = 'rakuten/rakutenpay/js/rakutenpay-onestepcheckout-before-save.js';
+        }
+
+        $this->setRakutenPayBeforeSaveJsSkinUrl($this->getSkinUrl($skinUrl));
+    }
 }

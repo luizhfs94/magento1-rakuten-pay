@@ -38,10 +38,11 @@
 
 <script type="text/javascript">
 //<![CDATA[
+var beforeSaveJsUrl  = "<?php echo $this->getRakutenPayBeforeSaveJsSkinUrl() ?>";
 var x = document.getElementsByTagName("script");
   var header_already_added = false;
   for (var i=0; i< x.length; i++){
-      if (x[i].src == "<?php echo $this->getSkinUrl('rakuten/rakutenpay/js/rakutenpay-before-save.js') ?>"){
+      if (x[i].src == beforeSaveJsUrl){
              header_already_added = true;
       }
   }
@@ -51,7 +52,7 @@ var x = document.getElementsByTagName("script");
     var head = document.getElementsByTagName("head")[0];
     var s = document.createElement('script');
     s.type = 'text/javascript';
-    s.src = '<?php echo $this->getSkinUrl('rakuten/rakutenpay/js/rakutenpay-before-save.js') ?>';
+    s.src = beforeSaveJsUrl;
     head.appendChild(s);
   }
 //]]>
@@ -59,6 +60,7 @@ var x = document.getElementsByTagName("script");
 
 <div class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
     <div id="rakutenpay-billet-method-div"></div>
+    <div class="display-none validation-advice boletoHiddenFields-error-message">Ocorreu um problema ao validar o boleto. Por favor, tente novamente.</div>
     <input type="hidden" id="boletoHash" value="" name="payment[boleto_hash]">
     <div style="float: left">
         <div class="rakutenpay-boleto-label-div">
