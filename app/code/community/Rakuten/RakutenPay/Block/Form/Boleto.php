@@ -56,6 +56,8 @@ class Rakuten_RakutenPay_Block_Form_Boleto extends Mage_Payment_Block_Form
             $skinUrl = 'rakuten/rakutenpay/js/rakutenpay-onestepcheckout-before-save.js';
         }
 
+        // Set Values for get in View
         $this->setRakutenPayBeforeSaveJsSkinUrl($this->getSkinUrl($skinUrl));
+        $this->setHasOneStepCheckout($paymentMethodModel->hasOneStepCheckout());
     }
 }

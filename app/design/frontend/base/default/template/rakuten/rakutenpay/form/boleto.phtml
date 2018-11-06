@@ -103,3 +103,9 @@ var x = document.getElementsByTagName("script");
         </ul>
     </div>-->
 </div>
+
+<?php if ($this->getHasOneStepCheckout()): ?>
+    <script type="text/javascript">
+        addCardFieldsObserver();
+    </script>
+<?php endif ?>

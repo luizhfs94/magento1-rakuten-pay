@@ -17,51 +17,6 @@
  */
 
 /**
- * Observer for checkout price modifications, like changes in shipment price or taxes
- * to call the installments value with the updated value
- * @object OnestepcheckoutForm.hidePriceChangeProcess
- *
- */
-addCardFieldsObserver();
-
-OnestepcheckoutForm.prototype.hidePriceChangeProcess = OnestepcheckoutForm.prototype.hidePriceChangeProcess.wrap(function(hidePriceChangeProcess){
-    var granTotalAmountUpdated = convertPriceStringToFloat(this.granTotalAmount.textContent);
-
-    if (document.getElementById('grand_total') !== null && parseFloat(document.getElementById('grand_total').value) !== granTotalAmountUpdated) {
-        document.getElementById('grand_total').value = granTotalAmountUpdated;
-        if (document.getElementById('creditCardNumVisible') !== null && document.getElementById('creditCardNumVisible').value.length > 6) {
-            getInstallments(document.getElementById('creditCardBrand').value);
-        }
-    }
-
-    return hidePriceChangeProcess();
-});
-
-
-/**
- * Call events before magento OneSstepChekouPayment switchToMethod event - only call
- * when the type of payment selected is relative to RakutenPay methods, preventing to
- * save all the time a PagSeguro Method is selected
- * @type OnestepcheckoutShipment
- */
-OnestepcheckoutShipment.prototype.switchToMethod = OnestepcheckoutShipment.prototype.switchToMethod.wrap(
-    function (switchToMethod, methodCode, forced) {
-        if (isRakutenPayCurrentPaymentMethod()) {
-            addCardFieldsObserver();
-            return false; //do nothing
-        }
-
-        // normal flow
-        return switchToMethod(methodCode, forced);
-    });
-
-OnestepcheckoutForm.prototype.validate = OnestepcheckoutForm.prototype.validate.wrap(function (validate) {
-    if (validateRakutenPayActiveMethod()) {
-        return validate;
-    }
-});
-
-/**
  * Validate the active payment method before magento save payment
  * @returns {Boolean}
  */
@@ -97,17 +52,6 @@ function convertPriceStringToFloat(priceString){
     return priceString;
 }
 
-/**
- * Return if is selected an RakutenPay Payment Method as a current payment method
- * in the checkout payment section
- * @returns {bolean}
- */
-function isRakutenPayCurrentPaymentMethod() {
-    currentPaymentMethod = document.querySelector('input[name="payment[method]"]:checked').value;
-    return (currentPaymentMethod === 'rakutenpay_credit_card' || currentPaymentMethod === 'rakutenpay_boleto');
-}
-
-
 function addCardFieldsObserver() {
 
     try {
@@ -127,7 +71,6 @@ function addCardFieldsObserver() {
     } catch(e) {
         console.error('Não foi possível adicionar observação aos cartões. ' + e.message);
     }
-
 }
 
 function updateCreditCardToken(creditCardNum, creditCardMonth, creditCardYear) {
@@ -199,3 +142,43 @@ function updateBilletFingerprint() {
 
         return true;
 }
+
+/**
+ * Observer for checkout price modifications, like changes in shipment price or taxes
+ * to call the installments value with the updated value
+ * @object OnestepcheckoutForm.hidePriceChangeProcess
+ *
+ */
+OnestepcheckoutForm.prototype.hidePriceChangeProcess = OnestepcheckoutForm.prototype.hidePriceChangeProcess.wrap(function(hidePriceChangeProcess){
+    var granTotalAmountUpdated = convertPriceStringToFloat(this.granTotalAmount.textContent);
+
+    if (document.getElementById('grand_total') !== null && parseFloat(document.getElementById('grand_total').value) !== granTotalAmountUpdated) {
+        document.getElementById('grand_total').value = granTotalAmountUpdated;
+        if (document.getElementById('creditCardNumVisible') !== null && document.getElementById('creditCardNumVisible').value.length > 6) {
+            getInstallments(document.getElementById('creditCardBrand').value);
+        }
+    }
+
+    return hidePriceChangeProcess();
+});
+
+/**
+ * Call events before magento OneSstepChekouPayment switchToMethod event - only call
+ * when the type of payment selected is relative to RakutenPay methods, preventing to
+ * save all the time a RakutenPay Method is selected
+ * @type OnestepcheckoutShipment
+ */
+OnestepcheckoutShipment.prototype.switchToMethod = OnestepcheckoutShipment.prototype.switchToMethod.wrap(
+    function (switchToMethod, methodCode, forced) {
+
+        // normal flow
+        return switchToMethod(methodCode, forced);
+    });
+
+OnestepcheckoutForm.prototype.validate = OnestepcheckoutForm.prototype.validate.wrap(function (validate) {
+    if (validateRakutenPayActiveMethod()) {
+        return validate;
+    }
+});
+
+addCardFieldsObserver();

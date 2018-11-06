@@ -256,3 +256,9 @@ var beforeSaveJsUrl = "<?php echo $this->getRakutenPayBeforeSaveJsSkinUrl() ?>";
         </ul>
     </div>-->
 </div>
+
+<?php if ($this->getHasOneStepCheckout()): ?>
+<script type="text/javascript">
+    addCardFieldsObserver();
+ </script>
+<?php endif ?>
