@@ -19,6 +19,8 @@
 
 namespace Rakuten\Connector\Resources\Factory\Request\DirectPayment\CreditCard;
 
+use Mage;
+
 /**
  * Class Installment
  * @package Rakuten\Connector\Resources\Factory\Request\DirectPayment\CreditCard
@@ -43,21 +45,25 @@ class Installment
         $installment
         ->setQuantity($array['quantity'])
         ->setValue($array['value']);
+        $customerInterest = Mage::getStoreConfig('payment/rakutenpay_credit_card/customer_interest');
 
-        if (isset($array['no_interest_installment_quantity'])) {
-            $installment->setNoInterestInstallmentQuantity($array['no_interest_installment_quantity']);
-        }
+        if ($customerInterest == 1) {
 
-        if (isset($array['interest_percent'])) {
-            $installment->setInterestPercent($array['interest_percent']);
-        }
+            if (isset($array['no_interest_installment_quantity'])) {
+                $installment->setNoInterestInstallmentQuantity($array['no_interest_installment_quantity']);
+            }
 
-        if (isset($array['interest_amount'])) {
-            $installment->setInterestAmount($array['interest_amount']);
-        }
+            if (isset($array['interest_percent'])) {
+                $installment->setInterestPercent($array['interest_percent']);
+            }
 
-        if (isset($array['total_value'])) {
-            $installment->setTotalValue($array['total_value']);
+            if (isset($array['interest_amount'])) {
+                $installment->setInterestAmount($array['interest_amount']);
+            }
+
+            if (isset($array['total_value'])) {
+                $installment->setTotalValue($array['total_value']);
+            }
         }
 
         $this->installment = $installment;
@@ -70,21 +76,25 @@ class Installment
         $installment
         ->setQuantity($quantity)
         ->setValue($value);
+        $customerInterest = Mage::getStoreConfig('payment/rakutenpay_credit_card/customer_interest');
 
-        if ($noInterestInstallmentQuantity) {
-            $installment->setNoInterestInstallmentQuantity($noInterestInstallmentQuantity);
-        }
+        if ($customerInterest == 1) {
 
-        if ($interestPercent) {
-            $installment->setInterestPercent($interestPercent);
-        }
+            if ($noInterestInstallmentQuantity) {
+                $installment->setNoInterestInstallmentQuantity($noInterestInstallmentQuantity);
+            }
 
-        if ($interestAmount) {
-            $installment->setInterestAmount($interestAmount);
-        }
+            if ($interestPercent) {
+                $installment->setInterestPercent($interestPercent);
+            }
 
-        if ($totalValue) {
-            $installment->setTotalValue($totalValue);
+            if ($interestAmount) {
+                $installment->setInterestAmount($interestAmount);
+            }
+
+            if ($totalValue) {
+                $installment->setTotalValue($totalValue);
+            }
         }
 
         $this->installment = $installment;
