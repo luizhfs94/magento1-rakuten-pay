@@ -118,10 +118,14 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
                     ->setInterestFree(false);
                 }
                 else {
+                    $value = $amount / $customerInterestInstallment->getQuantity();
+                    $value = ceil($value * 100) / 100;// rounds up to the nearest cent
+                    $total = $value * $customerInterestInstallment->getQuantity();
+                    $total = ceil($total * 100) / 100;
                     $installment
-                    ->setAmount($customerInterestInstallment->getInstallmentAmount() - $customerInterestInstallment->getInterestAmount())
+                    ->setAmount($value)
                     ->setQuantity($customerInterestInstallment->getQuantity())
-                    ->setTotalAmount($customerInterestInstallment->getQuantity() * ($customerInterestInstallment->getInstallmentAmount() - $customerInterestInstallment->getInterestAmount()))
+                    ->setTotalAmount($total)
                     ->setInterestAmount(0.0)
                     ->setInterestPercent(0.0)
                     ->setInterestFree(true);
