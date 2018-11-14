@@ -62,10 +62,10 @@ class Rakuten_RakutenPay_Model_NotificationMethod extends MethodAbstract
     private function setNotificationUpdateOrder()
     {
         \Rakuten\Connector\Resources\Log\Logger::info('Processing setNotificationUpdateOrder in ModelNotificationMethod.');
-        $orderId = $this->helper->getOrderIdFromReference($this->webhookReference);
+        $incrementId = $this->webhookReference;
         $transactionCode = $this->webhookStatus;
         $orderStatus = $this->helper->getPaymentStatusFromKey($transactionCode);
-        \Rakuten\Connector\Resources\Log\Logger::info("Processing webhook with transaction: " . $orderId
+        \Rakuten\Connector\Resources\Log\Logger::info("Processing webhook with transaction: " . $incrementId
                     . "; Status: ". $orderStatus . "; Amount: " . $this->amount,
                     ['service' => 'WEBHOOK']);
         if ($orderStatus == false) {
@@ -74,6 +74,6 @@ class Rakuten_RakutenPay_Model_NotificationMethod extends MethodAbstract
             return;
         }
         $class = null;
-        $this->helper->updateOrderStatusMagento($class, $orderId, $transactionCode, $orderStatus, $this->amount);
+        $this->helper->updateOrderStatusMagento($class, $incrementId, $transactionCode, $orderStatus, $this->amount);
     }
 }

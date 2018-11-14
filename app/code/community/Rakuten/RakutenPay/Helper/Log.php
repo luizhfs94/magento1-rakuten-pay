@@ -28,7 +28,7 @@ class Rakuten_RakutenPay_Helper_Log
      */
     public function setAbandonedSendEmailLog($orderId, $recoveryCode)
     {
-        $module = ' [Info] RakutenPayAbandoned.';
+        $module = 'RakutenPayAbandoned.';
         $phrase = "Mail( SendEmailAbandoned: array (\n 'orderId' => ".$orderId.",\n ";
         $phrase .= "'recoveryCode' => '".$recoveryCode."'\n) )";
         $this->setLog($phrase, $module);
@@ -41,14 +41,7 @@ class Rakuten_RakutenPay_Helper_Log
     public function setLog($phrase, $module)
     {
         if (Mage::getStoreConfig('payment/rakutenpay/log')) {
-            if (Mage::getStoreConfig('payment/rakutenpay/log_file')) {
-                $directoryLog = Mage::getBaseDir().'/'.Mage::getStoreConfig('payment/rakutenpay/log_file');
-            } else {
-                $directoryLog = Mage::getBaseDir('lib').'/RakutenPayLibrary/RakutenPay.log';
-            }
-            $date = '{'.Mage::app()->getLocale()->date().'}';
-            $return = $date.$module.$phrase."\r\n";
-            file_put_contents($directoryLog, $return, FILE_APPEND);
+            \Rakuten\Connector\Resources\Log\Logger::info($phrase, ['service' => $module]);
         }
     }
 
@@ -58,7 +51,7 @@ class Rakuten_RakutenPay_Helper_Log
      */
     public function setAbandonedSentEmailUpdateLog($orderId, $sent)
     {
-        $module = ' [Info] RakutenPayAbandoned.';
+        $module = 'RakutenPayAbandoned.';
         $phrase = "SentEmailUpdate( Has been updated to ".$sent." the number of emails sent,";
         $phrase .= " belonging to order ".$orderId." )";
         $this->setLog($phrase, $module);
@@ -66,7 +59,7 @@ class Rakuten_RakutenPay_Helper_Log
 
     public function setRequirementsLog()
     {
-        $module = ' [Info] RakutenPayRequirements.';
+        $module = 'RakutenPayRequirements.';
         $phrase = "Verification ( Checked requirements )";
         $this->setLog($phrase, $module);
     }
@@ -94,7 +87,7 @@ class Rakuten_RakutenPay_Helper_Log
     {
         $module = null;
         $option = explode('_', $class);
-        $module = ' [Info] RakutenPay'.end($option).'.';
+        $module = 'RakutenPay'.end($option).'.';
 
         return $module;
     }
