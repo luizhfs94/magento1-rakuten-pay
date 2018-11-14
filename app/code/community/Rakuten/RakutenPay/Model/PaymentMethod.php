@@ -144,7 +144,7 @@ class Rakuten_RakutenPay_Model_PaymentMethod extends Mage_Payment_Model_Method_A
         }
 
         \Rakuten\Connector\Resources\Log\Logger::info('Setting payment info...');
-        $payment->setReference($this->order->getId());
+        $payment->setReference($this->order->getIncrementId());
         \Rakuten\Connector\Resources\Log\Logger::info('Reference set.');
         $payment->setCurrency('BRL');
         \Rakuten\Connector\Resources\Log\Logger::info('Currency set.');
