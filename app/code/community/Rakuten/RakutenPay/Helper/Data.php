@@ -377,6 +377,11 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
     public function getOrderIdFromReference($reference)
     {
         \Rakuten\Connector\Resources\Log\Logger::info('Processing getOrderIdFromReference.');
+        // TODO: Remover no próximo release.
+        if (false === strpos($reference, Rakuten\Connector\Enum\Properties\Current::ORDER_TAG)) {
+            return $reference;
+        }
+
         //remove the 'Pedido#' tag at the beggining
         return str_replace(Rakuten\Connector\Enum\Properties\Current::ORDER_TAG, '', $reference);
     }

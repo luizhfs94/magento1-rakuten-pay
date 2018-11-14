@@ -40,7 +40,7 @@ trait Basic
 
         // reference
         if (!is_null($request->getReference())) {
-            $data[$properties::REFERENCE] = $properties::ORDER_TAG . $request->getReference();
+            $data[$properties::REFERENCE] = $request->getReference();
         }
         //amount
         if (method_exists($request, 'getTotal') and !is_null($request->getTotal())) {
