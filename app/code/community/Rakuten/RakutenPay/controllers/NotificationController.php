@@ -55,6 +55,8 @@ class Rakuten_RakutenPay_NotificationController extends Mage_Core_Controller_Fro
         }
         if (!array_key_exists('Signature', $entity_headers) || $entity_headers['Signature'] !== $signature_base64) {
             \Rakuten\Connector\Resources\Log\Logger::info("Signature does not match.", ['service' => 'WEBHOOK']);
+            $logSignature = (array_key_exists('Signature', $entity_headers)) ? $entity_headers['Signature'] : false;
+            \Rakuten\Connector\Resources\Log\Logger::info(sprintf("Signature Local: %s | Signature Header: %s", $signature_base64, $logSignature), ['service' => 'WEBHOOK']);
             throw new \Exception("Signature does not match...");
         }
         \Rakuten\Connector\Resources\Log\Logger::info("All OK, processing.", ['service' => 'WEBHOOK']);
