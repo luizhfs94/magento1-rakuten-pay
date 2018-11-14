@@ -370,23 +370,6 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
     }
 
     /**
-     * @param $reference
-     *
-     * @return mixed
-     */
-    public function getOrderIdFromReference($reference)
-    {
-        \Rakuten\Connector\Resources\Log\Logger::info('Processing getOrderIdFromReference.');
-        // TODO: Remover no próximo release.
-        if (false === strpos($reference, Rakuten\Connector\Enum\Properties\Current::ORDER_TAG)) {
-            return $reference;
-        }
-
-        //remove the 'Pedido#' tag at the beggining
-        return str_replace(Rakuten\Connector\Enum\Properties\Current::ORDER_TAG, '', $reference);
-    }
-
-    /**
      * @return mixed
      */
     public function getStoreReference()
@@ -448,9 +431,11 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
     }
 
 
-    public function updateOrderStatusMagento($class, $orderId, $transactionCode, $orderStatus, $amount = false)
+    public function updateOrderStatusMagento($class, $incrementId, $transactionCode, $orderStatus, $amount = false)
     {
         try {
+            $orderId = $this->getOrderId($incrementId);
+
             \Rakuten\Connector\Resources\Log\Logger::info(
                 "Updating order with orderId: " . $orderId .
                 "; Status: "                    . $orderStatus .
@@ -680,5 +665,15 @@ class Rakuten_RakutenPay_Helper_Data extends Mage_Payment_Helper_Data
                 throw new Exception('Invalid document');
                 break;
         }
+    }
+
+    protected function getOrderId($incrementId)
+    {
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing getOrderId.');
+        $order = Mage::getModel('sales/order')->loadByIncrementId($incrementId);
+        $orderId = $order->getId();
+        \Rakuten\Connector\Resources\Log\Logger::info(sprintf('incrementId: %s | orderId: %s', $incrementId, $orderId));
+
+        return $orderId;
     }
 }
