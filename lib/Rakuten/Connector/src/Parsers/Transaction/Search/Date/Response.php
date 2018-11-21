@@ -166,13 +166,12 @@ class Response
 
     private function createTransaction($response)
     {
-        $helper = Mage::helper('rakutenpay');
         $history = $response['status_history'];
         $payment = $response['payments'][0];
         $transaction = new Transaction();
         $transaction->setDate($response['created_at'])
             ->setCode($response['uuid'])
-            ->setReference($helper->getOrderIdFromReference($response['reference']))
+            ->setReference($response['reference'])
             ->setStatus($response['status'])
             ->setLastEventDate(end($history)['created_at'])
             ->setPaymentMethod($payment['method'])

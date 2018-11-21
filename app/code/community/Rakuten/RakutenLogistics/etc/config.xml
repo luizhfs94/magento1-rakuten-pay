@@ -72,7 +72,7 @@
             </rakuten_rakutenlogistics>
             <adminhtml>
                 <rewrite>
-                    <sales_order_grid>Rakuten_RakutenLogistics_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                    <sales_order_view>Rakuten_RakutenLogistics_Block_Adminhtml_Sales_Order_View</sales_order_view>
                 </rewrite>
             </adminhtml>
         </blocks>

@@ -1,5 +1,5 @@
 <?php
-
+ 
 /**
  ************************************************************************
  * Copyright [2018] [RakutenConnector]
@@ -18,14 +18,21 @@
  ************************************************************************
  */
 
-class Rakuten_RakutenLogistics_Block_Adminhtml_Sales_Order_InvoiceDataRenderer extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
+class Rakuten_RakutenLogistics_Block_Adminhtml_Sales_Order_View extends Mage_Adminhtml_Block_Sales_Order_View
 {
-    public function render(Varien_Object $row)
+    public function  __construct()
     {
-        $orderId = $row->getData()['increment_id'];
-        
-        $link = Mage::helper("adminhtml")->getUrl('rakutenlogistics/invoiceData/edit/order_increment_id/'. $orderId);
+        parent::__construct();
+        $isActive = (bool)Mage::getStoreConfig('carriers/rakutenlogistics_settings/active');
+        if ($isActive) {
 
-        return "<a href='".$link ."'>Edit</a>";
+            $order = Mage::registry('current_order');
+            $url = Mage::helper("adminhtml")->getUrl('rakutenlogistics/invoiceData/edit/order_increment_id/' . $order->getIncrementId());
+            $this->_addButton('button_id', array(
+                'label' => "RakutenLog Invoice",
+                'onclick' => 'setLocation(\'' . $url . '\')',
+                'class' => 'go'
+            ), 0, 100, 'header', 'header');
+        }
     }
 }
