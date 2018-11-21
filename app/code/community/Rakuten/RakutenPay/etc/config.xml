@@ -220,5 +220,17 @@
             </rakutenpay_boleto>
         </payment>
     </default>
+    <crontab>
+        <jobs>
+            <rakuten_rakutenpay>
+                <schedule>
+                    <cron_expr>*/1 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>rakuten_rakutenpay/observer::updateOrderStatus</model>
+                </run>
+            </rakuten_rakutenpay>
+        </jobs>
+    </crontab>
 </config>
 

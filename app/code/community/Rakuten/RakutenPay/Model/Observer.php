@@ -130,4 +130,11 @@ class Rakuten_RakutenPay_Model_Observer
             $result->isAvailable = false;
         }
     }
+
+    public function updateOrderStatus()
+    {
+        \Rakuten\Connector\Resources\Log\Logger::info('Processing updateOrderStatus in Observer.');
+        $cronOrder =  Mage::getSingleton('Rakuten_RakutenPay_Model_Cron_Order');
+        $cronOrder->updateOrderStatus();
+    }
 }
