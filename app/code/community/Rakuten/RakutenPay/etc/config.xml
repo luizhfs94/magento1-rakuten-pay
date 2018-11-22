@@ -148,14 +148,6 @@
             </updates>
         </layout>
         <events>
-            <sales_order_grid_collection_load_before>
-                <observers>
-                    <rakuten_rakutenpay>
-                        <model>rakuten_rakutenpay/observer</model>
-                        <method>salesOrderGridCollectionLoadBefore</method>
-                    </rakuten_rakutenpay>
-                </observers>
-            </sales_order_grid_collection_load_before>
             <admin_system_config_changed_section_payment>
                 <observers>
                     <rakuten_rakutenpay>
