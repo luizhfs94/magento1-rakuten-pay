@@ -58,7 +58,8 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
         try {
             $session = \Mage::getSingleton('checkout/session');
             $minimumValue = \Mage::getStoreConfig("payment/rakutenpay_credit_card/minimum_installment");
-            $installments = self::createInstallments($amount, $minimumValue);
+            $maximumInstallments = \Mage::getStoreConfig("payment/rakutenpay_credit_card/maximum_installment_number");
+            $installments = self::createInstallments($amount, $minimumValue, $maximumInstallments);
             $format = $this->output($installments, true);
 
             return $format['installments'];
@@ -73,11 +74,29 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      * Returns the maximum number of installments
      * @param $amount
      * @param $minimumValue
+     * @param $maximumInstallments
      * @return float
      */
-    private function getMaxNoInstallments($amount, $minimumValue)
+    private function getMaxNoInstallments($amount, $minimumValue, $maximumInstallments)
     {
         \Rakuten\Connector\Resources\Log\Logger::info('Processing getMaxNoInstallments in ModelInstallmentsMethod.');
+        $installments = $this->getInstallmentsByMinimumValue($amount, $minimumValue);
+        if (!empty($maximumInstallments) && $maximumInstallments > 0) {
+            if ($installments > $maximumInstallments) {
+                return $maximumInstallments;
+            }
+        }
+
+        return $installments;
+    }
+
+    /**
+     * @param $amount
+     * @param $minimumValue
+     * @return float
+     */
+    private function getInstallmentsByMinimumValue($amount, $minimumValue)
+    {
         if (is_null($minimumValue) || is_nan($minimumValue) || $minimumValue < 0) {
             $minimumValue = self::DEFAULT_MINIMUM_VALUE;
         }
@@ -93,10 +112,11 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
      * Returns an array of installments
      * @param $amount
      * @param $minimumValue
+     * @param $maximumInstallments
      * @return array
      * @throws Exception
      */
-    private function createInstallments($amount, $minimumValue)
+    private function createInstallments($amount, $minimumValue, $maximumInstallments)
     {
         \Rakuten\Connector\Resources\Log\Logger::info('Processing createInstallments in ModelInstallmentsMethod.');
         $arr = [];
@@ -134,7 +154,7 @@ class Rakuten_RakutenPay_Model_InstallmentsMethod extends MethodAbstract
                 $arr[] = $installment;
             }
         } else {
-            $maxNoInstallments = self::getMaxNoInstallments($amount, $minimumValue);
+            $maxNoInstallments = self::getMaxNoInstallments($amount, $minimumValue, $maximumInstallments);
             for ($mo = 1; $mo <= $maxNoInstallments; $mo++) {
                 $value = $amount / $mo;
                 $value = ceil($value * 100) / 100;// rounds up to the nearest cent
