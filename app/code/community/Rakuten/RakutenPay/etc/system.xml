@@ -192,6 +192,19 @@
                                                 <customer_interest>0</customer_interest>
                                             </depends>
                                         </minimum_installment>
+                                        <maximum_installment_number translate="label">
+                                            <label>QUANTIDADE MÁXIMA DE PARCELAS</label>
+                                            <tooltip>Quantidade máxima de parcelas a serem exibidas no Checkout.</tooltip>
+                                            <frontend_type>text</frontend_type>
+                                            <sort_order>230</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>1</show_in_store>
+                                            <depends>
+                                                <installments>1</installments>
+                                                <customer_interest>0</customer_interest>
+                                            </depends>
+                                        </maximum_installment_number>
                                     </fields>
                                 </rakutenpay_credit_card>
                                 <rakutenpay_boleto type="group" translate="label">
