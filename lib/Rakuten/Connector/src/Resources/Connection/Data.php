@@ -31,6 +31,7 @@ class Data
     use Base\Notification;
     use Base\Refund;
     use Base\Cancel;
+    use Base\Pooling\OrderStatus;
     use Base\Transaction\Search {
         Base\Transaction\Search::buildSearchRequestUrl as buildTransactionSearchRequestUrl;
     }

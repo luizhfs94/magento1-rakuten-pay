@@ -116,8 +116,9 @@ class Rakuten_RakutenPay_Model_Observer
 
     public function updateOrderStatus()
     {
+        \Rakuten\Connector\Resources\Log\Logger::info("teste  " . Mage::getStoreConfig("payment/update/active"));
         \Rakuten\Connector\Resources\Log\Logger::info('Processing updateOrderStatus in Observer.');
-        $cronOrder =  Mage::getSingleton('Rakuten_RakutenPay_Model_Cron_Order');
-        $cronOrder->updateOrderStatus();
+        $cronOrderStatus =  Mage::getSingleton('Rakuten_RakutenPay_Model_Cron_OrderStatus');
+        $cronOrderStatus->updateOrderStatus();
     }
 }
