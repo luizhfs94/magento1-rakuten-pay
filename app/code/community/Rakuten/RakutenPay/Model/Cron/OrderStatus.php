@@ -54,11 +54,15 @@ class Rakuten_RakutenPay_Model_Cron_OrderStatus
         ];
     }
 
+    /**
+     * return @void
+     */
     public function updateOrderStatus()
     {
-        \Rakuten\Connector\Resources\Log\Logger::info("Processing updateOrderStatus in OrderStatus");
+        \Rakuten\Connector\Resources\Log\Logger::info("Processing updateOrderStatus in OrderStatus", ['service' => 'Pooling']);
         $orderCollection = Mage::getModel('sales/order')->getCollection()
             ->addFieldToFilter('status', ['nin' => $this->getFilterStatus()]);
+        \Rakuten\Connector\Resources\Log\Logger::info("Count Orders: " . count($orderCollection), ['service' => 'Pooling']);
 
         foreach ($orderCollection as $order) {
             $addtionalInformation = $order->getPayment()->getAdditionalInformation();

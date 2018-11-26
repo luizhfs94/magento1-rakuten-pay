@@ -193,6 +193,11 @@
         </layout>
     </frontend>
     <default>
+        <cron>
+            <update_order_status>
+                <active>0</active>
+            </update_order_status>
+        </cron>
         <payment>
             <rakutenpay_credit_card>
                 <active>0</active>
@@ -216,7 +221,7 @@
         <jobs>
             <rakuten_rakutenpay>
                 <schedule>
-                    <cron_expr>*/1 * * * *</cron_expr>
+                    <cron_expr>*/5 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>rakuten_rakutenpay/observer::updateOrderStatus</model>
