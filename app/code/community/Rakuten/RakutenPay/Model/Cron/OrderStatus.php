@@ -59,17 +59,33 @@ class Rakuten_RakutenPay_Model_Cron_OrderStatus
      */
     public function updateOrderStatus()
     {
-        \Rakuten\Connector\Resources\Log\Logger::info("Processing updateOrderStatus in OrderStatus", ['service' => 'Pooling']);
-        $orderCollection = Mage::getModel('sales/order')->getCollection()
-            ->addFieldToFilter('status', ['nin' => $this->getFilterStatus()]);
-        \Rakuten\Connector\Resources\Log\Logger::info("Count Orders: " . count($orderCollection), ['service' => 'Pooling']);
+        if ($this->isActive()) {
+            \Rakuten\Connector\Resources\Log\Logger::info("Processing updateOrderStatus in OrderStatus", ['service' => 'Pooling']);
+            $orderCollection = Mage::getModel('sales/order')->getCollection()
+                ->addFieldToFilter('status', ['nin' => $this->getFilterStatus()]);
+            \Rakuten\Connector\Resources\Log\Logger::info("Count Orders: " . count($orderCollection), ['service' => 'Pooling']);
 
-        foreach ($orderCollection as $order) {
-            $addtionalInformation = $order->getPayment()->getAdditionalInformation();
-            if (isset($addtionalInformation[ 'rakutenpay_id']) && !empty($addtionalInformation[ 'rakutenpay_id'])) {
-                $response = $this->webservice->poolingRequest($addtionalInformation['rakutenpay_id']);
-                $this->helper->notificationModel()->initialize(json_encode($response->getResult()), false);
+            foreach ($orderCollection as $order) {
+                $addtionalInformation = $order->getPayment()->getAdditionalInformation();
+                if (isset($addtionalInformation[ 'rakutenpay_id']) && !empty($addtionalInformation[ 'rakutenpay_id'])) {
+                    $response = $this->webservice->poolingRequest($addtionalInformation['rakutenpay_id']);
+                    $this->helper->notificationModel()->initialize(json_encode($response->getResult()), false);
+                }
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        $isActive = (int) Mage::getConfig()->getNode('default/cron/update_order_status/active');
+        \Rakuten\Connector\Resources\Log\Logger::info('updateOrderStatus => ' . $isActive, ['service' => 'Pooling']);
+        if ($isActive == 1) {
+            return true;
+        }
+
+        return false;
     }
 }
