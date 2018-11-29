@@ -10,7 +10,7 @@ Bem vindo ao módulo de pagamento Rakuten Connector no GitHub
 
 ## Instalação
 
-  Para instalar o Rakuten Connector [consulte nossa Wiki](https://github.com/luizhfs94/magento1-rakuten-pay)
+  Para instalar o Rakuten Connector [consulte nossa Wiki](https://github.com/luizhfs94/magento1-rakuten-pay/wiki)
 
 
 ## Suporte
