@@ -1,4 +1,4 @@
-# Extensão Magento 1 para [Rakuten Connector](https://digitalcommerce.rakuten.com.br/solucoes/rakuten-connector/) Payment Gateway (Magento CE 1.7+)
+# Extensão Magento 1 para [Rakuten Connector](https://digitalcommerce.rakuten.com.br/solucoes/rakuten-connector/) Payment Gateway (Magento CE 1.7+) 
 
 Bem vindo ao repositório da extensão Magento para o Rakuten Connector
 
