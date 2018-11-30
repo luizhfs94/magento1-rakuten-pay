@@ -21,7 +21,7 @@ Esta extensão está pronta para integrar com os serviços:
 
 ## Instalação
 
-  Para instalar o Rakuten Connector [consulte nossa Wiki](https://github.com/luizhfs94/magento1-rakuten-pay/wiki)
+  Para instalar o Rakuten Connector [consulte nossa Wiki](https://github.com/RakutenBrasil/magento1-rakuten-pay/wiki)
 
 
 ## Suporte
