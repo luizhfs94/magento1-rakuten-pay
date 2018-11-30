@@ -15,7 +15,7 @@ Conheça mais a respeito de nossa solução de Logística [Rakuten Log](https://
 
 ## Requisitos
 
-  * Magento Community 1 (testado em versões 1.9.x)
+  * Magento Community 1 (testado em versões 1.7+)
   * PHP 5.4.27+, 5.5.x+, 5.6.x+ 
   * Baixar aqui a última versão do módulo Rakuten Pay
 
